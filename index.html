@@ -1,0 +1,2052 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>DEIN RP | German Roleplay</title>
+
+<meta name="description"
+content="DEIN RP – moderner deutscher FiveM Roleplay Server.">
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #070a10;
+    --bg2: #0c111b;
+    --card: rgba(18,24,36,.78);
+    --text: #f5f7fb;
+    --muted: #8994a7;
+    --primary: #3987ff;
+    --primary2: #65b5ff;
+    --success: #35d98a;
+    --danger: #ff5964;
+    --warning: #ffbd4a;
+    --border: rgba(255,255,255,.08);
+    --radius: 20px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background:
+        radial-gradient(
+            circle at 15% 10%,
+            rgba(57,135,255,.16),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 85% 30%,
+            rgba(101,181,255,.08),
+            transparent 25%
+        ),
+        var(--bg);
+
+    color: var(--text);
+
+    font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    overflow-x: hidden;
+}
+
+.background-grid {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: .16;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.04) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.04) 1px,
+            transparent 1px
+        );
+
+    background-size: 50px 50px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            black,
+            transparent 80%
+        );
+}
+
+/* NAVIGATION */
+
+.navbar {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    z-index: 1000;
+
+    height: 76px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 6%;
+
+    background:
+        rgba(7,10,16,.72);
+
+    backdrop-filter: blur(18px);
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.06);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+
+    font-size: 20px;
+}
+
+.logo-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary),
+            var(--primary2)
+        );
+
+    box-shadow:
+        0 10px 35px
+        rgba(57,135,255,.3);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.nav-links a {
+    color: var(--muted);
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    transition: .2s;
+}
+
+.nav-links a:hover {
+    color: white;
+}
+
+.nav-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* BUTTONS */
+
+button,
+.btn {
+    border: 0;
+
+    color: white;
+
+    cursor: pointer;
+
+    text-decoration: none;
+
+    font-weight: 700;
+
+    transition:
+        transform .2s,
+        box-shadow .2s,
+        background .2s;
+}
+
+.btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px 18px;
+
+    border-radius: 12px;
+
+    font-size: 14px;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary),
+            var(--primary2)
+        );
+
+    box-shadow:
+        0 10px 30px
+        rgba(57,135,255,.22);
+}
+
+.btn-secondary {
+    background:
+        rgba(255,255,255,.06);
+
+    border:
+        1px solid
+        var(--border);
+}
+
+/* HERO */
+
+.hero {
+    min-height: 820px;
+
+    display: flex;
+    align-items: center;
+
+    padding:
+        130px 6%
+        80px;
+
+    position: relative;
+}
+
+.hero-content {
+    max-width: 760px;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+.badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 8px 12px;
+
+    border-radius: 999px;
+
+    background:
+        rgba(53,217,138,.08);
+
+    border:
+        1px solid
+        rgba(53,217,138,.2);
+
+    color: #7ff0b4;
+
+    font-size: 12px;
+
+    margin-bottom: 22px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: var(--success);
+
+    box-shadow:
+        0 0 14px
+        var(--success);
+}
+
+.hero h1 {
+    font-size:
+        clamp(
+            52px,
+            8vw,
+            100px
+        );
+
+    line-height: .92;
+
+    letter-spacing: -5px;
+
+    margin-bottom: 28px;
+}
+
+.hero h1 span {
+    background:
+        linear-gradient(
+            135deg,
+            #fff,
+            #6baeff
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+}
+
+.hero p {
+    max-width: 650px;
+
+    color: var(--muted);
+
+    font-size: 18px;
+
+    line-height: 1.7;
+
+    margin-bottom: 32px;
+}
+
+.hero-buttons {
+    display: flex;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+}
+
+/* SERVER CARD */
+
+.hero-card {
+    position: absolute;
+
+    right: 7%;
+    top: 220px;
+
+    width: 390px;
+
+    padding: 24px;
+
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(20,28,42,.9),
+            rgba(9,13,21,.9)
+        );
+
+    border:
+        1px solid
+        var(--border);
+
+    box-shadow:
+        0 30px 100px
+        rgba(0,0,0,.45);
+
+    z-index: 2;
+}
+
+.hero-card-title {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 22px;
+}
+
+.server-online {
+    color: var(--success);
+
+    font-size: 12px;
+}
+
+.server-number {
+    font-size: 40px;
+
+    font-weight: 900;
+
+    margin-bottom: 3px;
+}
+
+.server-label {
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+.progress {
+    width: 100%;
+
+    height: 7px;
+
+    margin-top: 20px;
+
+    border-radius: 99px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    overflow: hidden;
+}
+
+.progress div {
+    width: 64%;
+
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--primary),
+            var(--primary2)
+        );
+}
+
+/* SECTIONS */
+
+section {
+    position: relative;
+
+    padding:
+        100px 6%;
+}
+
+.section-header {
+    max-width: 700px;
+
+    margin-bottom: 45px;
+}
+
+.section-label {
+    color: var(--primary2);
+
+    text-transform: uppercase;
+
+    letter-spacing: 3px;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    margin-bottom: 12px;
+}
+
+.section-header h2 {
+    font-size: 42px;
+
+    letter-spacing: -2px;
+
+    margin-bottom: 12px;
+}
+
+.section-header p {
+    color: var(--muted);
+
+    line-height: 1.7;
+}
+
+/* CARDS */
+
+.cards {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            1fr
+        );
+
+    gap: 18px;
+}
+
+.card {
+    padding: 26px;
+
+    border-radius: var(--radius);
+
+    background:
+        var(--card);
+
+    border:
+        1px solid
+        var(--border);
+
+    backdrop-filter: blur(15px);
+
+    transition: .25s;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+
+    border-color:
+        rgba(57,135,255,.25);
+
+    box-shadow:
+        0 20px 60px
+        rgba(0,0,0,.25);
+}
+
+.card-icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background:
+        rgba(57,135,255,.12);
+
+    margin-bottom: 18px;
+
+    font-size: 22px;
+}
+
+.card h3 {
+    margin-bottom: 10px;
+
+    font-size: 19px;
+}
+
+.card p {
+    color: var(--muted);
+
+    line-height: 1.6;
+
+    font-size: 14px;
+}
+
+/* FRACTIONS */
+
+.faction {
+    min-height: 210px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+}
+
+.faction-tag {
+    display: inline-block;
+
+    padding: 6px 9px;
+
+    border-radius: 8px;
+
+    font-size: 10px;
+
+    background:
+        rgba(255,255,255,.06);
+
+    color: var(--muted);
+}
+
+/* NEWS */
+
+.news {
+    display: grid;
+
+    grid-template-columns:
+        1.4fr 1fr 1fr;
+
+    gap: 18px;
+}
+
+.news-card {
+    min-height: 280px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: flex-end;
+
+    overflow: hidden;
+
+    position: relative;
+
+    background:
+        linear-gradient(
+            145deg,
+            #172338,
+            #0c111a
+        );
+}
+
+.news-card.large {
+    min-height: 380px;
+}
+
+.news-card::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at 50% 10%,
+            rgba(57,135,255,.3),
+            transparent 45%
+        );
+}
+
+.news-content {
+    position: relative;
+
+    z-index: 2;
+}
+
+.news-date {
+    color: var(--primary2);
+
+    font-size: 11px;
+
+    margin-bottom: 8px;
+}
+
+.news-card h3 {
+    font-size: 21px;
+
+    margin-bottom: 8px;
+}
+
+.news-card p {
+    color: var(--muted);
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+/* STATS */
+
+.stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            1fr
+        );
+
+    gap: 15px;
+}
+
+.stat {
+    text-align: center;
+
+    padding: 30px;
+
+    border-radius: 18px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    border:
+        1px solid
+        var(--border);
+}
+
+.stat strong {
+    display: block;
+
+    font-size: 36px;
+
+    margin-bottom: 7px;
+}
+
+.stat span {
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+/* RULES */
+
+.rules {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 15px;
+}
+
+.rule {
+    display: flex;
+
+    gap: 15px;
+
+    padding: 20px;
+
+    border-radius: 16px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    border:
+        1px solid
+        var(--border);
+}
+
+.rule-number {
+    min-width: 34px;
+    height: 34px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background:
+        rgba(57,135,255,.13);
+
+    color: var(--primary2);
+
+    font-weight: 900;
+
+    font-size: 12px;
+}
+
+.rule h3 {
+    margin-bottom: 5px;
+
+    font-size: 15px;
+}
+
+.rule p {
+    color: var(--muted);
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+/* CTA */
+
+.cta {
+    text-align: center;
+
+    padding:
+        100px 20px;
+
+    margin:
+        40px 6% 100px;
+
+    border-radius: 28px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(57,135,255,.22),
+            transparent 65%
+        ),
+        rgba(255,255,255,.035);
+
+    border:
+        1px solid
+        var(--border);
+}
+
+.cta h2 {
+    font-size: 45px;
+
+    letter-spacing: -2px;
+
+    margin-bottom: 15px;
+}
+
+.cta p {
+    color: var(--muted);
+
+    margin-bottom: 28px;
+}
+
+/* FOOTER */
+
+footer {
+    padding:
+        40px 6%;
+
+    border-top:
+        1px solid
+        var(--border);
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+.footer-links {
+    display: flex;
+
+    gap: 20px;
+}
+
+.footer-links a {
+    color: var(--muted);
+
+    text-decoration: none;
+}
+
+/* MODAL */
+
+.modal {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 3000;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(0,0,0,.72);
+
+    backdrop-filter: blur(10px);
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-box {
+    width: 440px;
+
+    padding: 30px;
+
+    border-radius: 24px;
+
+    background:
+        #101722;
+
+    border:
+        1px solid
+        var(--border);
+
+    box-shadow:
+        0 30px 100px
+        rgba(0,0,0,.6);
+}
+
+.modal-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 25px;
+}
+
+.modal-header button {
+    background: none;
+
+    color: var(--muted);
+
+    font-size: 25px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+    margin-bottom: 7px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+
+    padding: 13px;
+
+    border-radius: 11px;
+
+    border:
+        1px solid
+        var(--border);
+
+    background:
+        rgba(255,255,255,.045);
+
+    color: white;
+
+    outline: none;
+}
+
+.form-group textarea {
+    min-height: 100px;
+
+    resize: vertical;
+}
+
+/* MOBILE */
+
+.mobile-menu {
+    display: none;
+
+    background: none;
+
+    color: white;
+
+    font-size: 25px;
+}
+
+@media(max-width:1000px) {
+
+    .hero-card {
+        position: relative;
+
+        right: auto;
+        top: auto;
+
+        margin-top: 40px;
+
+        width: 100%;
+    }
+
+    .hero {
+        display: block;
+    }
+
+    .cards {
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .news {
+        grid-template-columns:
+            1fr;
+    }
+}
+
+@media(max-width:700px) {
+
+    .navbar {
+        padding: 0 20px;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .nav-actions {
+        display: none;
+    }
+
+    .mobile-menu {
+        display: block;
+    }
+
+    section {
+        padding:
+            70px 20px;
+    }
+
+    .hero {
+        padding:
+            120px 20px
+            60px;
+    }
+
+    .hero h1 {
+        font-size: 55px;
+
+        letter-spacing: -3px;
+    }
+
+    .cards,
+    .stats,
+    .rules {
+        grid-template-columns:
+            1fr;
+    }
+
+    .cta {
+        margin:
+            20px;
+    }
+
+    footer {
+        flex-direction: column;
+
+        gap: 20px;
+
+        text-align: center;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="background-grid"></div>
+
+<!-- NAVIGATION -->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            RP
+        </div>
+
+        DEIN RP
+
+    </div>
+
+    <div class="nav-links">
+
+        <a href="#home">Start</a>
+
+        <a href="#fraktionen">Fraktionen</a>
+
+        <a href="#news">News</a>
+
+        <a href="#regeln">Regeln</a>
+
+        <a href="#bewerbung">Bewerbung</a>
+
+    </div>
+
+    <div class="nav-actions">
+
+        <button
+            class="btn btn-secondary"
+            onclick="openLogin()"
+        >
+            Login
+        </button>
+
+        <a
+            href="#bewerbung"
+            class="btn btn-primary"
+        >
+            Spielen
+        </a>
+
+    </div>
+
+    <button
+        class="mobile-menu"
+        onclick="mobileMenu()"
+    >
+        ☰
+    </button>
+
+</nav>
+
+
+<!-- HERO -->
+
+<main>
+
+<section
+    class="hero"
+    id="home"
+>
+
+    <div class="hero-content">
+
+        <div class="badge">
+
+            <span class="status-dot"></span>
+
+            SERVER ONLINE
+
+        </div>
+
+        <h1>
+
+            Deine Stadt.
+            <br>
+
+            <span>Deine Geschichte.</span>
+
+        </h1>
+
+        <p>
+
+            Willkommen auf DEIN RP – einem modernen
+            deutschen FiveM Roleplay Server.
+            Erstelle deinen Charakter, finde deinen
+            Platz in der Stadt und schreibe deine
+            eigene Geschichte.
+
+        </p>
+
+        <div class="hero-buttons">
+
+            <a
+                href="#bewerbung"
+                class="btn btn-primary"
+            >
+                Jetzt bewerben
+            </a>
+
+            <button
+                class="btn btn-secondary"
+                onclick="copyIP()"
+            >
+                Server-IP kopieren
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-card">
+
+        <div class="hero-card-title">
+
+            <strong>
+                SERVER STATUS
+            </strong>
+
+            <span class="server-online">
+                ● ONLINE
+            </span>
+
+        </div>
+
+        <div class="server-number">
+
+            <span id="players">
+                32
+            </span>/48
+
+        </div>
+
+        <div class="server-label">
+            Spieler online
+        </div>
+
+        <div class="progress">
+
+            <div id="progress"></div>
+
+        </div>
+
+        <div
+            style="
+            display:flex;
+            justify-content:space-between;
+            margin-top:18px;
+            color:#8994a7;
+            font-size:12px;
+            "
+        >
+
+            <span>
+                Frankfurt RP
+            </span>
+
+            <span>
+                Version 1.0
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FEATURES -->
+
+<section>
+
+    <div class="section-header">
+
+        <div class="section-label">
+            SERVER
+        </div>
+
+        <h2>
+            Warum DEIN RP?
+        </h2>
+
+        <p>
+            Wir verbinden ernsthaftes Roleplay mit
+            modernen Systemen und einer aktiven Community.
+        </p>
+
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+
+            <div class="card-icon">
+                👤
+            </div>
+
+            <h3>
+                Dein Charakter
+            </h3>
+
+            <p>
+                Erstelle deinen eigenen Charakter
+                und entwickle seine Geschichte.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-icon">
+                🚨
+            </div>
+
+            <h3>
+                Realistisches RP
+            </h3>
+
+            <p>
+                Polizei, Feuerwehr, Rettungsdienst
+                und zivile Berufe sorgen für abwechslungsreiches RP.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-icon">
+                🌐
+            </div>
+
+            <h3>
+                Aktive Community
+            </h3>
+
+            <p>
+                Events, Fraktionen und eine Community,
+                in der dein Roleplay zählt.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FRAKTIONEN -->
+
+<section id="fraktionen">
+
+    <div class="section-header">
+
+        <div class="section-label">
+            FRAKTIONEN
+        </div>
+
+        <h2>
+            Finde deinen Platz
+        </h2>
+
+        <p>
+            Entscheide selbst, welche Rolle du in der Stadt
+            übernehmen möchtest.
+        </p>
+
+    </div>
+
+    <div class="cards">
+
+        <div class="card faction">
+
+            <div>
+
+                <div class="card-icon">
+                    🚓
+                </div>
+
+                <span class="faction-tag">
+                    STAATLICH
+                </span>
+
+                <h3 style="margin-top:12px;">
+                    Polizei
+                </h3>
+
+                <p>
+                    Sorge für Sicherheit und Ordnung
+                    in der Stadt.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card faction">
+
+            <div>
+
+                <div class="card-icon">
+                    🚒
+                </div>
+
+                <span class="faction-tag">
+                    STAATLICH
+                </span>
+
+                <h3 style="margin-top:12px;">
+                    Feuerwehr
+                </h3>
+
+                <p>
+                    Brände, technische Hilfeleistungen
+                    und spannende Einsätze.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card faction">
+
+            <div>
+
+                <div class="card-icon">
+                    🚑
+                </div>
+
+                <span class="faction-tag">
+                    STAATLICH
+                </span>
+
+                <h3 style="margin-top:12px;">
+                    Rettungsdienst
+                </h3>
+
+                <p>
+                    Versorge verletzte Personen und
+                    bringe Patienten sicher ins Krankenhaus.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- STATS -->
+
+<section>
+
+    <div class="stats">
+
+        <div class="stat">
+
+            <strong>
+                24/7
+            </strong>
+
+            <span>
+                Serverbetrieb
+            </span>
+
+        </div>
+
+        <div class="stat">
+
+            <strong>
+                48
+            </strong>
+
+            <span>
+                Slots
+            </span>
+
+        </div>
+
+        <div class="stat">
+
+            <strong>
+                6+
+            </strong>
+
+            <span>
+                Berufe
+            </span>
+
+        </div>
+
+        <div class="stat">
+
+            <strong>
+                1
+            </strong>
+
+            <span>
+                Community
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- NEWS -->
+
+<section id="news">
+
+    <div class="section-header">
+
+        <div class="section-label">
+            NEWS
+        </div>
+
+        <h2>
+            Neuigkeiten
+        </h2>
+
+        <p>
+            Was passiert aktuell auf unserem Server?
+        </p>
+
+    </div>
+
+    <div class="news">
+
+        <article class="card news-card large">
+
+            <div class="news-content">
+
+                <div class="news-date">
+                    07.10.2026
+                </div>
+
+                <h3>
+                    Willkommen auf DEIN RP
+                </h3>
+
+                <p>
+                    Unser neuer Roleplay Server startet
+                    und wartet auf seine ersten Spieler.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <article class="card news-card">
+
+            <div class="news-content">
+
+                <div class="news-date">
+                    UPDATE
+                </div>
+
+                <h3>
+                    Neues Fraktionssystem
+                </h3>
+
+                <p>
+                    Polizei, Feuerwehr und Rettungsdienst
+                    werden laufend erweitert.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <article class="card news-card">
+
+            <div class="news-content">
+
+                <div class="news-date">
+                    COMMUNITY
+                </div>
+
+                <h3>
+                    Discord Community
+                </h3>
+
+                <p>
+                    Tritt unserer Community bei und
+                    bleibe über alle Updates informiert.
+                </p>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- REGELN -->
+
+<section id="regeln">
+
+    <div class="section-header">
+
+        <div class="section-label">
+            REGELN
+        </div>
+
+        <h2>
+            Roleplay-Regeln
+        </h2>
+
+        <p>
+            Gutes RP funktioniert nur, wenn alle
+            Spieler fair miteinander umgehen.
+        </p>
+
+    </div>
+
+    <div class="rules">
+
+        <div class="rule">
+
+            <div class="rule-number">
+                01
+            </div>
+
+            <div>
+
+                <h3>
+                    Respekt
+                </h3>
+
+                <p>
+                    Behandle andere Spieler respektvoll.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="rule">
+
+            <div class="rule-number">
+                02
+            </div>
+
+            <div>
+
+                <h3>
+                    Roleplay
+                </h3>
+
+                <p>
+                    Bleibe möglichst in deiner Rolle.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="rule">
+
+            <div class="rule-number">
+                03
+            </div>
+
+            <div>
+
+                <h3>
+                    Kein Trolling
+                </h3>
+
+                <p>
+                    Absichtliches Stören des RP ist nicht erlaubt.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="rule">
+
+            <div class="rule-number">
+                04
+            </div>
+
+            <div>
+
+                <h3>
+                    Team respektieren
+                </h3>
+
+                <p>
+                    Entscheidungen des Teams sind zu respektieren.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- BEWERBUNG -->
+
+<div
+    class="cta"
+    id="bewerbung"
+>
+
+    <h2>
+        Bereit für dein RP?
+    </h2>
+
+    <p>
+        Erstelle deinen Charakter und werde Teil
+        unserer Community.
+    </p>
+
+    <button
+        class="btn btn-primary"
+        onclick="openApplication()"
+    >
+        Bewerbung starten
+    </button>
+
+</div>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <div>
+        © 2026 DEIN RP
+    </div>
+
+    <div class="footer-links">
+
+        <a href="#regeln">
+            Regeln
+        </a>
+
+        <a href="#">
+            Impressum
+        </a>
+
+        <a href="#">
+            Datenschutz
+        </a>
+
+        <a href="#">
+            Discord
+        </a>
+
+    </div>
+
+</footer>
+
+
+<!-- LOGIN -->
+
+<div
+    class="modal"
+    id="loginModal"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>
+                Spieler Login
+            </h2>
+
+            <button
+                onclick="closeModal('loginModal')"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+                E-Mail
+            </label>
+
+            <input
+                id="loginEmail"
+                type="email"
+                placeholder="name@example.de"
+            >
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+                Passwort
+            </label>
+
+            <input
+                id="loginPassword"
+                type="password"
+                placeholder="••••••••"
+            >
+
+        </div>
+
+        <button
+            class="btn btn-primary"
+            style="width:100%;"
+            onclick="login()"
+        >
+            Einloggen
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- BEWERBUNG -->
+
+<div
+    class="modal"
+    id="applicationModal"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>
+                Whitelist Bewerbung
+            </h2>
+
+            <button
+                onclick="closeModal('applicationModal')"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+                Dein Name
+            </label>
+
+            <input
+                id="applicationName"
+                placeholder="Vorname Nachname"
+            >
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+                Discord
+            </label>
+
+            <input
+                id="applicationDiscord"
+                placeholder="username"
+            >
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+                Warum möchtest du bei uns spielen?
+            </label>
+
+            <textarea
+                id="applicationReason"
+                placeholder="Schreibe etwas über dich..."
+            ></textarea>
+
+        </div>
+
+        <button
+            class="btn btn-primary"
+            style="width:100%;"
+            onclick="sendApplication()"
+        >
+            Bewerbung absenden
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const SERVER_IP =
+    "DEINE-SERVER-IP:30120";
+
+
+/* LOGIN */
+
+function openLogin() {
+
+    document
+        .getElementById("loginModal")
+        .classList.add("active");
+
+}
+
+function login() {
+
+    const email =
+        document.getElementById(
+            "loginEmail"
+        ).value;
+
+    const password =
+        document.getElementById(
+            "loginPassword"
+        ).value;
+
+    if (!email || !password) {
+
+        alert(
+            "Bitte E-Mail und Passwort eingeben."
+        );
+
+        return;
+    }
+
+    alert(
+        "Login-Demo erfolgreich."
+    );
+}
+
+
+/* MODAL */
+
+function closeModal(id) {
+
+    document
+        .getElementById(id)
+        .classList.remove("active");
+
+}
+
+function openApplication() {
+
+    document
+        .getElementById("applicationModal")
+        .classList.add("active");
+
+}
+
+
+/* BEWERBUNG */
+
+function sendApplication() {
+
+    const name =
+        document.getElementById(
+            "applicationName"
+        ).value;
+
+    const discord =
+        document.getElementById(
+            "applicationDiscord"
+        ).value;
+
+    const reason =
+        document.getElementById(
+            "applicationReason"
+        ).value;
+
+    if (
+        !name ||
+        !discord ||
+        !reason
+    ) {
+
+        alert(
+            "Bitte fülle alle Felder aus."
+        );
+
+        return;
+    }
+
+    alert(
+        "Bewerbung erfolgreich vorbereitet."
+    );
+
+    closeModal(
+        "applicationModal"
+    );
+
+}
+
+
+/* SERVER IP */
+
+function copyIP() {
+
+    navigator
+        .clipboard
+        .writeText(SERVER_IP)
+        .then(() => {
+
+            alert(
+                "Server-IP wurde kopiert!"
+            );
+
+        });
+
+}
+
+
+/* SERVER STATUS */
+
+function updateServerStatus() {
+
+    const players =
+        Math.floor(
+            Math.random() * 17
+        ) + 25;
+
+    document
+        .getElementById("players")
+        .innerText = players;
+
+    const percentage =
+        (players / 48) * 100;
+
+    document
+        .getElementById("progress")
+        .style.width =
+            percentage + "%";
+
+}
+
+setInterval(
+    updateServerStatus,
+    10000
+);
+
+
+/* MOBILE */
+
+function mobileMenu() {
+
+    alert(
+        "Mobile Navigation kann als nächster Schritt erweitert werden."
+    );
+
+}
+
+
+/* MODAL AUSSEN KLICK */
+
+document
+    .querySelectorAll(".modal")
+    .forEach(modal => {
+
+        modal.addEventListener(
+            "click",
+            event => {
+
+                if (
+                    event.target === modal
+                ) {
+
+                    modal.classList.remove(
+                        "active"
+                    );
+
+                }
+
+            }
+        );
+
+    });
+
+</script>
+
+</body>
+</html>
