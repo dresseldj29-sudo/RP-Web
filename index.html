@@ -2,18 +2,31 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-<title>GameRP | Admin Panel</title>
-
-<meta name="theme-color" content="#070b12">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NovaRP — FiveM Roleplay</title>
 
 <style>
+:root{
+    --bg:#070b12;
+    --bg2:#0c111b;
+    --card:rgba(17,24,38,.82);
+    --card2:#111a29;
+    --line:rgba(255,255,255,.09);
+    --text:#f5f7fb;
+    --muted:#8f9bad;
+    --accent:#6d5dfc;
+    --accent2:#8b7cff;
+    --green:#26d07c;
+    --red:#ff5364;
+    --orange:#ffb84d;
+    --blue:#45a7ff;
+    --shadow:0 20px 60px rgba(0,0,0,.35);
+}
 
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
 }
 
 html{
@@ -22,17 +35,11 @@ html{
 
 body{
     font-family:Inter,Segoe UI,Arial,sans-serif;
-
     background:
-        radial-gradient(
-            circle at 10% 0%,
-            rgba(37,99,235,.15),
-            transparent 30%
-        ),
-        #070b12;
-
-    color:#fff;
-
+        radial-gradient(circle at 15% 10%,rgba(109,93,252,.18),transparent 30%),
+        radial-gradient(circle at 85% 20%,rgba(69,167,255,.12),transparent 28%),
+        var(--bg);
+    color:var(--text);
     min-height:100vh;
 }
 
@@ -47,4584 +54,3188 @@ button{
     cursor:pointer;
 }
 
-.hidden{
-    display:none!important;
+a{
+    color:inherit;
+    text-decoration:none;
 }
 
-/* =========================================
-   SIDEBAR
-========================================= */
+/* =========================
+   HEADER
+========================= */
 
-.sidebar{
-
+.header{
     position:fixed;
-
     top:0;
     left:0;
-    bottom:0;
-
-    width:260px;
-
-    padding:24px 16px;
-
-    background:
-        rgba(10,15,23,.96);
-
-    border-right:
-        1px solid rgba(255,255,255,.07);
-
+    right:0;
+    height:74px;
     z-index:1000;
+    background:rgba(7,11,18,.78);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid var(--line);
+}
 
-    overflow-y:auto;
+.nav{
+    max-width:1400px;
+    height:100%;
+    margin:auto;
+    padding:0 24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 }
 
 .logo{
-
     display:flex;
     align-items:center;
-
     gap:12px;
-
-    padding:0 10px 25px;
-
-    border-bottom:
-        1px solid rgba(255,255,255,.07);
-
-    margin-bottom:25px;
-}
-
-.logo-box{
-
-    width:42px;
-    height:42px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:13px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #2563eb,
-            #60a5fa
-        );
-
     font-weight:900;
-
-    box-shadow:
-        0 0 30px rgba(37,99,235,.3);
-}
-
-.logo-text strong{
-    display:block;
-    font-size:18px;
-}
-
-.logo-text small{
-    color:#718096;
-    font-size:11px;
-}
-
-.menu-title{
-
-    color:#526174;
-
-    font-size:10px;
-    font-weight:900;
-
-    letter-spacing:1px;
-
-    padding:0 10px;
-
-    margin:
-        22px 0 9px;
-}
-
-.nav-button{
-
-    width:100%;
-
-    display:flex;
-    align-items:center;
-
-    gap:12px;
-
-    padding:12px;
-
-    margin-bottom:5px;
-
-    border:0;
-
-    border-radius:10px;
-
-    color:#8996a9;
-
-    background:transparent;
-
-    text-align:left;
-
-    transition:.2s;
-}
-
-.nav-button:hover{
-
-    color:white;
-
-    background:
-        rgba(255,255,255,.05);
-}
-
-.nav-button.active{
-
-    color:white;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(37,99,235,.22),
-            rgba(37,99,235,.05)
-        );
-
-    border:
-        1px solid rgba(59,130,246,.15);
-}
-
-.nav-icon{
-    width:25px;
-    text-align:center;
-}
-
-.sidebar-bottom{
-
-    position:absolute;
-
-    left:16px;
-    right:16px;
-    bottom:20px;
-}
-
-.user-mini{
-
-    display:flex;
-    align-items:center;
-
-    gap:10px;
-
-    padding:12px;
-
-    border-radius:12px;
-
-    background:
-        rgba(255,255,255,.035);
-
-    border:
-        1px solid rgba(255,255,255,.06);
-}
-
-.avatar{
-
-    width:36px;
-    height:36px;
-
-    border-radius:10px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    background:#2563eb;
-
-    font-weight:900;
-}
-
-.user-mini-text{
-    min-width:0;
-}
-
-.user-mini-text strong{
-
-    display:block;
-
-    font-size:13px;
-
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-}
-
-.user-mini-text small{
-    color:#64748b;
-}
-
-/* =========================================
-   MAIN
-========================================= */
-
-.main{
-
-    margin-left:260px;
-
-    min-height:100vh;
-
-    padding:30px 35px;
-}
-
-/* =========================================
-   TOPBAR
-========================================= */
-
-.topbar{
-
-    min-height:70px;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    gap:20px;
-
-    margin-bottom:30px;
-
-    padding-bottom:20px;
-
-    border-bottom:
-        1px solid rgba(255,255,255,.07);
-}
-
-.page-title h1{
-
-    font-size:27px;
-
-    margin-bottom:4px;
-}
-
-.page-title p{
-
-    color:#718096;
-
-    font-size:13px;
-}
-
-.top-actions{
-
-    display:flex;
-    align-items:center;
-
-    gap:10px;
-}
-
-.role-badge{
-
-    padding:8px 12px;
-
-    border-radius:999px;
-
-    font-size:11px;
-    font-weight:900;
-
-    background:
-        rgba(37,99,235,.12);
-
-    color:#60a5fa;
-
-    border:
-        1px solid rgba(59,130,246,.2);
-}
-
-.owner-badge{
-
-    background:
-        rgba(168,85,247,.12);
-
-    color:#c084fc;
-
-    border-color:
-        rgba(168,85,247,.2);
-}
-
-/* =========================================
-   BUTTONS
-========================================= */
-
-.btn{
-
-    border:0;
-
-    border-radius:10px;
-
-    padding:11px 16px;
-
-    font-weight:800;
-
-    transition:.2s;
-}
-
-.btn:hover{
-    transform:translateY(-2px);
-}
-
-.btn-primary{
-
-    color:white;
-
-    background:
-        linear-gradient(
-            135deg,
-            #2563eb,
-            #3b82f6
-        );
-}
-
-.btn-secondary{
-
-    color:#fff;
-
-    background:
-        rgba(255,255,255,.05);
-
-    border:
-        1px solid rgba(255,255,255,.08);
-}
-
-.btn-danger{
-
-    color:white;
-
-    background:#dc2626;
-}
-
-.btn-success{
-
-    color:white;
-
-    background:#16a34a;
-}
-
-.btn-warning{
-
-    color:#111;
-
-    background:#f59e0b;
-}
-
-/* =========================================
-   CONTENT
-========================================= */
-
-.page{
-    display:none;
-}
-
-.page.active{
-    display:block;
-}
-
-/* =========================================
-   CARDS
-========================================= */
-
-.card{
-
-    background:
-        rgba(16,23,33,.88);
-
-    border:
-        1px solid rgba(255,255,255,.07);
-
-    border-radius:18px;
-
-    padding:23px;
-
-    margin-bottom:18px;
-}
-
-.card-header{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    gap:15px;
-
-    margin-bottom:20px;
-}
-
-.card-header h2{
-
-    font-size:18px;
-}
-
-.card-header p{
-
-    color:#718096;
-
-    font-size:12px;
-
-    margin-top:4px;
-}
-
-/* =========================================
-   DASHBOARD
-========================================= */
-
-.stats{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(4,1fr);
-
-    gap:15px;
-
-    margin-bottom:20px;
-}
-
-.stat-card{
-
-    padding:22px;
-
-    border-radius:16px;
-
-    background:
-        rgba(16,23,33,.88);
-
-    border:
-        1px solid rgba(255,255,255,.07);
-}
-
-.stat-top{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin-bottom:17px;
-}
-
-.stat-icon{
-
-    width:42px;
-    height:42px;
-
-    border-radius:12px;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    background:
-        rgba(59,130,246,.10);
-
     font-size:20px;
 }
 
-.stat-card small{
-
-    color:#68778c;
-
-    font-size:12px;
-}
-
-.stat-card strong{
-
-    display:block;
-
-    font-size:32px;
-
-    margin-top:5px;
-}
-
-.dashboard-grid{
-
+.logoIcon{
+    width:40px;
+    height:40px;
+    border-radius:12px;
     display:grid;
-
-    grid-template-columns:
-        1.4fr .6fr;
-
-    gap:18px;
+    place-items:center;
+    background:linear-gradient(135deg,var(--accent),#3c8cff);
+    box-shadow:0 8px 30px rgba(109,93,252,.35);
 }
 
-/* =========================================
-   SERVER STATUS
-========================================= */
-
-.server-status-card{
-
+.navLinks{
     display:flex;
-
+    gap:8px;
     align-items:center;
-
-    gap:15px;
-
-    padding:18px;
-
-    border-radius:14px;
-
-    background:
-        rgba(34,197,94,.04);
-
-    border:
-        1px solid rgba(34,197,94,.12);
 }
 
-.status-light{
-
-    width:12px;
-    height:12px;
-
-    border-radius:50%;
-
-    background:#22c55e;
-
-    box-shadow:
-        0 0 18px #22c55e;
-}
-
-.status-light.offline{
-
-    background:#ef4444;
-
-    box-shadow:
-        0 0 18px #ef4444;
-}
-
-.status-info strong{
-    display:block;
-}
-
-.status-info small{
-    color:#718096;
-}
-
-/* =========================================
-   FORM
-========================================= */
-
-.form-grid{
-
-    display:grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap:15px;
-}
-
-.form-group{
-    margin-bottom:15px;
-}
-
-.form-group.full{
-    grid-column:
-        1 / -1;
-}
-
-.form-group label{
-
-    display:block;
-
-    color:#aab6c6;
-
-    font-size:12px;
-
-    font-weight:700;
-
-    margin-bottom:7px;
-}
-
-.form-group input,
-.form-group textarea,
-.form-group select{
-
-    width:100%;
-
-    padding:12px 13px;
-
+.navLinks button{
+    border:0;
+    background:transparent;
+    color:var(--muted);
+    padding:10px 14px;
     border-radius:10px;
+    transition:.2s;
+}
 
-    outline:none;
-
+.navLinks button:hover{
+    background:rgba(255,255,255,.06);
     color:white;
-
-    background:#080d14;
-
-    border:
-        1px solid rgba(255,255,255,.08);
 }
 
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus{
-
-    border-color:#3b82f6;
-}
-
-.form-group textarea{
-
-    min-height:130px;
-
-    resize:vertical;
-}
-
-.form-actions{
-
+.headerActions{
     display:flex;
-
-    gap:10px;
-
-    flex-wrap:wrap;
+    gap:8px;
 }
 
-/* =========================================
-   TABLE
-========================================= */
-
-.table-wrapper{
-
-    width:100%;
-
-    overflow-x:auto;
+.btn{
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.05);
+    color:white;
+    padding:11px 16px;
+    border-radius:11px;
+    transition:.2s;
+    font-weight:700;
 }
 
-table{
-
-    width:100%;
-
-    border-collapse:collapse;
-
-    min-width:700px;
+.btn:hover{
+    transform:translateY(-1px);
+    background:rgba(255,255,255,.09);
 }
 
-th{
-
-    color:#68778c;
-
-    font-size:11px;
-
-    text-transform:uppercase;
-
-    letter-spacing:.5px;
-
-    text-align:left;
-
-    padding:13px;
-
-    border-bottom:
-        1px solid rgba(255,255,255,.07);
+.btn.primary{
+    border:0;
+    background:linear-gradient(135deg,var(--accent),#477cff);
+    box-shadow:0 10px 30px rgba(109,93,252,.22);
 }
 
-td{
+.btn.success{
+    background:rgba(38,208,124,.12);
+    color:#62e59e;
+    border-color:rgba(38,208,124,.2);
+}
 
-    padding:15px 13px;
+.btn.danger{
+    background:rgba(255,83,100,.12);
+    color:#ff7785;
+    border-color:rgba(255,83,100,.2);
+}
 
-    color:#c2ccda;
-
-    border-bottom:
-        1px solid rgba(255,255,255,.05);
-
+.btn.small{
+    padding:8px 11px;
     font-size:13px;
 }
 
-tr:hover td{
+/* =========================
+   HERO
+========================= */
 
-    background:
-        rgba(255,255,255,.018);
+.hero{
+    min-height:720px;
+    padding:150px 24px 80px;
+    display:flex;
+    align-items:center;
 }
 
-.status-badge{
+.heroInner{
+    width:100%;
+    max-width:1400px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    gap:50px;
+    align-items:center;
+}
 
-    display:inline-block;
-
-    padding:5px 9px;
-
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:rgba(109,93,252,.12);
+    border:1px solid rgba(109,93,252,.22);
+    color:#b5adff;
+    padding:8px 12px;
     border-radius:999px;
+    font-size:13px;
+    font-weight:800;
+}
 
-    font-size:10px;
+.statusDot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 15px var(--green);
+}
 
+.hero h1{
+    margin-top:20px;
+    font-size:clamp(48px,7vw,92px);
+    line-height:.95;
+    letter-spacing:-4px;
+}
+
+.gradientText{
+    background:linear-gradient(90deg,#fff,#8f82ff,#54a9ff);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.hero p{
+    color:var(--muted);
+    max-width:680px;
+    font-size:18px;
+    line-height:1.7;
+    margin:25px 0;
+}
+
+.heroButtons{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.heroStats{
+    margin-top:35px;
+    display:flex;
+    gap:35px;
+}
+
+.heroStat strong{
+    display:block;
+    font-size:25px;
+}
+
+.heroStat span{
+    color:var(--muted);
+    font-size:13px;
+}
+
+.serverCard{
+    background:linear-gradient(145deg,rgba(21,29,45,.95),rgba(9,14,24,.92));
+    border:1px solid var(--line);
+    border-radius:28px;
+    padding:26px;
+    box-shadow:var(--shadow);
+    position:relative;
+    overflow:hidden;
+}
+
+.serverCard:before{
+    content:"";
+    position:absolute;
+    width:260px;
+    height:260px;
+    right:-100px;
+    top:-100px;
+    background:var(--accent);
+    filter:blur(100px);
+    opacity:.22;
+}
+
+.serverTop{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.online{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:#65e59c;
+    font-size:13px;
+    font-weight:800;
+}
+
+.serverName{
+    font-size:25px;
     font-weight:900;
 }
 
-.status-pending{
-
-    color:#fbbf24;
-
-    background:
-        rgba(245,158,11,.10);
+.playerNumber{
+    font-size:64px;
+    font-weight:900;
+    margin:20px 0 5px;
 }
 
-.status-approved{
-
-    color:#4ade80;
-
-    background:
-        rgba(34,197,94,.10);
+.progress{
+    height:8px;
+    background:rgba(255,255,255,.07);
+    border-radius:20px;
+    overflow:hidden;
 }
 
-.status-rejected{
-
-    color:#f87171;
-
-    background:
-        rgba(239,68,68,.10);
+.progress span{
+    display:block;
+    height:100%;
+    width:62%;
+    background:linear-gradient(90deg,var(--accent),#42a8ff);
+    border-radius:20px;
 }
 
-/* =========================================
-   ACCESS DENIED
-========================================= */
+.serverDetails{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:22px;
+}
 
-.access-denied{
+.serverDetail{
+    padding:14px;
+    background:rgba(255,255,255,.035);
+    border:1px solid var(--line);
+    border-radius:13px;
+}
 
-    min-height:
-        calc(100vh - 150px);
+.serverDetail small{
+    color:var(--muted);
+    display:block;
+    margin-bottom:5px;
+}
 
+/* =========================
+   SECTIONS
+========================= */
+
+.section{
+    max-width:1400px;
+    margin:auto;
+    padding:90px 24px;
+}
+
+.sectionTitle{
+    margin-bottom:35px;
+}
+
+.sectionTitle span{
+    color:var(--accent2);
+    font-weight:800;
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+}
+
+.sectionTitle h2{
+    font-size:42px;
+    margin-top:8px;
+}
+
+.sectionTitle p{
+    color:var(--muted);
+    margin-top:8px;
+}
+
+.grid{
+    display:grid;
+    gap:18px;
+}
+
+.grid3{
+    grid-template-columns:repeat(3,1fr);
+}
+
+.grid4{
+    grid-template-columns:repeat(4,1fr);
+}
+
+.card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:24px;
+    box-shadow:0 12px 40px rgba(0,0,0,.15);
+}
+
+.featureIcon{
+    width:48px;
+    height:48px;
+    display:grid;
+    place-items:center;
+    border-radius:14px;
+    background:rgba(109,93,252,.12);
+    font-size:23px;
+    margin-bottom:18px;
+}
+
+.card h3{
+    margin-bottom:9px;
+}
+
+.card p{
+    color:var(--muted);
+    line-height:1.6;
+}
+
+/* =========================
+   FACTIONS
+========================= */
+
+.factionCard{
+    min-height:260px;
+    position:relative;
+    overflow:hidden;
+}
+
+.factionIcon{
+    font-size:40px;
+    margin-bottom:20px;
+}
+
+.factionTag{
+    display:inline-block;
+    margin-top:18px;
+    padding:6px 9px;
+    border-radius:8px;
+    background:rgba(255,255,255,.06);
+    color:var(--muted);
+    font-size:12px;
+}
+
+.factionCard button{
+    margin-top:20px;
+}
+
+/* =========================
+   NEWS
+========================= */
+
+.newsCard{
+    min-height:190px;
+}
+
+.newsCategory{
+    color:#9b91ff;
+    font-size:12px;
+    font-weight:900;
+    text-transform:uppercase;
+}
+
+.newsCard h3{
+    margin:10px 0;
+}
+
+/* =========================
+   RULES
+========================= */
+
+.rule{
     display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    text-align:center;
+    gap:16px;
+    padding:18px 0;
+    border-bottom:1px solid var(--line);
 }
 
-.access-icon{
+.rule:last-child{
+    border-bottom:0;
+}
 
-    width:80px;
-    height:80px;
+.ruleNumber{
+    width:32px;
+    height:32px;
+    border-radius:10px;
+    display:grid;
+    place-items:center;
+    background:rgba(109,93,252,.15);
+    color:#aaa2ff;
+    font-weight:900;
+}
 
-    margin:0 auto 20px;
+/* =========================
+   MODALS
+========================= */
 
-    border-radius:22px;
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.72);
+    backdrop-filter:blur(12px);
+    z-index:3000;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
 
+.modal.active{
+    display:flex;
+}
+
+.modalBox{
+    width:min(650px,100%);
+    max-height:90vh;
+    overflow:auto;
+    background:#0d1420;
+    border:1px solid var(--line);
+    border-radius:24px;
+    padding:28px;
+    box-shadow:0 30px 100px rgba(0,0,0,.5);
+}
+
+.modalHeader{
     display:flex;
     align-items:center;
-    justify-content:center;
-
-    font-size:35px;
-
-    background:
-        rgba(239,68,68,.1);
-
-    border:
-        1px solid rgba(239,68,68,.2);
+    justify-content:space-between;
+    margin-bottom:24px;
 }
 
-/* =========================================
+.close{
+    width:38px;
+    height:38px;
+    border-radius:10px;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.05);
+    color:white;
+}
+
+.formGrid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+}
+
+.formGroup{
+    margin-bottom:15px;
+}
+
+.formGroup.full{
+    grid-column:1/-1;
+}
+
+.formGroup label{
+    display:block;
+    color:#c6ccd7;
+    font-size:13px;
+    margin-bottom:7px;
+    font-weight:700;
+}
+
+.formGroup input,
+.formGroup textarea,
+.formGroup select{
+    width:100%;
+    padding:13px 14px;
+    background:#080e17;
+    border:1px solid var(--line);
+    color:white;
+    outline:none;
+    border-radius:11px;
+}
+
+.formGroup textarea{
+    min-height:120px;
+    resize:vertical;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus,
+.formGroup select:focus{
+    border-color:rgba(109,93,252,.65);
+}
+
+.discordBox{
+    background:rgba(88,101,242,.1);
+    border:1px solid rgba(88,101,242,.25);
+    padding:16px;
+    border-radius:13px;
+    margin:10px 0 20px;
+}
+
+.discordBox strong{
+    color:#9da5ff;
+}
+
+.applicationResult{
+    display:none;
+    margin-top:18px;
+    padding:18px;
+    background:rgba(38,208,124,.08);
+    border:1px solid rgba(38,208,124,.2);
+    border-radius:13px;
+}
+
+.applicationResult.show{
+    display:block;
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+.loginInfo{
+    padding:14px;
+    border-radius:12px;
+    background:rgba(255,255,255,.04);
+    color:var(--muted);
+    margin-bottom:18px;
+    line-height:1.6;
+}
+
+/* =========================
+   ADMIN
+========================= */
+
+#adminPanel{
+    display:none;
+}
+
+.adminLayout{
+    display:grid;
+    grid-template-columns:250px 1fr;
+    min-height:calc(100vh - 74px);
+}
+
+.adminSidebar{
+    border-right:1px solid var(--line);
+    background:#080d16;
+    padding:25px 15px;
+}
+
+.adminSidebar h3{
+    padding:10px;
+    margin-bottom:15px;
+}
+
+.adminNav button{
+    display:block;
+    width:100%;
+    text-align:left;
+    border:0;
+    background:transparent;
+    color:var(--muted);
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:4px;
+}
+
+.adminNav button:hover,
+.adminNav button.active{
+    color:white;
+    background:rgba(109,93,252,.14);
+}
+
+.adminMain{
+    padding:35px;
+    overflow:auto;
+}
+
+.adminPage{
+    display:none;
+}
+
+.adminPage.active{
+    display:block;
+}
+
+.statsGrid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+    margin-bottom:25px;
+}
+
+.statCard{
+    padding:20px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:17px;
+}
+
+.statCard small{
+    color:var(--muted);
+}
+
+.statCard strong{
+    display:block;
+    font-size:30px;
+    margin-top:8px;
+}
+
+.tableWrap{
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,
+td{
+    padding:14px 12px;
+    text-align:left;
+    border-bottom:1px solid var(--line);
+}
+
+th{
+    color:var(--muted);
+    font-size:12px;
+    text-transform:uppercase;
+}
+
+.status{
+    display:inline-flex;
+    padding:5px 9px;
+    border-radius:7px;
+    font-size:11px;
+    font-weight:800;
+}
+
+.status.pending{
+    background:rgba(255,184,77,.12);
+    color:#ffc96e;
+}
+
+.status.approved{
+    background:rgba(38,208,124,.12);
+    color:#65e59c;
+}
+
+.status.rejected{
+    background:rgba(255,83,100,.12);
+    color:#ff7585;
+}
+
+.adminForm{
+    max-width:800px;
+}
+
+.adminFormGrid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+}
+
+.ownerOnly{
+    display:none;
+}
+
+.adminOnly{
+    display:block;
+}
+
+/* =========================
    TOAST
-========================================= */
+========================= */
 
 .toast{
-
     position:fixed;
-
-    right:25px;
-    bottom:25px;
-
+    right:20px;
+    bottom:20px;
     z-index:5000;
-
-    max-width:400px;
-
-    padding:15px 18px;
-
-    border-radius:12px;
-
-    background:#151e2b;
-
-    border:
-        1px solid rgba(255,255,255,.08);
-
-    box-shadow:
-        0 20px 60px rgba(0,0,0,.4);
-
+    background:#111a28;
+    border:1px solid var(--line);
+    border-radius:13px;
+    padding:14px 18px;
+    box-shadow:var(--shadow);
+    transform:translateY(30px);
     opacity:0;
-
-    transform:translateY(100px);
-
-    transition:.3s;
+    pointer-events:none;
+    transition:.25s;
 }
 
 .toast.show{
-
-    opacity:1;
-
     transform:translateY(0);
+    opacity:1;
 }
 
-/* =========================================
-   MOBILE
-========================================= */
+/* =========================
+   FOOTER
+========================= */
 
-.mobile-menu{
-
-    display:none;
-
-    border:0;
-
-    color:white;
-
-    background:transparent;
-
-    font-size:24px;
+footer{
+    border-top:1px solid var(--line);
+    padding:35px 24px;
+    color:var(--muted);
 }
 
-@media(max-width:1100px){
+.footerInner{
+    max-width:1400px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+}
 
-    .stats{
+/* =========================
+   RESPONSIVE
+========================= */
 
-        grid-template-columns:
-            repeat(2,1fr);
-    }
-
-    .dashboard-grid{
-
+@media(max-width:1000px){
+    .heroInner{
         grid-template-columns:1fr;
     }
+
+    .grid4{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .statsGrid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .navLinks{
+        display:none;
+    }
 }
 
-@media(max-width:850px){
-
-    .sidebar{
-
-        transform:
-            translateX(-100%);
-
-        transition:.25s;
+@media(max-width:750px){
+    .hero{
+        padding-top:120px;
     }
 
-    .sidebar.open{
-
-        transform:
-            translateX(0);
+    .hero h1{
+        letter-spacing:-2px;
     }
 
-    .main{
+    .grid3,
+    .grid4{
+        grid-template-columns:1fr;
+    }
 
-        margin-left:0;
+    .formGrid,
+    .adminFormGrid{
+        grid-template-columns:1fr;
+    }
 
+    .adminLayout{
+        grid-template-columns:1fr;
+    }
+
+    .adminSidebar{
+        border-right:0;
+        border-bottom:1px solid var(--line);
+    }
+
+    .adminMain{
         padding:20px;
     }
 
-    .mobile-menu{
-
-        display:block;
+    .statsGrid{
+        grid-template-columns:1fr 1fr;
     }
 
-    .form-grid{
-
-        grid-template-columns:1fr;
-    }
-
-    .form-group.full{
-
-        grid-column:auto;
-    }
-
-    .topbar{
-
-        align-items:flex-start;
-    }
-}
-
-@media(max-width:600px){
-
-    .stats{
-
-        grid-template-columns:1fr;
-    }
-
-    .topbar{
-
+    .footerInner{
         flex-direction:column;
     }
-
-    .top-actions{
-
-        width:100%;
-
-        justify-content:space-between;
-    }
 }
 
+@media(max-width:500px){
+    .headerActions .btn:first-child{
+        display:none;
+    }
+
+    .heroStats{
+        gap:18px;
+        flex-wrap:wrap;
+    }
+
+    .statsGrid{
+        grid-template-columns:1fr;
+    }
+}
 </style>
 </head>
 
 <body>
 
-
 <!-- =====================================================
-     SIDEBAR
+     PUBLIC HEADER
 ===================================================== -->
 
-<aside
-    id="sidebar"
-    class="sidebar"
->
+<header class="header">
+<nav class="nav">
 
-    <div class="logo">
+    <a href="#" class="logo" onclick="showPublic();return false;">
+        <div class="logoIcon">N</div>
+        <span id="siteLogoName">NovaRP</span>
+    </a>
 
-        <div class="logo-box">
-            G
-        </div>
-
-        <div class="logo-text">
-
-            <strong>
-                GameRP
-            </strong>
-
-            <small>
-                Administration
-            </small>
-
-        </div>
-
+    <div class="navLinks">
+        <button onclick="scrollToId('home')">Home</button>
+        <button onclick="scrollToId('features')">Features</button>
+        <button onclick="scrollToId('factions')">Fraktionen</button>
+        <button onclick="scrollToId('news')">News</button>
+        <button onclick="scrollToId('rules')">Regeln</button>
     </div>
 
-
-    <div class="menu-title">
-        ÜBERSICHT
+    <div class="headerActions">
+        <button class="btn" onclick="openLogin()">Login</button>
+        <button class="btn primary" onclick="openApplication()">Bewerben</button>
     </div>
 
-
-    <button
-        class="nav-button active"
-        data-page="dashboard"
-        onclick="showPage('dashboard')"
-    >
-
-        <span class="nav-icon">
-            📊
-        </span>
-
-        Dashboard
-
-    </button>
-
-
-    <button
-        class="nav-button"
-        data-page="whitelist"
-        onclick="showPage('whitelist')"
-    >
-
-        <span class="nav-icon">
-            📋
-        </span>
-
-        Whitelist
-
-    </button>
-
-
-    <!-- OWNER ONLY -->
-
-    <div
-        id="ownerMenu"
-        class="owner-only"
-    >
-
-        <div class="menu-title">
-            SERVER
-        </div>
-
-
-        <button
-            class="nav-button"
-            data-page="server"
-            onclick="showPage('server')"
-        >
-
-            <span class="nav-icon">
-                🖥️
-            </span>
-
-            Server
-
-        </button>
-
-
-        <button
-            class="nav-button"
-            data-page="players"
-            onclick="showPage('players')"
-        >
-
-            <span class="nav-icon">
-                👥
-            </span>
-
-            Spieler
-
-        </button>
-
-
-        <button
-            class="nav-button"
-            data-page="factions"
-            onclick="showPage('factions')"
-        >
-
-            <span class="nav-icon">
-                🚓
-            </span>
-
-            Fraktionen
-
-        </button>
-
-
-        <div class="menu-title">
-            WEBSITE
-        </div>
-
-
-        <button
-            class="nav-button"
-            data-page="news"
-            onclick="showPage('news')"
-        >
-
-            <span class="nav-icon">
-                📰
-            </span>
-
-            News
-
-        </button>
-
-
-        <button
-            class="nav-button"
-            data-page="settings"
-            onclick="showPage('settings')"
-        >
-
-            <span class="nav-icon">
-                ⚙️
-            </span>
-
-            Einstellungen
-
-        </button>
-
-
-        <div class="menu-title">
-            ADMINISTRATION
-        </div>
-
-
-        <button
-            class="nav-button"
-            data-page="admins"
-            onclick="showPage('admins')"
-        >
-
-            <span class="nav-icon">
-                🛡️
-            </span>
-
-            Admins
-
-        </button>
-
-    </div>
-
-
-    <div class="sidebar-bottom">
-
-        <div class="user-mini">
-
-            <div
-                id="avatar"
-                class="avatar"
-            >
-                A
-            </div>
-
-            <div class="user-mini-text">
-
-                <strong id="userEmail">
-                    -
-                </strong>
-
-                <small id="userRole">
-                    -
-                </small>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</aside>
+</nav>
+</header>
 
 
 <!-- =====================================================
-     MAIN
+     PUBLIC WEBSITE
 ===================================================== -->
 
-<main class="main">
+<main id="publicSite">
 
+<section class="hero" id="home">
+<div class="heroInner">
 
-    <div class="topbar">
+<div>
 
-        <div class="page-title">
-
-            <button
-                class="mobile-menu"
-                onclick="toggleSidebar()"
-            >
-                ☰
-            </button>
-
-            <h1 id="pageTitle">
-                Dashboard
-            </h1>
-
-            <p id="pageDescription">
-                Übersicht über deinen GameRP Server
-            </p>
-
-        </div>
-
-
-        <div class="top-actions">
-
-            <div
-                id="roleBadge"
-                class="role-badge"
-            >
-                ADMIN
-            </div>
-
-
-            <button
-                class="btn btn-secondary"
-                onclick="openWebsite()"
-            >
-                🌐 Website
-            </button>
-
-
-            <button
-                class="btn btn-danger"
-                onclick="logout()"
-            >
-                Abmelden
-            </button>
-
-        </div>
-
+    <div class="badge">
+        <span class="statusDot"></span>
+        <span id="heroStatus">SERVER ONLINE</span>
     </div>
 
+    <h1>
+        Deine Stadt.<br>
+        <span class="gradientText" id="heroTitle">
+            Deine Geschichte.
+        </span>
+    </h1>
 
-    <!-- =================================================
-         DASHBOARD
-    ================================================= -->
+    <p id="heroDescription">
+        Erlebe modernes FiveM Roleplay mit Polizei, Feuerwehr,
+        Rettungsdienst, Unternehmen und einer aktiven Community.
+    </p>
 
-    <section
-        id="page-dashboard"
-        class="page active"
-    >
+    <div class="heroButtons">
+        <button class="btn primary" onclick="openApplication()">
+            Fraktion beitreten
+        </button>
 
-        <div class="stats">
+        <button class="btn" onclick="copyServerIP()">
+            Server-IP kopieren
+        </button>
+    </div>
 
-            <div class="stat-card">
-
-                <div class="stat-top">
-
-                    <div class="stat-icon">
-                        👥
-                    </div>
-
-                </div>
-
-                <small>
-                    Spieler online
-                </small>
-
-                <strong id="dashboardPlayers">
-                    0
-                </strong>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <div class="stat-top">
-
-                    <div class="stat-icon">
-                        📋
-                    </div>
-
-                </div>
-
-                <small>
-                    Offene Whitelists
-                </small>
-
-                <strong id="dashboardWhitelist">
-                    0
-                </strong>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <div class="stat-top">
-
-                    <div class="stat-icon">
-                        ⚡
-                    </div>
-
-                </div>
-
-                <small>
-                    Aktive Einsätze
-                </small>
-
-                <strong id="dashboardJobs">
-                    0
-                </strong>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <div class="stat-top">
-
-                    <div class="stat-icon">
-                        📡
-                    </div>
-
-                </div>
-
-                <small>
-                    Server Ping
-                </small>
-
-                <strong id="dashboardPing">
-                    --
-                </strong>
-
-            </div>
-
+    <div class="heroStats">
+        <div class="heroStat">
+            <strong id="heroPlayers">0</strong>
+            <span>Spieler online</span>
         </div>
 
-
-        <div class="dashboard-grid">
-
-
-            <div class="card">
-
-                <div class="card-header">
-
-                    <div>
-
-                        <h2>
-                            Serverstatus
-                        </h2>
-
-                        <p>
-                            Aktuelle Verbindung zum FiveM Server
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div
-                    id="serverStatusBox"
-                    class="server-status-card"
-                >
-
-                    <span
-                        id="serverLight"
-                        class="status-light"
-                    ></span>
-
-                    <div class="status-info">
-
-                        <strong id="dashboardServerStatus">
-                            Wird geprüft...
-                        </strong>
-
-                        <small id="dashboardServerIP">
-                            -
-                        </small>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="card">
-
-                <div class="card-header">
-
-                    <div>
-
-                        <h2>
-                            System
-                        </h2>
-
-                        <p>
-                            Backend Verbindung
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="server-status-card">
-
-                    <span
-                        id="backendLight"
-                        class="status-light"
-                    ></span>
-
-                    <div class="status-info">
-
-                        <strong id="backendStatus">
-                            Prüfe Backend...
-                        </strong>
-
-                        <small>
-                            Node.js / API
-                        </small>
-
-                    </div>
-
-                </div>
-
-            </div>
-
+        <div class="heroStat">
+            <strong id="heroMaxPlayers">128</strong>
+            <span>Slots</span>
         </div>
 
-
-        <div class="card">
-
-            <div class="card-header">
-
-                <div>
-
-                    <h2>
-                        Schnellaktionen
-                    </h2>
-
-                    <p>
-                        Häufig verwendete Funktionen
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="form-actions">
-
-                <button
-                    class="btn btn-primary"
-                    onclick="showPage('whitelist')"
-                >
-                    📋 Whitelist öffnen
-                </button>
-
-
-                <button
-                    id="quickServer"
-                    class="btn btn-secondary owner-only"
-                    onclick="showPage('server')"
-                >
-                    🖥️ Server bearbeiten
-                </button>
-
-
-                <button
-                    id="quickNews"
-                    class="btn btn-secondary owner-only"
-                    onclick="showPage('news')"
-                >
-                    📰 News bearbeiten
-                </button>
-
-            </div>
-
+        <div class="heroStat">
+            <strong id="heroPing">--</strong>
+            <span>Ping</span>
         </div>
+    </div>
 
-    </section>
+</div>
 
 
-    <!-- =================================================
-         WHITELIST
-    ================================================= -->
+<div class="serverCard">
 
-    <section
-        id="page-whitelist"
-        class="page"
-    >
-
-        <div class="card">
-
-            <div class="card-header">
-
-                <div>
-
-                    <h2>
-                        Whitelist Bewerbungen
-                    </h2>
-
-                    <p>
-                        Bewerbungen prüfen und bearbeiten
-                    </p>
-
-                </div>
-
-
-                <button
-                    class="btn btn-secondary"
-                    onclick="loadWhitelist()"
-                >
-                    🔄 Aktualisieren
-                </button>
-
-            </div>
-
-
-            <div class="table-wrapper">
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                Name
-                            </th>
-
-                            <th>
-                                Alter
-                            </th>
-
-                            <th>
-                                Grund
-                            </th>
-
-                            <th>
-                                Status
-                            </th>
-
-                            <th>
-                                Datum
-                            </th>
-
-                            <th>
-                                Aktionen
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody id="whitelistTable">
-
-                        <tr>
-
-                            <td colspan="6">
-
-                                <span style="color:#718096">
-                                    Lade Bewerbungen...
-                                </span>
-
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =================================================
-         SERVER
-    ================================================= -->
-
-    <section
-        id="page-server"
-        class="page owner-only"
-    >
-
-        <div class="card">
-
-            <div class="card-header">
-
-                <div>
-
-                    <h2>
-                        Server Einstellungen
-                    </h2>
-
-                    <p>
-                        FiveM Server konfigurieren
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="form-grid">
-
-                <div class="form-group">
-
-                    <label>
-                        Server Name
-                    </label>
-
-                    <input
-                        id="serverNameInput"
-                        value="GameRP"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        FiveM IP
-                    </label>
-
-                    <input
-                        id="serverIpInput"
-                        placeholder="123.123.123.123:30120"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Maximale Spieler
-                    </label>
-
-                    <input
-                        id="maxPlayersInput"
-                        type="number"
-                        value="128"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Server Version
-                    </label>
-
-                    <input
-                        id="serverVersionInput"
-                        value="GameRP v1.0"
-                    >
-
-                </div>
-
-
-                <div class="form-group full">
-
-                    <label>
-                        Server Beschreibung
-                    </label>
-
-                    <textarea
-                        id="serverDescriptionInput"
-                    >Willkommen auf GameRP.</textarea>
-
-                </div>
-
-            </div>
-
-
-            <div class="form-actions">
-
-                <button
-                    class="btn btn-primary"
-                    onclick="saveServerSettings()"
-                >
-                    💾 Speichern
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-header">
-
-                <div>
-
-                    <h2>
-                        Server Steuerung
-                    </h2>
-
-                    <p>
-                        Status und Wartungsmodus
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="form-actions">
-
-                <button
-                    class="btn btn-success"
-                    onclick="serverAction('online')"
-                >
-                    🟢 Online
-                </button>
-
-
-                <button
-                    class="btn btn-warning"
-                    onclick="serverAction('maintenance')"
-                >
-                    🛠️ Wartung
-                </button>
-
-
-                <button
-                    class="btn btn-danger"
-                    onclick="serverAction('offline')"
-                >
-                    🔴 Offline
-                </button>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =================================================
-         PLAYERS
-    ================================================= -->
-
-    <section
-        id="page-players"
-        class="page owner-only"
-    >
-
-        <div class="card">
-
-            <div class="card-header">
-
-                <div>
-
-                    <h2>
-                        Spieler
-                    </h2>
-
-                    <p>
-                        Aktuell online
-                    </p>
-
-                </div>
-
-                <button
-                    class="btn btn-secondary"
-                    onclick="loadPlayers()"
-                >
-                    🔄 Aktualisieren
-                </button>
-
-            </div>
-
-
-            <div class="table-wrapper">
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                ID
-                            </th>
-
-                            <th>
-                                Name
-                            </th>
-
-                            <th>
-                                Job
-                            </th>
-
-                            <th>
-                                Ping
-                            </th>
-
-                            <th>
-                                Status
-                            </th>
-
-                            <th>
-                                Aktion
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody id="playersTable">
-
-                        <tr>
-
-                            <td colspan="6">
-
-                                <span style="color:#718096">
-                                    Lade Spieler...
-                                </span>
-
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =================================================
-         FRACTIONS
-    ================================================= -->
-
-    <section
-        id="page-factions"
-        class="page owner-only"
-    >
-
-        <div class="card">
-
-            <div class="card-header">
-
-                <div>
-
-                    <h2>
-                        Fraktionen
-                    </h2>
-
-                    <p>
-                        Polizei, Feuerwehr, Rettungsdienst und weitere
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="form-grid">
-
-                <div class="form-group">
-
-                    <label>
-                        Fraktion
-                    </label>
-
-                    <select id="factionSelect">
-
-                        <option value="police">
-                            Polizei
-                        </option>
-
-                        <option value="fire">
-                            Feuerwehr
-                        </option>
-
-                        <option value="ems">
-                            Rettungsdienst
-                        </option>
-
-                        <option value="mechanic">
-                            Mechaniker
-                        </option>
-
-                        <option value="taxi">
-                            Taxi
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Anzeigename
-                    </label>
-
-                    <input
-                        id="factionName"
-                        value="Polizei"
-                    >
-
-                </div>
-
-
-                <div class="form-group full">
-
-                    <label>
-                        Beschreibung
-                    </label>
-
-                    <textarea
-                        id="factionDescription"
-                    >Law Enforcement</textarea>
-
-                </div>
-
-            </div>
-
-
-            <div class="form-actions">
-
-                <button
-                    class="btn btn-primary"
-                    onclick="saveFaction()"
-                >
-                    💾 Fraktion speichern
-                </button>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =================================================
-         NEWS
-    ================================================= -->
-
-    <section
-        id="page-news"
-        class="page owner-only"
-    >
-
-        <div class="card">
-
-            <div class="card-header">
-
-                <div>
-
-                    <h2>
-                        News erstellen
-                    </h2>
-
-                    <p>
-                        Neuigkeiten auf der Website veröffentlichen
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="form-grid">
-
-                <div class="form-group">
-
-                    <label>
-                        Überschrift
-                    </label>
-
-                    <input
-                        id="newsTitle"
-                        placeholder="Neue News"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Kategorie
-                    </label>
-
-                    <select id="newsCategory">
-
-                        <option>
-                            SERVER
-                        </option>
-
-                        <option>
-                            UPDATE
-                        </option>
-
-                        <option>
-                            COMMUNITY
-                        </option>
-
-                        <option>
-                            EVENT
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <div class="form-group full">
-
-                    <label>
-                        Text
-                    </label>
-
-                    <textarea
-                        id="newsText"
-                        placeholder="News Text..."
-                    ></textarea>
-
-                </div>
-
-            </div>
-
-
-            <div class="form-actions">
-
-                <button
-                    class="btn btn-primary"
-                    onclick="createNews()"
-                >
-                    📰 News veröffentlichen
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-header">
-
-                <div>
-
-                    <h2>
-                        Bestehende News
-                    </h2>
-
-                </div>
-
-            </div>
-
-
-            <div id="newsList">
-
-                <p style="color:#718096">
-                    Noch keine News geladen.
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =================================================
-         SETTINGS
-    ================================================= -->
-
-    <section
-        id="page-settings"
-        class="page owner-only"
-    >
-
-        <div class="card">
-
-            <div class="card-header">
-
-                <div>
-
-                    <h2>
-                        Website Einstellungen
-                    </h2>
-
-                    <p>
-                        Allgemeine Einstellungen
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="form-grid">
-
-                <div class="form-group">
-
-                    <label>
-                        Website Name
-                    </label>
-
-                    <input
-                        id="websiteName"
-                        value="GameRP"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Discord
-                    </label>
-
-                    <input
-                        id="discordUrl"
-                        placeholder="Discord Link"
-                    >
-
-                </div>
-
-
-                <div class="form-group full">
-
-                    <label>
-                        Hero Überschrift
-                    </label>
-
-                    <input
-                        id="heroTitle"
-                        value="Deine Stadt. Deine Geschichte."
-                    >
-
-                </div>
-
-
-                <div class="form-group full">
-
-                    <label>
-                        Hero Beschreibung
-                    </label>
-
-                    <textarea id="heroDescription">Willkommen auf GameRP.</textarea>
-
-                </div>
-
-            </div>
-
-
-            <div class="form-actions">
-
-                <button
-                    class="btn btn-primary"
-                    onclick="saveWebsiteSettings()"
-                >
-                    💾 Einstellungen speichern
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-header">
-
-                <div>
-
-                    <h2>
-                        Wartungsmodus
-                    </h2>
-
-                    <p>
-                        Website für normale Besucher sperren
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="form-actions">
-
-                <button
-                    class="btn btn-warning"
-                    onclick="maintenance(true)"
-                >
-                    🛠️ Aktivieren
-                </button>
-
-
-                <button
-                    class="btn btn-success"
-                    onclick="maintenance(false)"
-                >
-                    🟢 Deaktivieren
-                </button>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =================================================
-         ADMINS
-    ================================================= -->
-
-    <section
-        id="page-admins"
-        class="page owner-only"
-    >
-
-        <div class="card">
-
-            <div class="card-header">
-
-                <div>
-
-                    <h2>
-                        Administratoren
-                    </h2>
-
-                    <p>
-                        Admin-Konten verwalten
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="form-grid">
-
-                <div class="form-group">
-
-                    <label>
-                        E-Mail
-                    </label>
-
-                    <input
-                        id="newAdminEmail"
-                        type="email"
-                        placeholder="admin@example.com"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Passwort
-                    </label>
-
-                    <input
-                        id="newAdminPassword"
-                        type="password"
-                        placeholder="Passwort"
-                    >
-
-                </div>
-
-            </div>
-
-
-            <div class="form-actions">
-
-                <button
-                    class="btn btn-primary"
-                    onclick="createAdmin()"
-                >
-                    🛡️ Admin erstellen
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-header">
-
-                <div>
-
-                    <h2>
-                        Rollen
-                    </h2>
-
-                    <p>
-                        Berechtigungen
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="table-wrapper">
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                Konto
-                            </th>
-
-                            <th>
-                                Rolle
-                            </th>
-
-                            <th>
-                                Zugriff
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody>
-
-                        <tr>
-
-                            <td>
-                                Owner@Game.com
-                            </td>
-
-                            <td>
-
-                                <span
-                                    class="role-badge owner-badge"
-                                >
-                                    OWNER
-                                </span>
-
-                            </td>
-
-                            <td>
-                                Vollzugriff
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-                                Admin@Game.com
-                            </td>
-
-                            <td>
-
-                                <span
-                                    class="role-badge"
-                                >
-                                    ADMIN
-                                </span>
-
-                            </td>
-
-                            <td>
-                                Nur Whitelist
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =================================================
-         ACCESS DENIED
-    ================================================= -->
-
-    <section
-        id="accessDenied"
-        class="access-denied hidden"
-    >
-
+    <div class="serverTop">
         <div>
-
-            <div class="access-icon">
-                🔒
+            <div class="serverName" id="serverCardName">
+                NovaRP
             </div>
-
-            <h2>
-                Kein Zugriff
-            </h2>
-
-            <p style="
-                color:#718096;
-                margin:10px 0 20px;
-            ">
-                Du hast keine Berechtigung für diesen Bereich.
-            </p>
-
-            <button
-                class="btn btn-primary"
-                onclick="showPage('dashboard')"
-            >
-                Zurück zum Dashboard
-            </button>
-
+            <small style="color:var(--muted)">
+                FiveM Roleplay Server
+            </small>
         </div>
 
-    </section>
+        <div class="online">
+            <span class="statusDot"></span>
+            ONLINE
+        </div>
+    </div>
+
+    <div class="playerNumber">
+        <span id="serverPlayers">0</span>
+        <span style="font-size:22px;color:var(--muted)">
+            / <span id="serverMax">128</span>
+        </span>
+    </div>
+
+    <div class="progress">
+        <span id="playerProgress"></span>
+    </div>
+
+    <div class="serverDetails">
+
+        <div class="serverDetail">
+            <small>Server-IP</small>
+            <strong id="serverIP">127.0.0.1:30120</strong>
+        </div>
+
+        <div class="serverDetail">
+            <small>Version</small>
+            <strong id="serverVersion">1.0.0</strong>
+        </div>
+
+        <div class="serverDetail">
+            <small>Ping</small>
+            <strong id="serverPing">--</strong>
+        </div>
+
+        <div class="serverDetail">
+            <small>Status</small>
+            <strong style="color:#63df98">Online</strong>
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+</section>
+
+
+<section class="section" id="features">
+
+<div class="sectionTitle">
+    <span>Unser Server</span>
+    <h2>Roleplay neu erleben</h2>
+    <p>Alles, was du für ein modernes RP-Erlebnis brauchst.</p>
+</div>
+
+<div class="grid grid3">
+
+<div class="card">
+    <div class="featureIcon">🚔</div>
+    <h3>Polizei</h3>
+    <p>
+        Streifendienst, Einsätze, Ermittlungen und ein eigenes
+        Polizeisystem.
+    </p>
+</div>
+
+<div class="card">
+    <div class="featureIcon">🚒</div>
+    <h3>Feuerwehr</h3>
+    <p>
+        Brandeinsätze, technische Hilfeleistung und
+        realistische Einsatzabläufe.
+    </p>
+</div>
+
+<div class="card">
+    <div class="featureIcon">🚑</div>
+    <h3>Rettungsdienst</h3>
+    <p>
+        Medizinische Einsätze und abwechslungsreiches
+        Rettungsdienst-RP.
+    </p>
+</div>
+
+<div class="card">
+    <div class="featureIcon">🏢</div>
+    <h3>Unternehmen</h3>
+    <p>
+        Gründe dein eigenes Unternehmen und baue dir deine
+        Karriere auf.
+    </p>
+</div>
+
+<div class="card">
+    <div class="featureIcon">👥</div>
+    <h3>Community</h3>
+    <p>
+        Aktive Spieler, Events und eine wachsende RP-Community.
+    </p>
+</div>
+
+<div class="card">
+    <div class="featureIcon">⚡</div>
+    <h3>Modernes System</h3>
+    <p>
+        Moderne Webseite mit Bewerbungen, Serverstatus und
+        Administration.
+    </p>
+</div>
+
+</div>
+</section>
+
+
+<!-- =====================================================
+     FACTIONS
+===================================================== -->
+
+<section class="section" id="factions">
+
+<div class="sectionTitle">
+    <span>Karriere</span>
+    <h2>Unsere Fraktionen</h2>
+    <p>
+        Bewirb dich direkt für deine Wunschfraktion.
+    </p>
+</div>
+
+<div class="grid grid3" id="factionCards"></div>
+
+</section>
+
+
+<!-- =====================================================
+     NEWS
+===================================================== -->
+
+<section class="section" id="news">
+
+<div class="sectionTitle">
+    <span>Neuigkeiten</span>
+    <h2>Server-News</h2>
+    <p>Was gibt es Neues in unserer Stadt?</p>
+</div>
+
+<div class="grid grid3" id="newsCards"></div>
+
+</section>
+
+
+<!-- =====================================================
+     RULES
+===================================================== -->
+
+<section class="section" id="rules">
+
+<div class="sectionTitle">
+    <span>Community</span>
+    <h2>Serverregeln</h2>
+    <p>Respekt und gutes Roleplay stehen an erster Stelle.</p>
+</div>
+
+<div class="card">
+
+<div class="rule">
+    <div class="ruleNumber">1</div>
+    <div>
+        <h3>Respekt</h3>
+        <p>Behandle andere Spieler respektvoll.</p>
+    </div>
+</div>
+
+<div class="rule">
+    <div class="ruleNumber">2</div>
+    <div>
+        <h3>Roleplay</h3>
+        <p>Bleibe möglichst realistisch und spiele deine Rolle aus.</p>
+    </div>
+</div>
+
+<div class="rule">
+    <div class="ruleNumber">3</div>
+    <div>
+        <h3>Kein Trolling</h3>
+        <p>Absichtliches Stören anderer Spieler ist nicht erlaubt.</p>
+    </div>
+</div>
+
+<div class="rule">
+    <div class="ruleNumber">4</div>
+    <div>
+        <h3>Administratoren</h3>
+        <p>Den Anweisungen des Serverteams ist Folge zu leisten.</p>
+    </div>
+</div>
+
+<div class="rule">
+    <div class="ruleNumber">5</div>
+    <div>
+        <h3>Fair Play</h3>
+        <p>Nutze keine Cheats, Exploits oder unerlaubte Vorteile.</p>
+    </div>
+</div>
+
+</div>
+</section>
 
 </main>
 
 
 <!-- =====================================================
-     TOAST
+     APPLICATION MODAL
 ===================================================== -->
 
-<div
-    id="toast"
-    class="toast"
-></div>
+<div class="modal" id="applicationModal">
+
+<div class="modalBox">
+
+<div class="modalHeader">
+    <div>
+        <h2>Fraktionsbewerbung</h2>
+        <p style="color:var(--muted);margin-top:5px">
+            Bewirb dich direkt bei deiner Wunschfraktion.
+        </p>
+    </div>
+
+    <button class="close" onclick="closeModal('applicationModal')">
+        ✕
+    </button>
+</div>
+
+<form id="applicationForm" onsubmit="submitApplication(event)">
+
+<div class="formGrid">
+
+<div class="formGroup">
+    <label>Vorname</label>
+    <input id="appFirstName" required placeholder="Max">
+</div>
+
+<div class="formGroup">
+    <label>Nachname</label>
+    <input id="appLastName" required placeholder="Mustermann">
+</div>
+
+<div class="formGroup">
+    <label>Alter</label>
+    <input id="appAge" type="number" min="16" max="99" required placeholder="18">
+</div>
+
+<div class="formGroup">
+    <label>Discord-Name</label>
+    <input id="appDiscord" required placeholder="max123">
+</div>
+
+<div class="formGroup full">
+    <label>Fraktion</label>
+
+    <select id="appFaction" required onchange="updateDiscordTarget()">
+        <option value="">Fraktion auswählen...</option>
+    </select>
+</div>
+
+<div class="formGroup full">
+    <label>Warum möchtest du dieser Fraktion beitreten?</label>
+
+    <textarea
+        id="appReason"
+        required
+        placeholder="Schreibe hier deine Bewerbung..."
+    ></textarea>
+</div>
+
+<div class="formGroup full">
+    <label>RP-Erfahrung</label>
+
+    <textarea
+        id="appExperience"
+        placeholder="Welche Erfahrungen hast du mit FiveM/RP?"
+    ></textarea>
+</div>
+
+</div>
+
+<div class="discordBox">
+
+    <strong>Discord der ausgewählten Fraktion</strong>
+
+    <div id="discordTarget" style="margin-top:6px;color:white">
+        Bitte zuerst eine Fraktion auswählen.
+    </div>
+
+</div>
+
+<button class="btn primary" style="width:100%" type="submit">
+    Bewerbung erstellen
+</button>
+
+</form>
+
+<div class="applicationResult" id="applicationResult">
+
+<h3>✅ Bewerbung erstellt</h3>
+
+<p style="color:var(--muted);margin:10px 0">
+    Deine Bewerbung wurde vorbereitet. Kopiere sie und sende sie
+    im angegebenen Discord.
+</p>
+
+<textarea
+    id="generatedApplication"
+    readonly
+    style="
+        width:100%;
+        min-height:200px;
+        background:#080e17;
+        color:white;
+        border:1px solid var(--line);
+        border-radius:10px;
+        padding:12px;
+    "
+></textarea>
+
+<div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+
+<button class="btn success" onclick="copyApplication()">
+    Bewerbung kopieren
+</button>
+
+<button class="btn primary" onclick="joinSelectedDiscord()">
+    Discord öffnen
+</button>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- =====================================================
+     LOGIN MODAL
+===================================================== -->
+
+<div class="modal" id="loginModal">
+
+<div class="modalBox" style="max-width:450px">
+
+<div class="modalHeader">
+    <div>
+        <h2>Admin Login</h2>
+        <p style="color:var(--muted);margin-top:5px">
+            Zugang zum Verwaltungsbereich
+        </p>
+    </div>
+
+    <button class="close" onclick="closeModal('loginModal')">
+        ✕
+    </button>
+</div>
+
+<div class="loginInfo">
+    <strong>Owner</strong><br>
+    Owner@Game.com<br><br>
+
+    <strong>Admin</strong><br>
+    Admin@Game.com
+</div>
+
+<form onsubmit="login(event)">
+
+<div class="formGroup">
+    <label>E-Mail</label>
+    <input id="loginEmail" type="email" required>
+</div>
+
+<div class="formGroup">
+    <label>Passwort</label>
+    <input id="loginPassword" type="password" required>
+</div>
+
+<button class="btn primary" style="width:100%">
+    Einloggen
+</button>
+
+</form>
+
+</div>
+</div>
+
+
+<!-- =====================================================
+     ADMIN PANEL
+===================================================== -->
+
+<section id="adminPanel">
+
+<div class="adminLayout">
+
+<aside class="adminSidebar">
+
+<h3>⚡ Control Center</h3>
+
+<div style="padding:0 10px 18px;color:var(--muted);font-size:13px">
+    <span id="adminRoleText">Nicht angemeldet</span>
+</div>
+
+<div class="adminNav">
+
+<button class="active" onclick="showAdminPage('dashboard',this)">
+    📊 Dashboard
+</button>
+
+<button onclick="showAdminPage('whitelist',this)">
+    📋 Whitelist
+</button>
+
+<button class="ownerOnly" onclick="showAdminPage('server',this)">
+    🖥️ Server
+</button>
+
+<button class="ownerOnly" onclick="showAdminPage('players',this)">
+    👥 Spieler
+</button>
+
+<button class="ownerOnly" onclick="showAdminPage('factions',this)">
+    🚔 Fraktionen
+</button>
+
+<button class="ownerOnly" onclick="showAdminPage('newsAdmin',this)">
+    📰 News
+</button>
+
+<button class="ownerOnly" onclick="showAdminPage('settings',this)">
+    ⚙️ Einstellungen
+</button>
+
+<button class="ownerOnly" onclick="showAdminPage('admins',this)">
+    🔐 Administratoren
+</button>
+
+<button onclick="logout()" style="margin-top:20px;color:#ff7585">
+    🚪 Logout
+</button>
+
+</div>
+
+</aside>
+
+
+<main class="adminMain">
+
+<!-- DASHBOARD -->
+
+<div class="adminPage active" id="admin-dashboard">
+
+<div class="sectionTitle">
+    <span>Control Center</span>
+    <h2>Dashboard</h2>
+    <p>Übersicht über deine RP-Community.</p>
+</div>
+
+<div class="statsGrid">
+
+<div class="statCard">
+    <small>Spieler online</small>
+    <strong id="adminPlayers">0</strong>
+</div>
+
+<div class="statCard">
+    <small>Whitelist</small>
+    <strong id="adminWhitelist">0</strong>
+</div>
+
+<div class="statCard">
+    <small>Serverstatus</small>
+    <strong id="adminServerStatus">ONLINE</strong>
+</div>
+
+<div class="statCard">
+    <small>Ping</small>
+    <strong id="adminPing">--</strong>
+</div>
+
+</div>
+
+<div class="grid grid3">
+
+<div class="card">
+    <h3>Server</h3>
+    <p id="adminServerInfo">
+        NovaRP — 127.0.0.1:30120
+    </p>
+</div>
+
+<div class="card">
+    <h3>Account</h3>
+    <p id="adminAccountInfo">
+        Nicht angemeldet
+    </p>
+</div>
+
+<div class="card">
+    <h3>Live-System</h3>
+    <p>
+        Webseite läuft lokal mit automatischer Aktualisierung.
+    </p>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- WHITELIST -->
+
+<div class="adminPage" id="admin-whitelist">
+
+<div class="sectionTitle">
+    <span>Moderation</span>
+    <h2>Whitelist</h2>
+    <p>Bewerbungen prüfen und verwalten.</p>
+</div>
+
+<div class="card">
+
+<div class="tableWrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Name</th>
+<th>Discord</th>
+<th>Fraktion</th>
+<th>Alter</th>
+<th>Status</th>
+<th>Aktion</th>
+</tr>
+</thead>
+
+<tbody id="whitelistTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- SERVER -->
+
+<div class="adminPage" id="admin-server">
+
+<div class="sectionTitle">
+    <span>Owner</span>
+    <h2>Serververwaltung</h2>
+</div>
+
+<div class="card adminForm">
+
+<div class="adminFormGrid">
+
+<div class="formGroup">
+<label>Servername</label>
+<input id="serverNameInput" value="NovaRP">
+</div>
+
+<div class="formGroup">
+<label>Server-IP</label>
+<input id="serverIpInput" value="127.0.0.1:30120">
+</div>
+
+<div class="formGroup">
+<label>Max. Spieler</label>
+<input id="maxPlayersInput" type="number" value="128">
+</div>
+
+<div class="formGroup">
+<label>Version</label>
+<input id="serverVersionInput" value="1.0.0">
+</div>
+
+<div class="formGroup full">
+<label>Beschreibung</label>
+<textarea id="serverDescriptionInput">Modernes FiveM Roleplay.</textarea>
+</div>
+
+</div>
+
+<button class="btn primary" onclick="saveServerSettings()">
+    Einstellungen speichern
+</button>
+
+</div>
+
+<br>
+
+<div class="card">
+
+<h3>Serverstatus</h3>
+
+<div style="display:flex;gap:10px;margin-top:15px;flex-wrap:wrap">
+
+<button class="btn success" onclick="setServerStatus('online')">
+    Server online
+</button>
+
+<button class="btn" onclick="setServerStatus('maintenance')">
+    Wartungsmodus
+</button>
+
+<button class="btn danger" onclick="setServerStatus('offline')">
+    Server offline
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- PLAYERS -->
+
+<div class="adminPage" id="admin-players">
+
+<div class="sectionTitle">
+    <span>Owner</span>
+    <h2>Spieler</h2>
+</div>
+
+<div class="card">
+
+<div class="tableWrap">
+
+<table>
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Ping</th>
+<th>Fraktion</th>
+<th>Aktion</th>
+</tr>
+</thead>
+
+<tbody id="playersTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- FACTIONS -->
+
+<div class="adminPage" id="admin-factions">
+
+<div class="sectionTitle">
+    <span>Owner</span>
+    <h2>Fraktionen</h2>
+</div>
+
+<div class="card adminForm">
+
+<div class="formGroup">
+<label>Fraktion</label>
+
+<select id="factionSelect">
+</select>
+
+</div>
+
+<div class="formGroup">
+<label>Name</label>
+
+<input id="factionName">
+
+</div>
+
+<div class="formGroup">
+<label>Beschreibung</label>
+
+<textarea id="factionDescription"></textarea>
+
+</div>
+
+<div class="formGroup">
+<label>Discord Join-Code</label>
+
+<input
+    id="factionDiscord"
+    placeholder="https://discord.gg/deinserver"
+/>
+
+</div>
+
+<button class="btn primary" onclick="saveFaction()">
+    Fraktion speichern
+</button>
+
+</div>
+
+</div>
+
+
+<!-- NEWS -->
+
+<div class="adminPage" id="admin-newsAdmin">
+
+<div class="sectionTitle">
+    <span>Owner</span>
+    <h2>News</h2>
+</div>
+
+<div class="card adminForm">
+
+<div class="formGroup">
+<label>Titel</label>
+<input id="newsTitle">
+</div>
+
+<div class="formGroup">
+<label>Kategorie</label>
+<input id="newsCategory" value="News">
+</div>
+
+<div class="formGroup">
+<label>Text</label>
+<textarea id="newsText"></textarea>
+</div>
+
+<button class="btn primary" onclick="createNews()">
+    News veröffentlichen
+</button>
+
+</div>
+
+</div>
+
+
+<!-- SETTINGS -->
+
+<div class="adminPage" id="admin-settings">
+
+<div class="sectionTitle">
+    <span>Owner</span>
+    <h2>Webseite</h2>
+</div>
+
+<div class="card adminForm">
+
+<div class="formGroup">
+<label>Webseitenname</label>
+<input id="websiteName" value="NovaRP">
+</div>
+
+<div class="formGroup">
+<label>Hero-Titel</label>
+<input id="heroTitleInput" value="Deine Geschichte.">
+</div>
+
+<div class="formGroup">
+<label>Hero-Beschreibung</label>
+<textarea id="heroDescriptionInput"></textarea>
+</div>
+
+<div class="formGroup">
+<label>Discord</label>
+<input id="discordUrl" placeholder="https://discord.gg/deinserver">
+</div>
+
+<button class="btn primary" onclick="saveWebsiteSettings()">
+    Website speichern
+</button>
+
+</div>
+
+</div>
+
+
+<!-- ADMINS -->
+
+<div class="adminPage" id="admin-admins">
+
+<div class="sectionTitle">
+    <span>Owner</span>
+    <h2>Administratoren</h2>
+</div>
+
+<div class="card adminForm">
+
+<div class="formGroup">
+<label>E-Mail</label>
+<input id="newAdminEmail" type="email">
+</div>
+
+<div class="formGroup">
+<label>Passwort</label>
+<input id="newAdminPassword" type="password">
+</div>
+
+<button class="btn primary" onclick="createAdmin()">
+    Admin erstellen
+</button>
+
+</div>
+
+<br>
+
+<div class="card">
+
+<h3>Aktuelle Rollen</h3>
+
+<div style="margin-top:15px;line-height:2">
+
+<div>
+    👑 <strong>Owner@Game.com</strong>
+    — Vollzugriff
+</div>
+
+<div>
+    🛡️ <strong>Admin@Game.com</strong>
+    — Nur Whitelist
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+<div class="footerInner">
+
+<div>
+    © 2026 <strong id="footerName">NovaRP</strong>
+</div>
+
+<div>
+    FiveM Roleplay • Community • Serious RP
+</div>
+
+</div>
+
+</footer>
+
+
+<div class="toast" id="toast"></div>
 
 
 <script>
-
-/* =====================================================
+/* =========================================================
    KONFIGURATION
-===================================================== */
+========================================================= */
 
-const BACKEND_URL =
-    "http://DEINE-VPS-IP:3000";
+const CONFIG = {
 
+    siteName: "NovaRP",
 
-const WEBSITE_URL =
-    "index.html";
+    serverIP: "127.0.0.1:30120",
 
+    maxPlayers: 128,
 
-/* =====================================================
-   BENUTZER
-===================================================== */
+    version: "1.0.0",
 
-const ADMIN_EMAIL =
-    "Admin@Game.com";
-
-const ADMIN_PASSWORD =
-    "299120";
-
-
-const OWNER_EMAIL =
-    "Owner@Game.com";
-
-const OWNER_PASSWORD =
-    "Owner!!";
-
-
-/* =====================================================
-   ROLLEN
-===================================================== */
-
-let currentRole = null;
-
-let currentUser = null;
-
-
-/* =====================================================
-   PAGE TITEL
-===================================================== */
-
-const pageInformation = {
-
-    dashboard:{
-        title:"Dashboard",
-        description:
-            "Übersicht über deinen GameRP Server"
-    },
-
-    whitelist:{
-        title:"Whitelist",
-        description:
-            "Bewerbungen prüfen und bearbeiten"
-    },
-
-    server:{
-        title:"Server",
-        description:
-            "FiveM Server verwalten"
-    },
-
-    players:{
-        title:"Spieler",
-        description:
-            "Online-Spieler verwalten"
-    },
-
-    factions:{
-        title:"Fraktionen",
-        description:
-            "Fraktionen konfigurieren"
-    },
-
-    news:{
-        title:"News",
-        description:
-            "Website News verwalten"
-    },
-
-    settings:{
-        title:"Einstellungen",
-        description:
-            "Website und Server konfigurieren"
-    },
-
-    admins:{
-        title:"Admins",
-        description:
-            "Administratoren verwalten"
-    }
+    discord: "https://discord.gg/DEIN-COMMUNITY-CODE"
 
 };
 
 
-/* =====================================================
-   TOAST
-===================================================== */
+/* =========================================================
+   ROLLEN
+=========================================================
 
-function showToast(message){
+   ACHTUNG:
+   Diese Zugangsdaten sind nur für die lokale Demo.
+   Für einen echten öffentlichen Server muss die
+   Authentifizierung serverseitig erfolgen.
+*/
 
-    const toast =
-        document.getElementById(
-            "toast"
-        );
+const ACCOUNTS = [
 
-    toast.textContent =
-        message;
+    {
+        email: "Owner@Game.com",
+        password: "Owner!!",
+        role: "owner"
+    },
 
-    toast.classList.add(
-        "show"
-    );
+    {
+        email: "Admin@Game.com",
+        password: "299120",
+        role: "admin"
+    }
 
-    setTimeout(
-        () => {
+];
 
-            toast.classList.remove(
-                "show"
-            );
 
-        },
-        3500
-    );
+/* =========================================================
+   FRAKTIONEN
+========================================================= */
+
+let factions = [
+
+    {
+        id:"polizei",
+        name:"Polizei",
+        icon:"🚔",
+        description:"Sorge für Sicherheit, bearbeite Einsätze und ermittle in Fällen.",
+        discord:"https://discord.gg/POLIZEI-CODE"
+    },
+
+    {
+        id:"feuerwehr",
+        name:"Feuerwehr",
+        icon:"🚒",
+        description:"Brände, technische Hilfeleistungen und spannende Einsätze.",
+        discord:"https://discord.gg/FEUERWEHR-CODE"
+    },
+
+    {
+        id:"rettungsdienst",
+        name:"Rettungsdienst",
+        icon:"🚑",
+        description:"Versorge Patienten und fahre medizinische Einsätze.",
+        discord:"https://discord.gg/RETTUNG-CODE"
+    },
+
+    {
+        id:"mechaniker",
+        name:"Mechaniker",
+        icon:"🔧",
+        description:"Repariere Fahrzeuge und betreibe deine Werkstatt.",
+        discord:"https://discord.gg/MECHANIKER-CODE"
+    },
+
+    {
+        id:"taxi",
+        name:"Taxi",
+        icon:"🚕",
+        description:"Bringe Bürger sicher durch die Stadt.",
+        discord:"https://discord.gg/TAXI-CODE"
+    },
+
+    {
+        id:"unternehmen",
+        name:"Unternehmen",
+        icon:"🏢",
+        description:"Baue dein Unternehmen auf und entwickle deine Karriere.",
+        discord:"https://discord.gg/UNTERNEHMEN-CODE"
+    }
+
+];
+
+
+/* =========================================================
+   NEWS
+========================================================= */
+
+let news = [
+
+    {
+        title:"Willkommen bei NovaRP",
+        category:"Server",
+        text:"Unser neuer Roleplay-Server ist gestartet."
+    },
+
+    {
+        title:"Fraktionsbewerbungen geöffnet",
+        category:"Fraktionen",
+        text:"Bewirb dich jetzt für deine Wunschfraktion."
+    },
+
+    {
+        title:"Neue Systeme",
+        category:"Update",
+        text:"Das Server- und Community-System wurde erweitert."
+    }
+
+];
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let currentUser = null;
+let currentRole = null;
+let selectedDiscord = "";
+
+let serverData = {
+    name:CONFIG.siteName,
+    ip:CONFIG.serverIP,
+    maxPlayers:CONFIG.maxPlayers,
+    players:0,
+    version:CONFIG.version,
+    status:"online"
+};
+
+let whitelist = JSON.parse(
+    localStorage.getItem("rp_whitelist") || "[]"
+);
+
+
+/* =========================================================
+   START
+========================================================= */
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+    loadSavedState();
+
+    renderFactions();
+
+    renderFactionSelect();
+
+    renderFactionAdminSelect();
+
+    renderNews();
+
+    updatePublicServer();
+
+    setInterval(simulateLiveServer,5000);
+
+});
+
+
+/* =========================================================
+   PUBLIC / ADMIN
+========================================================= */
+
+function showPublic(){
+
+    document.getElementById("publicSite").style.display="block";
+
+    document.getElementById("adminPanel").style.display="none";
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
 
 }
 
 
-/* =====================================================
-   ROLLE ERMITTELN
-===================================================== */
+function showAdmin(){
 
-function detectUser(){
+    document.getElementById("publicSite").style.display="none";
 
-    /*
-       Zuerst gespeicherten User prüfen.
-    */
+    document.getElementById("adminPanel").style.display="block";
 
-    try{
-
-        const saved =
-            localStorage.getItem(
-                "rp_user"
-            );
-
-
-        if(saved){
-
-            currentUser =
-                JSON.parse(
-                    saved
-                );
-
-            if(
-                currentUser.role
-            ){
-
-                currentRole =
-                    currentUser.role;
-
-            }
-
-        }
-
-    }
-    catch(error){
-
-        currentUser =
-            null;
-
-    }
-
-
-    /*
-       Gespeicherte Rolle
-    */
-
-    const savedRole =
-        localStorage.getItem(
-            "rp_role"
-        );
-
-
-    if(savedRole){
-
-        currentRole =
-            savedRole;
-
-    }
-
-
-    /*
-       Fallback:
-       Wenn keine Rolle gespeichert ist,
-       versuchen wir die Demo-Anmeldedaten
-       aus dem Login-System.
-    */
-
-    if(!currentRole){
-
-        showLoginRequired();
-
-        return;
-    }
-
-
-    applyPermissions();
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
 
 }
 
 
-/* =====================================================
-   BERECHTIGUNGEN
-===================================================== */
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
-function applyPermissions(){
+function scrollToId(id){
 
-    const owner =
-        currentRole === "owner";
+    showPublic();
 
+    const element=document.getElementById(id);
 
-    const admin =
-        currentRole === "admin";
+    if(element){
 
-
-    /*
-       OWNER
-    */
-
-    if(owner){
-
-        document
-            .querySelectorAll(
-                ".owner-only"
-            )
-            .forEach(
-                element => {
-
-                    element.classList.remove(
-                        "hidden"
-                    );
-
-                }
-            );
-
-
-        document
-            .getElementById(
-                "roleBadge"
-            )
-            .textContent =
-                "OWNER";
-
-
-        document
-            .getElementById(
-                "roleBadge"
-            )
-            .classList.add(
-                "owner-badge"
-            );
+        element.scrollIntoView({
+            behavior:"smooth"
+        });
 
     }
-
-
-    /*
-       ADMIN
-    */
-
-    else if(admin){
-
-        document
-            .querySelectorAll(
-                ".owner-only"
-            )
-            .forEach(
-                element => {
-
-                    element.classList.add(
-                        "hidden"
-                    );
-
-                }
-            );
-
-
-        document
-            .getElementById(
-                "roleBadge"
-            )
-            .textContent =
-                "ADMIN";
-
-    }
-
-
-    /*
-       User Infos
-    */
-
-    const email =
-        currentUser?.email ||
-        (
-            owner
-            ?
-            OWNER_EMAIL
-            :
-            ADMIN_EMAIL
-        );
-
-
-    document
-        .getElementById(
-            "userEmail"
-        )
-        .textContent =
-            email;
-
-
-    document
-        .getElementById(
-            "userRole"
-        )
-        .textContent =
-            owner
-            ?
-            "Owner"
-            :
-            "Administrator";
-
-
-    document
-        .getElementById(
-            "avatar"
-        )
-        .textContent =
-            owner
-            ?
-            "O"
-            :
-            "A";
-
-
-    loadDashboard();
 
 }
 
 
-/* =====================================================
-   LOGIN ERFORDERLICH
-===================================================== */
+/* =========================================================
+   MODALS
+========================================================= */
 
-function showLoginRequired(){
+function openApplication(){
 
-    document
-        .getElementById(
-            "page-dashboard"
-        )
-        .innerHTML = `
+    renderFactionSelect();
 
-            <div class="access-denied">
+    document.getElementById("applicationModal")
+        .classList.add("active");
 
-                <div>
+}
 
-                    <div class="access-icon">
-                        🔐
-                    </div>
 
-                    <h2>
-                        Anmeldung erforderlich
-                    </h2>
+function openLogin(){
 
-                    <p style="
-                        color:#718096;
-                        margin:10px 0 20px;
-                    ">
-                        Bitte melde dich zuerst über
-                        die GameRP Website an.
-                    </p>
+    document.getElementById("loginModal")
+        .classList.add("active");
 
-                    <button
-                        class="btn btn-primary"
-                        onclick="openWebsite()"
-                    >
-                        Zur Website
-                    </button>
+}
 
-                </div>
 
-            </div>
+function closeModal(id){
+
+    document.getElementById(id)
+        .classList.remove("active");
+
+}
+
+
+/* =========================================================
+   FRACTIONS RENDER
+========================================================= */
+
+function renderFactions(){
+
+    const container=document.getElementById("factionCards");
+
+    container.innerHTML="";
+
+    factions.forEach(f=>{
+
+        container.innerHTML += `
+
+        <div class="card factionCard">
+
+            <div class="factionIcon">${f.icon}</div>
+
+            <h3>${escapeHTML(f.name)}</h3>
+
+            <p>${escapeHTML(f.description)}</p>
+
+            <span class="factionTag">
+                Bewerbung möglich
+            </span>
+
+            <br>
+
+            <button
+                class="btn primary small"
+                onclick="openFactionApplication('${f.id}')"
+            >
+                Jetzt bewerben
+            </button>
+
+        </div>
 
         `;
 
+    });
+
 }
 
 
-/* =====================================================
-   PAGE WECHSELN
-===================================================== */
+function renderFactionSelect(){
 
-function showPage(page){
+    const select=document.getElementById("appFaction");
 
-    /*
-       Owner-only prüfen
-    */
+    if(!select)return;
 
-    const ownerPages = [
-        "server",
-        "players",
-        "factions",
-        "news",
-        "settings",
-        "admins"
-    ];
+    select.innerHTML=`
+        <option value="">Fraktion auswählen...</option>
+    `;
+
+    factions.forEach(f=>{
+
+        select.innerHTML += `
+            <option value="${f.id}">
+                ${escapeHTML(f.name)}
+            </option>
+        `;
+
+    });
+
+}
 
 
-    if(
-        ownerPages.includes(
-            page
-        )
-        &&
-        currentRole !== "owner"
-    ){
+function renderFactionAdminSelect(){
 
-        showToast(
-            "Dieser Bereich ist nur für den Owner verfügbar."
-        );
+    const select=document.getElementById("factionSelect");
+
+    if(!select)return;
+
+    select.innerHTML="";
+
+    factions.forEach(f=>{
+
+        select.innerHTML += `
+            <option value="${f.id}">
+                ${escapeHTML(f.name)}
+            </option>
+        `;
+
+    });
+
+    select.onchange=loadFactionAdmin;
+
+    loadFactionAdmin();
+
+}
+
+
+function openFactionApplication(id){
+
+    openApplication();
+
+    document.getElementById("appFaction").value=id;
+
+    updateDiscordTarget();
+
+}
+
+
+/* =========================================================
+   DISCORD TARGET
+========================================================= */
+
+function updateDiscordTarget(){
+
+    const id=document.getElementById("appFaction").value;
+
+    const faction=factions.find(f=>f.id===id);
+
+    const target=document.getElementById("discordTarget");
+
+    if(!faction){
+
+        selectedDiscord="";
+
+        target.innerHTML="Bitte zuerst eine Fraktion auswählen.";
 
         return;
+
     }
 
+    selectedDiscord=faction.discord;
 
-    /*
-       Seiten verstecken
-    */
+    target.innerHTML=`
 
-    document
-        .querySelectorAll(
-            ".page"
-        )
-        .forEach(
-            element => {
+        <strong>${escapeHTML(faction.name)}</strong><br>
 
-                element.classList.remove(
-                    "active"
-                );
+        <span style="color:var(--muted)">
+            ${escapeHTML(faction.discord)}
+        </span>
 
-            }
-        );
+    `;
+
+}
 
 
-    /*
-       Seite anzeigen
-    */
+/* =========================================================
+   APPLICATION
+========================================================= */
 
-    const target =
-        document.getElementById(
-            "page-" + page
-        );
+function submitApplication(event){
 
+    event.preventDefault();
 
-    if(!target)
+    const first=document.getElementById("appFirstName").value.trim();
+
+    const last=document.getElementById("appLastName").value.trim();
+
+    const age=document.getElementById("appAge").value.trim();
+
+    const discord=document.getElementById("appDiscord").value.trim();
+
+    const factionId=document.getElementById("appFaction").value;
+
+    const reason=document.getElementById("appReason").value.trim();
+
+    const experience=document.getElementById("appExperience").value.trim();
+
+    const faction=factions.find(f=>f.id===factionId);
+
+    if(!faction){
+
+        showToast("Bitte eine Fraktion auswählen.");
+
         return;
 
-
-    target.classList.add(
-        "active"
-    );
-
-
-    /*
-       Navigation
-    */
-
-    document
-        .querySelectorAll(
-            ".nav-button"
-        )
-        .forEach(
-            button => {
-
-                button.classList.remove(
-                    "active"
-                );
-
-            }
-        );
-
-
-    const activeButton =
-        document.querySelector(
-            `[data-page="${page}"]`
-        );
-
-
-    if(activeButton){
-
-        activeButton.classList.add(
-            "active"
-        );
-
     }
 
+    const application={
 
-    /*
-       Titel
-    */
+        id:Date.now(),
 
-    if(
-        pageInformation[page]
-    ){
+        name:first+" "+last,
 
-        document
-            .getElementById(
-                "pageTitle"
-            )
-            .textContent =
-                pageInformation[
-                    page
-                ].title;
+        age,
 
+        discord,
 
-        document
-            .getElementById(
-                "pageDescription"
-            )
-            .textContent =
-                pageInformation[
-                    page
-                ].description;
+        faction:faction.name,
 
-    }
+        reason,
 
+        experience,
 
-    /*
-       Daten laden
-    */
+        status:"pending",
 
-    if(page === "dashboard")
-        loadDashboard();
-
-    if(page === "whitelist")
-        loadWhitelist();
-
-    if(page === "players")
-        loadPlayers();
-
-    if(page === "news")
-        loadNews();
-
-}
-
-
-/* =====================================================
-   SIDEBAR
-===================================================== */
-
-function toggleSidebar(){
-
-    document
-        .getElementById(
-            "sidebar"
-        )
-        .classList.toggle(
-            "open"
-        );
-
-}
-
-
-/* =====================================================
-   WEBSITE ÖFFNEN
-===================================================== */
-
-function openWebsite(){
-
-    window.location.href =
-        WEBSITE_URL;
-
-}
-
-
-/* =====================================================
-   LOGOUT
-===================================================== */
-
-function logout(){
-
-    localStorage.removeItem(
-        "rp_token"
-    );
-
-    localStorage.removeItem(
-        "rp_user"
-    );
-
-    localStorage.removeItem(
-        "rp_role"
-    );
-
-
-    window.location.href =
-        WEBSITE_URL;
-
-}
-
-
-/* =====================================================
-   API HELPER
-===================================================== */
-
-async function apiRequest(
-    endpoint,
-    options = {}
-){
-
-    const token =
-        localStorage.getItem(
-            "rp_token"
-        );
-
-
-    const headers = {
-
-        "Content-Type":
-            "application/json",
-
-        ...(options.headers || {})
+        date:new Date().toLocaleString("de-DE")
 
     };
 
+    whitelist.push(application);
 
-    if(token){
+    localStorage.setItem(
+        "rp_whitelist",
+        JSON.stringify(whitelist)
+    );
 
-        headers[
-            "Authorization"
-        ] =
-            "Bearer " +
-            token;
+    const text=
 
-    }
+`📋 FRAKTIONSBEWERBUNG
 
+Name: ${first} ${last}
+Alter: ${age}
+Discord: ${discord}
 
-    const response =
-        await fetch(
-            BACKEND_URL +
-            endpoint,
-            {
-                ...options,
-                headers
-            }
-        );
+Fraktion: ${faction.name}
 
+Warum möchte ich beitreten:
+${reason}
 
-    let data = {};
+RP-Erfahrung:
+${experience}
 
-    try{
+Erstellt am:
+${application.date}`;
 
-        data =
-            await response.json();
+    document.getElementById("generatedApplication")
+        .value=text;
 
-    }
-    catch(error){
+    document.getElementById("applicationResult")
+        .classList.add("show");
 
-        data = {};
-
-    }
-
-
-    if(!response.ok){
-
-        throw new Error(
-            data.message ||
-            "Serverfehler"
-        );
-
-    }
-
-
-    return data;
+    showToast("Bewerbung wurde erstellt.");
 
 }
 
 
-/* =====================================================
-   DASHBOARD
-===================================================== */
+function copyApplication(){
 
-async function loadDashboard(){
+    const text=document.getElementById("generatedApplication").value;
 
-    /*
-       Wenn kein Backend vorhanden ist,
-       werden Demo-Werte angezeigt.
-    */
+    navigator.clipboard.writeText(text);
 
-    if(
-        BACKEND_URL.includes(
-            "DEINE-VPS-IP"
-        )
-    ){
-
-        document
-            .getElementById(
-                "backendStatus"
-            )
-            .textContent =
-                "Backend nicht konfiguriert";
-
-        document
-            .getElementById(
-                "dashboardServerStatus"
-            )
-            .textContent =
-                "Nicht verbunden";
-
-        return;
-
-    }
-
-
-    try{
-
-        const data =
-            await apiRequest(
-                "/api/admin/dashboard"
-            );
-
-
-        document
-            .getElementById(
-                "dashboardPlayers"
-            )
-            .textContent =
-                data.players ??
-                0;
-
-
-        document
-            .getElementById(
-                "dashboardWhitelist"
-            )
-            .textContent =
-                data.whitelist ??
-                0;
-
-
-        document
-            .getElementById(
-                "dashboardJobs"
-            )
-            .textContent =
-                data.jobs ??
-                0;
-
-
-        document
-            .getElementById(
-                "dashboardPing"
-            )
-            .textContent =
-                data.ping ??
-                "--";
-
-
-        document
-            .getElementById(
-                "dashboardServerStatus"
-            )
-            .textContent =
-                data.online
-                ?
-                "Server Online"
-                :
-                "Server Offline";
-
-
-        document
-            .getElementById(
-                "dashboardServerIP"
-            )
-            .textContent =
-                data.ip ??
-                "-";
-
-
-        document
-            .getElementById(
-                "backendStatus"
-            )
-            .textContent =
-                "Verbunden";
-
-
-        document
-            .getElementById(
-                "backendLight"
-            )
-            .classList.remove(
-                "offline"
-            );
-
-    }
-    catch(error){
-
-        document
-            .getElementById(
-                "backendStatus"
-            )
-            .textContent =
-                "Backend nicht erreichbar";
-
-
-        document
-            .getElementById(
-                "backendLight"
-            )
-            .classList.add(
-                "offline"
-            );
-
-    }
+    showToast("Bewerbung kopiert.");
 
 }
 
 
-/* =====================================================
-   WHITELIST
-===================================================== */
+function joinSelectedDiscord(){
 
-async function loadWhitelist(){
+    if(!selectedDiscord){
 
-    const table =
-        document.getElementById(
-            "whitelistTable"
-        );
-
-
-    if(
-        BACKEND_URL.includes(
-            "DEINE-VPS-IP"
-        )
-    ){
-
-        table.innerHTML = `
-
-            <tr>
-
-                <td colspan="6">
-
-                    <span style="color:#718096">
-                        Backend noch nicht verbunden.
-                    </span>
-
-                </td>
-
-            </tr>
-
-        `;
+        showToast("Kein Discord ausgewählt.");
 
         return;
-    }
-
-
-    try{
-
-        const data =
-            await apiRequest(
-                "/api/admin/whitelist"
-            );
-
-
-        const applications =
-            data.applications ||
-            data ||
-            [];
-
-
-        if(
-            !applications.length
-        ){
-
-            table.innerHTML = `
-
-                <tr>
-
-                    <td colspan="6">
-
-                        Keine Bewerbungen vorhanden.
-
-                    </td>
-
-                </tr>
-
-            `;
-
-            return;
-
-        }
-
-
-        table.innerHTML =
-            applications
-            .map(
-                application => {
-
-                    const status =
-                        application.status ||
-                        "pending";
-
-
-                    return `
-
-                        <tr>
-
-                            <td>
-                                ${escapeHtml(
-                                    application.name ||
-                                    "-"
-                                )}
-                            </td>
-
-                            <td>
-                                ${escapeHtml(
-                                    application.age ||
-                                    "-"
-                                )}
-                            </td>
-
-                            <td>
-                                ${escapeHtml(
-                                    application.reason ||
-                                    "-"
-                                )}
-                            </td>
-
-                            <td>
-
-                                <span class="
-                                    status-badge
-                                    status-${status}
-                                ">
-
-                                    ${status}
-
-                                </span>
-
-                            </td>
-
-                            <td>
-                                ${escapeHtml(
-                                    application.date ||
-                                    application.createdAt ||
-                                    "-"
-                                )}
-                            </td>
-
-                            <td>
-
-                                ${
-                                    status === "pending"
-                                    ?
-
-                                    `
-
-                                    <button
-                                        class="btn btn-success"
-                                        onclick="whitelistAction('${escapeAttribute(application.id)}','approve')"
-                                    >
-                                        ✓
-                                    </button>
-
-                                    <button
-                                        class="btn btn-danger"
-                                        onclick="whitelistAction('${escapeAttribute(application.id)}','reject')"
-                                    >
-                                        ✕
-                                    </button>
-
-                                    `
-
-                                    :
-
-                                    "-"
-
-                                }
-
-                            </td>
-
-                        </tr>
-
-                    `;
-
-                }
-            )
-            .join("");
 
     }
-    catch(error){
 
-        table.innerHTML = `
-
-            <tr>
-
-                <td colspan="6">
-
-                    Fehler:
-                    ${escapeHtml(
-                        error.message
-                    )}
-
-                </td>
-
-            </tr>
-
-        `;
-
-    }
+    window.open(selectedDiscord,"_blank");
 
 }
 
 
-/* =====================================================
-   WHITELIST AKTION
-===================================================== */
+/* =========================================================
+   LOGIN
+========================================================= */
 
-async function whitelistAction(
-    id,
-    action
-){
+function login(event){
 
-    if(
-        currentRole !== "owner" &&
-        currentRole !== "admin"
-    ){
+    event.preventDefault();
 
-        showToast(
-            "Keine Berechtigung."
-        );
-
-        return;
-
-    }
-
-
-    try{
-
-        await apiRequest(
-            "/api/admin/whitelist/" +
-            id,
-            {
-
-                method:
-                    "PATCH",
-
-                body:
-                    JSON.stringify({
-                        action
-                    })
-
-            }
-        );
-
-
-        showToast(
-            action === "approve"
-            ?
-            "Whitelist angenommen."
-            :
-            "Whitelist abgelehnt."
-        );
-
-
-        loadWhitelist();
-
-    }
-    catch(error){
-
-        showToast(
-            error.message
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   SERVER SETTINGS
-===================================================== */
-
-async function saveServerSettings(){
-
-    if(
-        currentRole !== "owner"
-    ){
-
-        showToast(
-            "Nur der Owner darf Servereinstellungen ändern."
-        );
-
-        return;
-
-    }
-
-
-    const data = {
-
-        name:
-            document
-            .getElementById(
-                "serverNameInput"
-            )
-            .value,
-
-        ip:
-            document
-            .getElementById(
-                "serverIpInput"
-            )
-            .value,
-
-        maxPlayers:
-            Number(
-                document
-                .getElementById(
-                    "maxPlayersInput"
-                )
-                .value
-            ),
-
-        version:
-            document
-            .getElementById(
-                "serverVersionInput"
-            )
-            .value,
-
-        description:
-            document
-            .getElementById(
-                "serverDescriptionInput"
-            )
-            .value
-
-    };
-
-
-    if(
-        BACKEND_URL.includes(
-            "DEINE-VPS-IP"
-        )
-    ){
-
-        showToast(
-            "Backend-Adresse fehlt."
-        );
-
-        return;
-
-    }
-
-
-    try{
-
-        await apiRequest(
-            "/api/admin/server",
-            {
-
-                method:
-                    "PUT",
-
-                body:
-                    JSON.stringify(data)
-
-            }
-        );
-
-
-        showToast(
-            "Servereinstellungen gespeichert."
-        );
-
-    }
-    catch(error){
-
-        showToast(
-            error.message
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   SERVER AKTION
-===================================================== */
-
-async function serverAction(
-    action
-){
-
-    if(
-        currentRole !== "owner"
-    ){
-
-        showToast(
-            "Nur der Owner darf den Server steuern."
-        );
-
-        return;
-
-    }
-
-
-    try{
-
-        await apiRequest(
-            "/api/admin/server/action",
-            {
-
-                method:
-                    "POST",
-
-                body:
-                    JSON.stringify({
-                        action
-                    })
-
-            }
-        );
-
-
-        showToast(
-            "Serveraktion ausgeführt: " +
-            action
-        );
-
-    }
-    catch(error){
-
-        showToast(
-            error.message
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   PLAYERS
-===================================================== */
-
-async function loadPlayers(){
-
-    const table =
-        document.getElementById(
-            "playersTable"
-        );
-
-
-    if(
-        BACKEND_URL.includes(
-            "DEINE-VPS-IP"
-        )
-    ){
-
-        table.innerHTML = `
-
-            <tr>
-
-                <td colspan="6">
-
-                    Backend noch nicht verbunden.
-
-                </td>
-
-            </tr>
-
-        `;
-
-        return;
-
-    }
-
-
-    try{
-
-        const data =
-            await apiRequest(
-                "/api/admin/players"
-            );
-
-
-        const players =
-            data.players ||
-            data ||
-            [];
-
-
-        if(
-            !players.length
-        ){
-
-            table.innerHTML = `
-
-                <tr>
-
-                    <td colspan="6">
-
-                        Keine Spieler online.
-
-                    </td>
-
-                </tr>
-
-            `;
-
-            return;
-
-        }
-
-
-        table.innerHTML =
-            players
-            .map(
-                player => `
-
-                    <tr>
-
-                        <td>
-                            ${escapeHtml(
-                                player.id ||
-                                "-"
-                            )}
-                        </td>
-
-                        <td>
-                            ${escapeHtml(
-                                player.name ||
-                                "-"
-                            )}
-                        </td>
-
-                        <td>
-                            ${escapeHtml(
-                                player.job ||
-                                "-"
-                            )}
-                        </td>
-
-                        <td>
-                            ${escapeHtml(
-                                player.ping ||
-                                "-"
-                            )} ms
-                        </td>
-
-                        <td>
-
-                            <span class="
-                                status-badge
-                                status-approved
-                            ">
-                                ONLINE
-                            </span>
-
-                        </td>
-
-                        <td>
-
-                            <button
-                                class="btn btn-danger"
-                                onclick="kickPlayer('${escapeAttribute(player.id)}')"
-                            >
-                                Kick
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-                `
-            )
-            .join("");
-
-    }
-    catch(error){
-
-        table.innerHTML = `
-
-            <tr>
-
-                <td colspan="6">
-
-                    ${escapeHtml(
-                        error.message
-                    )}
-
-                </td>
-
-            </tr>
-
-        `;
-
-    }
-
-}
-
-
-/* =====================================================
-   PLAYER KICK
-===================================================== */
-
-async function kickPlayer(id){
-
-    if(
-        currentRole !== "owner"
-    ){
-
-        showToast(
-            "Nur der Owner darf Spieler verwalten."
-        );
-
-        return;
-
-    }
-
-
-    if(
-        !confirm(
-            "Spieler wirklich kicken?"
-        )
-    ){
-
-        return;
-
-    }
-
-
-    try{
-
-        await apiRequest(
-            "/api/admin/players/" +
-            id +
-            "/kick",
-            {
-
-                method:
-                    "POST"
-
-            }
-        );
-
-
-        showToast(
-            "Spieler wurde gekickt."
-        );
-
-
-        loadPlayers();
-
-    }
-    catch(error){
-
-        showToast(
-            error.message
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   FRAKTION SPEICHERN
-===================================================== */
-
-async function saveFaction(){
-
-    if(
-        currentRole !== "owner"
-    ){
-
-        showToast(
-            "Nur der Owner darf Fraktionen ändern."
-        );
-
-        return;
-
-    }
-
-
-    const data = {
-
-        id:
-            document
-            .getElementById(
-                "factionSelect"
-            )
-            .value,
-
-        name:
-            document
-            .getElementById(
-                "factionName"
-            )
-            .value,
-
-        description:
-            document
-            .getElementById(
-                "factionDescription"
-            )
-            .value
-
-    };
-
-
-    try{
-
-        await apiRequest(
-            "/api/admin/factions",
-            {
-
-                method:
-                    "PUT",
-
-                body:
-                    JSON.stringify(data)
-
-            }
-        );
-
-
-        showToast(
-            "Fraktion gespeichert."
-        );
-
-    }
-    catch(error){
-
-        showToast(
-            error.message
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   NEWS ERSTELLEN
-===================================================== */
-
-async function createNews(){
-
-    if(
-        currentRole !== "owner"
-    ){
-
-        showToast(
-            "Nur der Owner darf News erstellen."
-        );
-
-        return;
-
-    }
-
-
-    const data = {
-
-        title:
-            document
-            .getElementById(
-                "newsTitle"
-            )
-            .value,
-
-        category:
-            document
-            .getElementById(
-                "newsCategory"
-            )
-            .value,
-
-        text:
-            document
-            .getElementById(
-                "newsText"
-            )
-            .value
-
-    };
-
-
-    if(
-        !data.title ||
-        !data.text
-    ){
-
-        showToast(
-            "Bitte Titel und Text eingeben."
-        );
-
-        return;
-
-    }
-
-
-    try{
-
-        await apiRequest(
-            "/api/admin/news",
-            {
-
-                method:
-                    "POST",
-
-                body:
-                    JSON.stringify(data)
-
-            }
-        );
-
-
-        showToast(
-            "News veröffentlicht."
-        );
-
-
-        document
-            .getElementById(
-                "newsTitle"
-            )
-            .value = "";
-
-
-        document
-            .getElementById(
-                "newsText"
-            )
-            .value = "";
-
-
-        loadNews();
-
-    }
-    catch(error){
-
-        showToast(
-            error.message
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   NEWS LADEN
-===================================================== */
-
-async function loadNews(){
-
-    const list =
-        document.getElementById(
-            "newsList"
-        );
-
-
-    if(
-        BACKEND_URL.includes(
-            "DEINE-VPS-IP"
-        )
-    ){
-
-        list.innerHTML = `
-            <p style="color:#718096">
-                Backend noch nicht verbunden.
-            </p>
-        `;
-
-        return;
-
-    }
-
-
-    try{
-
-        const data =
-            await apiRequest(
-                "/api/admin/news"
-            );
-
-
-        const news =
-            data.news ||
-            data ||
-            [];
-
-
-        if(
-            !news.length
-        ){
-
-            list.innerHTML = `
-                <p style="color:#718096">
-                    Keine News vorhanden.
-                </p>
-            `;
-
-            return;
-
-        }
-
-
-        list.innerHTML =
-            news
-            .map(
-                item => `
-
-                    <div
-                        class="card"
-                        style="margin-bottom:10px"
-                    >
-
-                        <strong>
-                            ${escapeHtml(
-                                item.title ||
-                                "-"
-                            )}
-                        </strong>
-
-                        <p style="
-                            color:#718096;
-                            margin-top:6px;
-                        ">
-
-                            ${escapeHtml(
-                                item.text ||
-                                ""
-                            )}
-
-                        </p>
-
-                    </div>
-
-                `
-            )
-            .join("");
-
-    }
-    catch(error){
-
-        list.innerHTML = `
-            <p style="color:#ef4444">
-                ${escapeHtml(
-                    error.message
-                )}
-            </p>
-        `;
-
-    }
-
-}
-
-
-/* =====================================================
-   WEBSITE SETTINGS
-===================================================== */
-
-async function saveWebsiteSettings(){
-
-    if(
-        currentRole !== "owner"
-    ){
-
-        showToast(
-            "Nur der Owner darf Website-Einstellungen ändern."
-        );
-
-        return;
-
-    }
-
-
-    const data = {
-
-        name:
-            document
-            .getElementById(
-                "websiteName"
-            )
-            .value,
-
-        discord:
-            document
-            .getElementById(
-                "discordUrl"
-            )
-            .value,
-
-        heroTitle:
-            document
-            .getElementById(
-                "heroTitle"
-            )
-            .value,
-
-        heroDescription:
-            document
-            .getElementById(
-                "heroDescription"
-            )
-            .value
-
-    };
-
-
-    try{
-
-        await apiRequest(
-            "/api/admin/settings",
-            {
-
-                method:
-                    "PUT",
-
-                body:
-                    JSON.stringify(data)
-
-            }
-        );
-
-
-        showToast(
-            "Website-Einstellungen gespeichert."
-        );
-
-    }
-    catch(error){
-
-        showToast(
-            error.message
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   WARTUNGSMODUS
-===================================================== */
-
-async function maintenance(
-    enabled
-){
-
-    if(
-        currentRole !== "owner"
-    ){
-
-        showToast(
-            "Nur der Owner darf den Wartungsmodus ändern."
-        );
-
-        return;
-
-    }
-
-
-    try{
-
-        await apiRequest(
-            "/api/admin/maintenance",
-            {
-
-                method:
-                    "POST",
-
-                body:
-                    JSON.stringify({
-                        enabled
-                    })
-
-            }
-        );
-
-
-        showToast(
-            enabled
-            ?
-            "Wartungsmodus aktiviert."
-            :
-            "Wartungsmodus deaktiviert."
-        );
-
-    }
-    catch(error){
-
-        showToast(
-            error.message
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   ADMIN ERSTELLEN
-===================================================== */
-
-async function createAdmin(){
-
-    if(
-        currentRole !== "owner"
-    ){
-
-        showToast(
-            "Nur der Owner darf Admins erstellen."
-        );
-
-        return;
-
-    }
-
-
-    const email =
-        document
-        .getElementById(
-            "newAdminEmail"
-        )
+    const email=document.getElementById("loginEmail")
         .value
         .trim();
 
-    const password =
-        document
-        .getElementById(
-            "newAdminPassword"
-        )
+    const password=document.getElementById("loginPassword")
         .value;
 
+    const account=ACCOUNTS.find(a=>
+        a.email.toLowerCase()===email.toLowerCase()
+        &&
+        a.password===password
+    );
 
-    if(
-        !email ||
-        !password
-    ){
+    if(!account){
 
-        showToast(
-            "Bitte E-Mail und Passwort eingeben."
-        );
+        showToast("E-Mail oder Passwort falsch.");
 
         return;
 
     }
 
+    currentUser=account.email;
+
+    currentRole=account.role;
+
+    localStorage.setItem(
+        "rp_user",
+        currentUser
+    );
+
+    localStorage.setItem(
+        "rp_role",
+        currentRole
+    );
+
+    closeModal("loginModal");
+
+    applyPermissions();
+
+    showAdmin();
+
+    showToast(
+        currentRole==="owner"
+        ? "Als Owner angemeldet."
+        : "Als Admin angemeldet."
+    );
+
+}
+
+
+/* =========================================================
+   LOAD STATE
+========================================================= */
+
+function loadSavedState(){
+
+    currentUser=localStorage.getItem("rp_user");
+
+    currentRole=localStorage.getItem("rp_role");
+
+    if(currentUser && currentRole){
+
+        applyPermissions();
+
+    }
+
+}
+
+
+/* =========================================================
+   PERMISSIONS
+========================================================= */
+
+function applyPermissions(){
+
+    const ownerItems=document.querySelectorAll(".ownerOnly");
+
+    ownerItems.forEach(el=>{
+
+        el.style.display=
+            currentRole==="owner"
+            ? "block"
+            : "none";
+
+    });
+
+    const roleText=document.getElementById("adminRoleText");
+
+    const accountText=document.getElementById("adminAccountInfo");
+
+    if(currentRole==="owner"){
+
+        roleText.innerHTML="👑 Owner — Vollzugriff";
+
+    }else if(currentRole==="admin"){
+
+        roleText.innerHTML="🛡️ Admin — Whitelist";
+
+    }
+
+    if(currentUser){
+
+        accountText.innerHTML=
+            escapeHTML(currentUser)
+            +" — "
+            +(currentRole==="owner"
+                ?"Owner"
+                :"Admin");
+
+    }
+
+    renderWhitelist();
+
+}
+
+
+/* =========================================================
+   ADMIN NAV
+========================================================= */
+
+function showAdminPage(page,button){
+
+    if(
+        currentRole!=="owner"
+        &&
+        ["server","players","factions","newsAdmin","settings","admins"]
+            .includes(page)
+    ){
+
+        showToast("Nur der Owner hat Zugriff.");
+
+        return;
+
+    }
+
+    document.querySelectorAll(".adminPage")
+        .forEach(p=>p.classList.remove("active"));
+
+    const target=document.getElementById(
+        "admin-"+page
+    );
+
+    if(target){
+
+        target.classList.add("active");
+
+    }
+
+    document.querySelectorAll(".adminNav button")
+        .forEach(b=>b.classList.remove("active"));
+
+    if(button){
+
+        button.classList.add("active");
+
+    }
+
+    if(page==="whitelist"){
+
+        renderWhitelist();
+
+    }
+
+    if(page==="players"){
+
+        renderPlayers();
+
+    }
+
+}
+
+
+/* =========================================================
+   WHITELIST
+========================================================= */
+
+function renderWhitelist(){
+
+    const table=document.getElementById("whitelistTable");
+
+    if(!table)return;
+
+    table.innerHTML="";
+
+    if(whitelist.length===0){
+
+        table.innerHTML=`
+
+        <tr>
+            <td colspan="6" style="color:var(--muted)">
+                Keine Bewerbungen vorhanden.
+            </td>
+        </tr>
+
+        `;
+
+        return;
+
+    }
+
+    whitelist.forEach(app=>{
+
+        table.innerHTML += `
+
+        <tr>
+
+            <td>${escapeHTML(app.name)}</td>
+
+            <td>${escapeHTML(app.discord)}</td>
+
+            <td>${escapeHTML(app.faction)}</td>
+
+            <td>${escapeHTML(app.age)}</td>
+
+            <td>
+
+                <span class="status ${app.status}">
+                    ${escapeHTML(app.status)}
+                </span>
+
+            </td>
+
+            <td>
+
+                ${
+                    app.status==="pending"
+                    ? `
+                    <button
+                        class="btn success small"
+                        onclick="changeWhitelist(${app.id},'approved')"
+                    >
+                        ✓
+                    </button>
+
+                    <button
+                        class="btn danger small"
+                        onclick="changeWhitelist(${app.id},'rejected')"
+                    >
+                        ✕
+                    </button>
+                    `
+                    :
+                    "—"
+                }
+
+            </td>
+
+        </tr>
+
+        `;
+
+    });
+
+}
+
+
+function changeWhitelist(id,status){
+
+    if(
+        currentRole!=="owner"
+        &&
+        currentRole!=="admin"
+    ){
+
+        return;
+
+    }
+
+    const app=whitelist.find(a=>a.id===id);
+
+    if(!app)return;
+
+    app.status=status;
+
+    localStorage.setItem(
+        "rp_whitelist",
+        JSON.stringify(whitelist)
+    );
+
+    renderWhitelist();
+
+    showToast(
+        status==="approved"
+        ? "Bewerbung angenommen."
+        : "Bewerbung abgelehnt."
+    );
+
+}
+
+
+/* =========================================================
+   SERVER
+========================================================= */
+
+function updatePublicServer(){
+
+    document.getElementById("serverCardName")
+        .textContent=serverData.name;
+
+    document.getElementById("siteLogoName")
+        .textContent=serverData.name;
+
+    document.getElementById("footerName")
+        .textContent=serverData.name;
+
+    document.getElementById("serverIP")
+        .textContent=serverData.ip;
+
+    document.getElementById("serverVersion")
+        .textContent=serverData.version;
+
+    document.getElementById("serverPlayers")
+        .textContent=serverData.players;
+
+    document.getElementById("heroPlayers")
+        .textContent=serverData.players;
+
+    document.getElementById("serverMax")
+        .textContent=serverData.maxPlayers;
+
+    document.getElementById("heroMaxPlayers")
+        .textContent=serverData.maxPlayers;
+
+    const percent=Math.min(
+        100,
+        (serverData.players/serverData.maxPlayers)*100
+    );
+
+    document.getElementById("playerProgress")
+        .style.width=percent+"%";
+
+}
+
+
+function simulateLiveServer(){
+
+    /*
+      Demo-Live-System.
+
+      Für echte FiveM-Spielerzahlen muss hier später
+      deine Server/API-Anbindung angeschlossen werden.
+    */
+
+    serverData.players=
+        Math.max(
+            0,
+            Math.min(
+                serverData.maxPlayers,
+                serverData.players + Math.floor(Math.random()*7)-3
+            )
+        );
+
+    updatePublicServer();
+
+    const ping=
+        Math.floor(25+Math.random()*35);
+
+    document.getElementById("serverPing")
+        .textContent=ping+" ms";
+
+    document.getElementById("heroPing")
+        .textContent=ping+" ms";
+
+    document.getElementById("adminPing")
+        .textContent=ping+" ms";
+
+    document.getElementById("adminPlayers")
+        .textContent=serverData.players;
+
+    document.getElementById("adminServerStatus")
+        .textContent=serverData.status.toUpperCase();
+
+    document.getElementById("adminWhitelist")
+        .textContent=whitelist.length;
+
+}
+
+
+function copyServerIP(){
+
+    navigator.clipboard.writeText(serverData.ip);
+
+    showToast("Server-IP kopiert.");
+
+}
+
+
+function saveServerSettings(){
+
+    if(currentRole!=="owner"){
+
+        showToast("Nur der Owner darf das.");
+
+        return;
+
+    }
+
+    serverData.name=
+        document.getElementById("serverNameInput").value;
+
+    serverData.ip=
+        document.getElementById("serverIpInput").value;
+
+    serverData.maxPlayers=
+        Number(
+            document.getElementById("maxPlayersInput").value
+        ) || 128;
+
+    serverData.version=
+        document.getElementById("serverVersionInput").value;
+
+    localStorage.setItem(
+        "rp_server",
+        JSON.stringify(serverData)
+    );
+
+    updatePublicServer();
+
+    showToast("Servereinstellungen gespeichert.");
+
+}
+
+
+function setServerStatus(status){
+
+    if(currentRole!=="owner"){
+
+        showToast("Nur der Owner darf das.");
+
+        return;
+
+    }
+
+    serverData.status=status;
+
+    const statusText=
+        status==="online"
+        ? "SERVER ONLINE"
+        : status==="maintenance"
+        ? "WARTUNGSMODUS"
+        : "SERVER OFFLINE";
+
+    document.getElementById("heroStatus")
+        .textContent=statusText;
+
+    showToast(
+        "Serverstatus: "
+        +status
+    );
+
+}
+
+
+/* =========================================================
+   PLAYERS
+========================================================= */
+
+function renderPlayers(){
+
+    const table=document.getElementById("playersTable");
+
+    if(!table)return;
+
+    table.innerHTML="";
+
+    const fakePlayers=[
+        {
+            id:1,
+            name:"Max_Mustermann",
+            ping:32,
+            faction:"Polizei"
+        },
+        {
+            id:2,
+            name:"Feuerwehr_01",
+            ping:41,
+            faction:"Feuerwehr"
+        },
+        {
+            id:3,
+            name:"Medic_01",
+            ping:28,
+            faction:"Rettungsdienst"
+        }
+    ];
+
+    fakePlayers.forEach(player=>{
+
+        table.innerHTML += `
+
+        <tr>
+
+            <td>${player.id}</td>
+
+            <td>${escapeHTML(player.name)}</td>
+
+            <td>${player.ping} ms</td>
+
+            <td>${escapeHTML(player.faction)}</td>
+
+            <td>
+
+                <button
+                    class="btn danger small"
+                    onclick="kickPlayer('${escapeHTML(player.name)}')"
+                >
+                    Kick
+                </button>
+
+            </td>
+
+        </tr>
+
+        `;
+
+    });
+
+}
+
+
+function kickPlayer(name){
+
+    if(currentRole!=="owner"){
+
+        showToast("Nur der Owner darf Spieler kicken.");
+
+        return;
+
+    }
+
+    showToast(
+        name+" wurde für diese Demo getrennt."
+    );
+
+}
+
+
+/* =========================================================
+   FACTION ADMIN
+========================================================= */
+
+function loadFactionAdmin(){
+
+    const id=document.getElementById("factionSelect").value;
+
+    const faction=factions.find(f=>f.id===id);
+
+    if(!faction)return;
+
+    document.getElementById("factionName").value=
+        faction.name;
+
+    document.getElementById("factionDescription").value=
+        faction.description;
+
+    document.getElementById("factionDiscord").value=
+        faction.discord;
+
+}
+
+
+function saveFaction(){
+
+    if(currentRole!=="owner"){
+
+        showToast("Nur der Owner darf Fraktionen bearbeiten.");
+
+        return;
+
+    }
+
+    const id=document.getElementById("factionSelect").value;
+
+    const faction=factions.find(f=>f.id===id);
+
+    if(!faction)return;
+
+    faction.name=
+        document.getElementById("factionName").value;
+
+    faction.description=
+        document.getElementById("factionDescription").value;
+
+    faction.discord=
+        document.getElementById("factionDiscord").value;
+
+    renderFactions();
+
+    renderFactionSelect();
+
+    renderFactionAdminSelect();
+
+    showToast("Fraktion gespeichert.");
+
+}
+
+
+/* =========================================================
+   NEWS
+========================================================= */
+
+function renderNews(){
+
+    const container=document.getElementById("newsCards");
+
+    if(!container)return;
+
+    container.innerHTML="";
+
+    news.forEach(item=>{
+
+        container.innerHTML += `
+
+        <div class="card newsCard">
+
+            <div class="newsCategory">
+                ${escapeHTML(item.category)}
+            </div>
+
+            <h3>
+                ${escapeHTML(item.title)}
+            </h3>
+
+            <p>
+                ${escapeHTML(item.text)}
+            </p>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+
+function createNews(){
+
+    if(currentRole!=="owner"){
+
+        showToast("Nur der Owner darf News erstellen.");
+
+        return;
+
+    }
+
+    const title=
+        document.getElementById("newsTitle").value.trim();
+
+    const category=
+        document.getElementById("newsCategory").value.trim();
+
+    const text=
+        document.getElementById("newsText").value.trim();
+
+    if(!title || !text){
+
+        showToast("Titel und Text ausfüllen.");
+
+        return;
+
+    }
+
+    news.unshift({
+        title,
+        category:category || "News",
+        text
+    });
+
+    renderNews();
+
+    document.getElementById("newsTitle").value="";
+    document.getElementById("newsText").value="";
+
+    showToast("News veröffentlicht.");
+
+}
+
+
+/* =========================================================
+   WEBSITE SETTINGS
+========================================================= */
+
+function saveWebsiteSettings(){
+
+    if(currentRole!=="owner"){
+
+        showToast("Nur der Owner darf das.");
+
+        return;
+
+    }
+
+    const name=
+        document.getElementById("websiteName").value;
+
+    const heroTitle=
+        document.getElementById("heroTitleInput").value;
+
+    const heroDescription=
+        document.getElementById("heroDescriptionInput").value;
+
+    const discord=
+        document.getElementById("discordUrl").value;
+
+    document.getElementById("siteLogoName")
+        .textContent=name;
+
+    document.getElementById("footerName")
+        .textContent=name;
+
+    document.getElementById("heroTitle")
+        .textContent=heroTitle;
+
+    document.getElementById("heroDescription")
+        .textContent=heroDescription;
+
+    CONFIG.siteName=name;
+
+    CONFIG.discord=discord;
+
+    showToast("Website gespeichert.");
+
+}
+
+
+/* =========================================================
+   ADMIN ERSTELLEN
+========================================================= */
+
+function createAdmin(){
+
+    if(currentRole!=="owner"){
+
+        showToast("Nur der Owner darf Admins erstellen.");
+
+        return;
+
+    }
+
+    const email=
+        document.getElementById("newAdminEmail").value.trim();
+
+    const password=
+        document.getElementById("newAdminPassword").value;
+
+    if(!email || !password){
+
+        showToast("E-Mail und Passwort ausfüllen.");
+
+        return;
+
+    }
+
+    showToast(
+        "Demo-Admin "+email+" wurde erstellt."
+    );
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+function logout(){
+
+    localStorage.removeItem("rp_user");
+
+    localStorage.removeItem("rp_role");
+
+    currentUser=null;
+
+    currentRole=null;
+
+    showPublic();
+
+    showToast("Du wurdest ausgeloggt.");
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer;
+
+function showToast(message){
+
+    const toast=document.getElementById("toast");
+
+    toast.textContent=message;
+
+    toast.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer=setTimeout(()=>{
+
+        toast.classList.remove("show");
+
+    },3000);
+
+}
+
+
+/* =========================================================
+   SECURITY HELPER
+========================================================= */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================================================
+   CLOSE MODAL ON BACKGROUND
+========================================================= */
+
+document.querySelectorAll(".modal").forEach(modal=>{
+
+    modal.addEventListener("click",event=>{
+
+        if(event.target===modal){
+
+            modal.classList.remove("active");
+
+        }
+
+    });
+
+});
+
+
+/* =========================================================
+   LOAD SAVED SERVER DATA
+========================================================= */
+
+const savedServer=
+    localStorage.getItem("rp_server");
+
+if(savedServer){
 
     try{
 
-        await apiRequest(
-            "/api/admin/admins",
-            {
+        serverData=JSON.parse(savedServer);
 
-                method:
-                    "POST",
+    }catch(e){
 
-                body:
-                    JSON.stringify({
-                        email,
-                        password,
-                        role:
-                            "admin"
-                    })
-
-            }
-        );
-
-
-        showToast(
-            "Admin wurde erstellt."
-        );
-
-
-        document
-            .getElementById(
-                "newAdminEmail"
-            )
-            .value = "";
-
-
-        document
-            .getElementById(
-                "newAdminPassword"
-            )
-            .value = "";
-
-    }
-    catch(error){
-
-        showToast(
-            error.message
-        );
+        console.warn("Serverdaten konnten nicht geladen werden.");
 
     }
 
 }
-
-
-/* =====================================================
-   HTML SICHER AUSGEBEN
-===================================================== */
-
-function escapeHtml(
-    value
-){
-
-    return String(
-        value ?? ""
-    )
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-    .replace(
-        /</g,
-        "&lt;"
-    )
-    .replace(
-        />/g,
-        "&gt;"
-    )
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-    .replace(
-        /'/g,
-        "&#039;"
-    );
-
-}
-
-
-function escapeAttribute(
-    value
-){
-
-    return String(
-        value ?? ""
-    )
-    .replace(
-        /'/g,
-        "\\'"
-    );
-
-}
-
-
-/* =====================================================
-   FAKTISCHE LOGIN-ROLLE FÜR DIESE DEMO
-===================================================== */
-
-/*
-   Diese Funktion ermöglicht auch den direkten
-   Aufruf der admin.html nach dem Login.
-
-   Owner:
-   Owner@Game.com
-   Owner!!
-
-   Admin:
-   Admin@Game.com
-   299120
-*/
-
-function setupDemoRoles(){
-
-    /*
-       Falls noch keine Rolle gespeichert wurde,
-       wird nichts automatisch eingeloggt.
-
-       Die Rolle kommt normalerweise vom Login.
-    */
-
-    const savedUser =
-        localStorage.getItem(
-            "rp_user"
-        );
-
-
-    if(
-        savedUser
-    ){
-
-        try{
-
-            const user =
-                JSON.parse(
-                    savedUser
-                );
-
-
-            if(
-                user.email &&
-                user.email.toLowerCase() ===
-                OWNER_EMAIL.toLowerCase()
-            ){
-
-                currentRole =
-                    "owner";
-
-            }
-
-
-            if(
-                user.email &&
-                user.email.toLowerCase() ===
-                ADMIN_EMAIL.toLowerCase()
-            ){
-
-                currentRole =
-                    "admin";
-
-            }
-
-        }
-        catch(error){
-
-        }
-
-    }
-
-
-    const role =
-        localStorage.getItem(
-            "rp_role"
-        );
-
-
-    if(
-        role === "owner" ||
-        role === "admin"
-    ){
-
-        currentRole =
-            role;
-
-    }
-
-}
-
-
-/* =====================================================
-   START
-===================================================== */
-
-setupDemoRoles();
-
-detectUser();
-
-
-/* =====================================================
-   AUTOMATISCHE AKTUALISIERUNG
-===================================================== */
-
-setInterval(
-    () => {
-
-        if(
-            currentRole
-        ){
-
-            loadDashboard();
-
-        }
-
-    },
-    10000
-);
 
 </script>
 
