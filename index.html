@@ -4,55 +4,98 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>DEIN RP | German Roleplay</title>
+    <title>DEINRP | German Roleplay</title>
 
-    <!-- Socket.IO -->
+    <!-- Socket.IO für Live-Daten -->
     <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
 
     <style>
+
+        /* =========================================================
+           GRUNDLAGEN
+           ========================================================= */
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        :root {
-            --bg: #070a0f;
-            --bg2: #0d121a;
-            --card: rgba(18, 24, 34, 0.85);
-            --border: rgba(255,255,255,0.08);
-            --text: #ffffff;
-            --muted: #8f9aaa;
-            --accent: #e63946;
-            --accent2: #ff5964;
-            --green: #22c55e;
-            --yellow: #facc15;
-            --blue: #3b82f6;
-        }
-
         html {
             scroll-behavior: smooth;
         }
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background:
-                radial-gradient(circle at 20% 10%, rgba(230,57,70,.15), transparent 30%),
-                radial-gradient(circle at 80% 30%, rgba(59,130,246,.10), transparent 30%),
-                var(--bg);
-            color: var(--text);
-            min-height: 100vh;
+        :root {
+            --bg: #07090d;
+            --bg2: #0c1118;
+            --card: rgba(17, 23, 32, .88);
+            --card2: rgba(22, 29, 40, .95);
+
+            --text: #ffffff;
+            --muted: #929cab;
+
+            --accent: #e63946;
+            --accent2: #ff5964;
+
+            --green: #22c55e;
+            --red: #ef4444;
+            --yellow: #facc15;
+            --blue: #3b82f6;
+
+            --border: rgba(255,255,255,.08);
         }
 
-        /* NAVBAR */
+        body {
+            font-family:
+                Inter,
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 15% 10%,
+                    rgba(230,57,70,.15),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 85% 20%,
+                    rgba(59,130,246,.10),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    180deg,
+                    #07090d,
+                    #090d13
+                );
+
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        button,
+        input,
+        textarea {
+            font-family: inherit;
+        }
+
+        button,
+        .btn {
+            cursor: pointer;
+        }
+
+        /* =========================================================
+           NAVIGATION
+           ========================================================= */
 
         nav {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            height: 72px;
-            z-index: 1000;
+
+            height: 74px;
 
             display: flex;
             align-items: center;
@@ -60,15 +103,20 @@
 
             padding: 0 6%;
 
-            background: rgba(7,10,15,.78);
-            backdrop-filter: blur(18px);
+            z-index: 1000;
 
-            border-bottom: 1px solid var(--border);
+            background:
+                rgba(7,9,13,.78);
+
+            backdrop-filter: blur(20px);
+
+            border-bottom:
+                1px solid var(--border);
         }
 
         .logo {
-            font-size: 22px;
-            font-weight: 900;
+            font-size: 23px;
+            font-weight: 950;
             letter-spacing: 1px;
         }
 
@@ -85,6 +133,7 @@
         .nav-links a {
             color: #cbd5e1;
             text-decoration: none;
+            font-size: 14px;
             transition: .2s;
         }
 
@@ -97,53 +146,95 @@
             gap: 10px;
         }
 
-        button,
         .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
             border: none;
-            cursor: pointer;
             text-decoration: none;
+
             color: white;
-            font-weight: 700;
-            border-radius: 10px;
+
+            font-weight: 800;
+
+            border-radius: 11px;
+
             padding: 12px 18px;
-            transition: .2s;
+
+            transition:
+                transform .2s,
+                background .2s,
+                box-shadow .2s;
         }
 
-        .btn-primary {
-            background: var(--accent);
-        }
-
-        .btn-primary:hover {
-            background: var(--accent2);
+        .btn:hover {
             transform: translateY(-2px);
         }
 
+        .btn-primary {
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--accent),
+                    var(--accent2)
+                );
+
+            box-shadow:
+                0 10px 30px
+                rgba(230,57,70,.22);
+        }
+
+        .btn-primary:hover {
+            box-shadow:
+                0 14px 35px
+                rgba(230,57,70,.35);
+        }
+
         .btn-secondary {
-            background: rgba(255,255,255,.07);
-            border: 1px solid var(--border);
+            background:
+                rgba(255,255,255,.06);
+
+            border:
+                1px solid var(--border);
         }
 
         .btn-secondary:hover {
-            background: rgba(255,255,255,.12);
+            background:
+                rgba(255,255,255,.11);
         }
 
-        /* HERO */
+        /* =========================================================
+           HERO
+           ========================================================= */
 
         .hero {
             min-height: 100vh;
-            padding: 150px 6% 80px;
+
+            padding:
+                155px 6%
+                80px;
 
             display: grid;
-            grid-template-columns: 1.2fr .8fr;
-            gap: 50px;
+
+            grid-template-columns:
+                minmax(0, 1.2fr)
+                minmax(350px, .8fr);
+
+            gap: 60px;
+
             align-items: center;
         }
 
         .hero h1 {
-            font-size: clamp(50px, 7vw, 100px);
-            line-height: .95;
-            letter-spacing: -4px;
-            margin-bottom: 25px;
+            font-size:
+                clamp(50px, 7vw, 105px);
+
+            line-height: .92;
+
+            letter-spacing: -5px;
+
+            margin-bottom: 30px;
         }
 
         .hero h1 span {
@@ -151,100 +242,168 @@
         }
 
         .hero p {
-            max-width: 650px;
+            max-width: 680px;
+
             color: var(--muted);
+
             font-size: 19px;
+
             line-height: 1.7;
+
             margin-bottom: 30px;
         }
 
         .hero-buttons {
             display: flex;
-            gap: 15px;
+            gap: 14px;
             flex-wrap: wrap;
         }
 
-        /* SERVER CARD */
+        /* =========================================================
+           SERVER CARD
+           ========================================================= */
 
         .server-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 28px;
-            box-shadow: 0 30px 100px rgba(0,0,0,.4);
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(25,32,43,.96),
+                    rgba(12,16,23,.94)
+                );
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 25px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 35px 100px
+                rgba(0,0,0,.45);
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .server-card::before {
+            content: "";
+
+            position: absolute;
+
+            width: 220px;
+            height: 220px;
+
+            top: -100px;
+            right: -100px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(230,57,70,.12);
+
+            filter: blur(30px);
         }
 
         .server-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+
+            position: relative;
+
             margin-bottom: 25px;
         }
 
         .server-header h2 {
-            font-size: 22px;
+            font-size: 21px;
         }
 
         .status {
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 13px;
-            font-weight: bold;
+
+            font-size: 12px;
+            font-weight: 900;
         }
 
         .status-dot {
             width: 10px;
             height: 10px;
+
             border-radius: 50%;
+
             background: var(--green);
-            box-shadow: 0 0 15px var(--green);
+
+            box-shadow:
+                0 0 15px var(--green);
         }
 
         .status.offline .status-dot {
-            background: #ef4444;
-            box-shadow: 0 0 15px #ef4444;
+            background: var(--red);
+
+            box-shadow:
+                0 0 15px var(--red);
         }
 
         .player-number {
-            font-size: 52px;
-            font-weight: 900;
-            margin: 15px 0 5px;
+            font-size: 56px;
+            font-weight: 950;
+
+            position: relative;
         }
 
         .player-label {
             color: var(--muted);
+            margin-top: 3px;
         }
 
         .progress {
             height: 10px;
-            background: rgba(255,255,255,.07);
+
+            background:
+                rgba(255,255,255,.06);
+
             border-radius: 20px;
+
             overflow: hidden;
-            margin-top: 20px;
+
+            margin-top: 22px;
         }
 
         .progress-bar {
-            height: 100%;
             width: 0%;
-            background: linear-gradient(
-                90deg,
-                var(--accent),
-                #ff7b84
-            );
+            height: 100%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--accent),
+                    var(--accent2)
+                );
+
             border-radius: inherit;
-            transition: width .5s ease;
+
+            transition:
+                width .5s ease;
         }
 
         .server-info {
             margin-top: 25px;
+
             display: grid;
-            gap: 12px;
+
+            gap: 13px;
         }
 
         .info-row {
             display: flex;
-            justify-content: space-between;
+
+            justify-content:
+                space-between;
+
             color: var(--muted);
         }
 
@@ -252,7 +411,9 @@
             color: white;
         }
 
-        /* SECTIONS */
+        /* =========================================================
+           SECTIONS
+           ========================================================= */
 
         section {
             padding: 100px 6%;
@@ -272,35 +433,61 @@
             color: var(--muted);
         }
 
-        /* CARDS */
+        /* =========================================================
+           CARDS
+           ========================================================= */
 
         .cards {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+
+            grid-template-columns:
+                repeat(3, minmax(0,1fr));
+
             gap: 20px;
         }
 
         .card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
+            background:
+                var(--card);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 21px;
+
             padding: 30px;
-            transition: .25s;
+
+            transition:
+                transform .25s,
+                border .25s,
+                background .25s;
         }
 
         .card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(230,57,70,.4);
+            transform:
+                translateY(-7px);
+
+            border-color:
+                rgba(230,57,70,.4);
+
+            background:
+                var(--card2);
         }
 
         .icon {
-            width: 55px;
-            height: 55px;
-            border-radius: 15px;
+            width: 56px;
+            height: 56px;
+
             display: grid;
             place-items: center;
+
+            border-radius: 16px;
+
             font-size: 25px;
-            background: rgba(230,57,70,.12);
+
+            background:
+                rgba(230,57,70,.12);
+
             margin-bottom: 20px;
         }
 
@@ -310,28 +497,40 @@
 
         .card p {
             color: var(--muted);
-            line-height: 1.6;
+            line-height: 1.65;
         }
 
-        /* STATS */
+        /* =========================================================
+           STATS
+           ========================================================= */
 
         .stats {
             display: grid;
-            grid-template-columns: repeat(4,1fr);
+
+            grid-template-columns:
+                repeat(4,1fr);
+
             gap: 20px;
         }
 
         .stat {
             text-align: center;
-            background: var(--card);
-            border: 1px solid var(--border);
+
+            background:
+                var(--card);
+
+            border:
+                1px solid var(--border);
+
             padding: 35px;
+
             border-radius: 20px;
         }
 
         .stat-number {
             font-size: 42px;
-            font-weight: 900;
+            font-weight: 950;
+
             color: var(--accent);
         }
 
@@ -340,28 +539,44 @@
             margin-top: 8px;
         }
 
-        /* NEWS */
+        /* =========================================================
+           NEWS
+           ========================================================= */
 
         .news {
             display: grid;
-            grid-template-columns: repeat(3,1fr);
+
+            grid-template-columns:
+                repeat(3,1fr);
+
             gap: 20px;
         }
 
         .news-card {
-            background: var(--card);
-            border: 1px solid var(--border);
+            background:
+                var(--card);
+
+            border:
+                1px solid var(--border);
+
             border-radius: 20px;
+
             overflow: hidden;
         }
 
         .news-image {
-            height: 170px;
+            height: 175px;
+
             background:
+                radial-gradient(
+                    circle at 30% 30%,
+                    rgba(255,255,255,.12),
+                    transparent 25%
+                ),
                 linear-gradient(
                     135deg,
-                    rgba(230,57,70,.8),
-                    rgba(20,25,35,.9)
+                    rgba(230,57,70,.85),
+                    rgba(15,20,28,.95)
                 );
         }
 
@@ -371,6 +586,7 @@
 
         .news-content small {
             color: var(--accent);
+            font-weight: 900;
         }
 
         .news-content h3 {
@@ -382,64 +598,106 @@
             line-height: 1.6;
         }
 
-        /* FOOTER */
+        /* =========================================================
+           FOOTER
+           ========================================================= */
 
         footer {
-            border-top: 1px solid var(--border);
-            padding: 40px 6%;
+            border-top:
+                1px solid var(--border);
+
+            padding:
+                40px 6%;
+
             display: flex;
-            justify-content: space-between;
+
+            justify-content:
+                space-between;
+
             color: var(--muted);
         }
 
-        /* LIVE */
+        /* =========================================================
+           LIVE BOX
+           ========================================================= */
 
         .live-box {
             position: fixed;
+
             right: 20px;
             bottom: 20px;
-            z-index: 999;
 
-            background: rgba(10,15,22,.92);
-            border: 1px solid var(--border);
+            z-index: 1500;
+
+            background:
+                rgba(10,15,22,.92);
+
+            border:
+                1px solid var(--border);
+
             border-radius: 15px;
-            padding: 13px 17px;
+
+            padding:
+                13px 17px;
 
             display: flex;
+
             align-items: center;
+
             gap: 10px;
 
-            backdrop-filter: blur(15px);
-            box-shadow: 0 15px 50px rgba(0,0,0,.4);
+            backdrop-filter:
+                blur(15px);
+
+            box-shadow:
+                0 15px 50px
+                rgba(0,0,0,.4);
         }
 
         .live-light {
             width: 9px;
             height: 9px;
+
             border-radius: 50%;
-            background: var(--green);
-            box-shadow: 0 0 12px var(--green);
+
+            background:
+                var(--green);
+
+            box-shadow:
+                0 0 12px var(--green);
         }
 
         .live-light.offline {
-            background: #ef4444;
-            box-shadow: 0 0 12px #ef4444;
+            background:
+                var(--red);
+
+            box-shadow:
+                0 0 12px var(--red);
         }
 
-        /* MODAL */
+        /* =========================================================
+           MODAL
+           ========================================================= */
 
         .modal {
             position: fixed;
+
             inset: 0;
-            background: rgba(0,0,0,.75);
-            backdrop-filter: blur(8px);
+
+            z-index: 3000;
 
             display: none;
+
             align-items: center;
             justify-content: center;
 
-            z-index: 2000;
             padding: 20px;
+
+            background:
+                rgba(0,0,0,.78);
+
+            backdrop-filter:
+                blur(10px);
         }
 
         .modal.active {
@@ -448,11 +706,42 @@
 
         .modal-box {
             width: 100%;
-            max-width: 450px;
-            background: #101722;
-            border: 1px solid var(--border);
+            max-width: 460px;
+
+            background:
+                #101722;
+
+            border:
+                1px solid var(--border);
+
             border-radius: 22px;
+
             padding: 30px;
+
+            box-shadow:
+                0 30px 100px
+                rgba(0,0,0,.6);
+
+            animation:
+                modalOpen .2s ease;
+        }
+
+        @keyframes modalOpen {
+
+            from {
+                opacity: 0;
+                transform:
+                    translateY(15px)
+                    scale(.97);
+            }
+
+            to {
+                opacity: 1;
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+
         }
 
         .modal-box h2 {
@@ -461,31 +750,115 @@
 
         .input {
             width: 100%;
+
             padding: 14px;
+
             margin-bottom: 12px;
 
-            border-radius: 10px;
-            border: 1px solid var(--border);
+            border-radius: 11px;
 
-            background: #080c12;
+            border:
+                1px solid var(--border);
+
+            background:
+                #080c12;
+
             color: white;
+
             outline: none;
+
+            resize: vertical;
         }
 
         .input:focus {
-            border-color: var(--accent);
+            border-color:
+                var(--accent);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(230,57,70,.08);
         }
 
         .modal-actions {
             display: flex;
-            justify-content: flex-end;
+
+            justify-content:
+                flex-end;
+
             gap: 10px;
+
             margin-top: 10px;
         }
 
-        /* RESPONSIVE */
+        /* =========================================================
+           TOAST
+           ========================================================= */
 
-        @media(max-width:900px) {
+        .toast-container {
+            position: fixed;
+
+            top: 90px;
+            right: 20px;
+
+            z-index: 5000;
+
+            display: grid;
+
+            gap: 10px;
+        }
+
+        .toast {
+            min-width: 280px;
+
+            padding: 15px 18px;
+
+            border-radius: 13px;
+
+            background:
+                #111923;
+
+            border:
+                1px solid var(--border);
+
+            box-shadow:
+                0 15px 40px
+                rgba(0,0,0,.4);
+
+            animation:
+                toastIn .25s ease;
+        }
+
+        .toast.success {
+            border-left:
+                4px solid var(--green);
+        }
+
+        .toast.error {
+            border-left:
+                4px solid var(--red);
+        }
+
+        @keyframes toastIn {
+
+            from {
+                opacity: 0;
+                transform:
+                    translateX(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform:
+                    translateX(0);
+            }
+
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media(max-width: 950px) {
 
             .hero {
                 grid-template-columns: 1fr;
@@ -497,15 +870,31 @@
             }
 
             .stats {
-                grid-template-columns: repeat(2,1fr);
+                grid-template-columns:
+                    repeat(2,1fr);
+            }
+
+        }
+
+        @media(max-width: 650px) {
+
+            nav {
+                padding: 0 20px;
             }
 
             .nav-links {
                 display: none;
             }
-        }
 
-        @media(max-width:500px) {
+            .hero {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            section {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
 
             .hero h1 {
                 font-size: 55px;
@@ -519,13 +908,26 @@
                 flex-direction: column;
                 gap: 10px;
             }
+
+            .live-box {
+                right: 10px;
+                left: 10px;
+                bottom: 10px;
+                justify-content: center;
+            }
+
         }
+
     </style>
 </head>
 
+
 <body>
 
-<!-- NAVIGATION -->
+
+<!-- =========================================================
+     NAVIGATION
+     ========================================================= -->
 
 <nav>
 
@@ -533,52 +935,114 @@
         DEIN<span>RP</span>
     </div>
 
+
     <ul class="nav-links">
-        <li><a href="#start">Start</a></li>
-        <li><a href="#fraktionen">Fraktionen</a></li>
-        <li><a href="#news">News</a></li>
-        <li><a href="#regeln">Regeln</a></li>
+
+        <li>
+            <a href="#start">
+                Start
+            </a>
+        </li>
+
+        <li>
+            <a href="#fraktionen">
+                Fraktionen
+            </a>
+        </li>
+
+        <li>
+            <a href="#news">
+                News
+            </a>
+        </li>
+
+        <li>
+            <a href="#regeln">
+                Regeln
+            </a>
+        </li>
+
     </ul>
 
+
     <div class="nav-buttons">
-        <button class="btn btn-secondary" onclick="openLogin()">
+
+        <button
+            class="btn btn-secondary"
+            onclick="openLogin()">
+
             Login
+
         </button>
 
-        <a href="#server" class="btn btn-primary">
+
+        <a
+            href="#server"
+            class="btn btn-primary">
+
             Spielen
+
         </a>
+
     </div>
 
 </nav>
 
 
-<!-- HERO -->
 
-<section class="hero" id="start">
+<!-- =========================================================
+     HERO
+     ========================================================= -->
+
+<section
+    class="hero"
+    id="start">
+
 
     <div>
 
         <h1>
+
             Deine Stadt.<br>
-            Deine <span>Geschichte.</span>
+
+            Deine
+            <span>
+                Geschichte.
+            </span>
+
         </h1>
 
+
         <p>
-            Willkommen auf DEINRP – einem modernen deutschen
-            FiveM Roleplay Server. Erstelle deinen Charakter,
-            finde deinen Weg und werde Teil unserer Community.
+
+            Willkommen auf DEINRP –
+            einem modernen deutschen
+            FiveM Roleplay Server.
+
+            Erstelle deinen Charakter,
+            finde deinen Weg und werde
+            Teil unserer Community.
+
         </p>
+
 
         <div class="hero-buttons">
 
-            <a href="#server" class="btn btn-primary">
+            <a
+                href="#server"
+                class="btn btn-primary">
+
                 Server spielen
+
             </a>
 
-            <button class="btn btn-secondary"
-                    onclick="openApplication()">
+
+            <button
+                class="btn btn-secondary"
+                onclick="openApplication()">
+
                 Whitelist bewerben
+
             </button>
 
         </div>
@@ -586,25 +1050,40 @@
     </div>
 
 
+
     <!-- SERVER STATUS -->
 
-    <div class="server-card" id="server">
+    <div
+        class="server-card"
+        id="server">
+
 
         <div class="server-header">
 
-            <h2>Serverstatus</h2>
+            <h2>
+                Serverstatus
+            </h2>
 
-            <div class="status" id="serverStatus">
 
-                <span class="status-dot"></span>
+            <div
+                class="status"
+                id="serverStatus">
 
-                <span id="statusText">
+                <span
+                    class="status-dot">
+                </span>
+
+                <span
+                    id="statusText">
+
                     VERBINDE...
+
                 </span>
 
             </div>
 
         </div>
+
 
 
         <div class="player-number">
@@ -614,15 +1093,18 @@
             </span>
 
             /
-            
+
             <span id="maxPlayers">
                 64
             </span>
 
         </div>
 
+
         <div class="player-label">
+
             Spieler online
+
         </div>
 
 
@@ -636,31 +1118,74 @@
         </div>
 
 
+
         <div class="server-info">
 
-            <div class="info-row">
-                <span>Server</span>
-                <strong>DEINRP</strong>
-            </div>
 
             <div class="info-row">
-                <span>Modus</span>
-                <strong>German RP</strong>
+
+                <span>
+                    Server
+                </span>
+
+                <strong>
+                    DEINRP
+                </strong>
+
             </div>
 
+
             <div class="info-row">
-                <span>Version</span>
+
+                <span>
+                    Modus
+                </span>
+
+                <strong>
+                    German RP
+                </strong>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span>
+                    Version
+                </span>
+
                 <strong id="serverVersion">
                     —
                 </strong>
+
             </div>
 
+
             <div class="info-row">
-                <span>Ping</span>
+
+                <span>
+                    Ping
+                </span>
+
                 <strong id="serverPing">
                     —
                 </strong>
+
             </div>
+
+
+            <div class="info-row">
+
+                <span>
+                    Status
+                </span>
+
+                <strong id="serverConnection">
+                    —
+                </strong>
+
+            </div>
+
 
         </div>
 
@@ -669,76 +1194,117 @@
 </section>
 
 
-<!-- FEATURES -->
+
+<!-- =========================================================
+     FEATURES
+     ========================================================= -->
 
 <section>
 
+
     <div class="section-title">
 
-        <h2>Dein Roleplay</h2>
+        <h2>
+            Dein Roleplay
+        </h2>
 
         <p>
-            Alles, was du für dein nächstes Abenteuer brauchst.
+            Alles, was du für dein
+            nächstes Abenteuer brauchst.
         </p>
 
     </div>
 
 
+
     <div class="cards">
 
+
         <div class="card">
 
-            <div class="icon">🎭</div>
+            <div class="icon">
+                🎭
+            </div>
 
-            <h3>Realistisches RP</h3>
+            <h3>
+                Realistisches RP
+            </h3>
 
             <p>
-                Erstelle deinen eigenen Charakter und
-                schreibe deine persönliche Geschichte.
+
+                Erstelle deinen eigenen
+                Charakter und schreibe
+                deine persönliche Geschichte.
+
             </p>
 
         </div>
 
 
+
         <div class="card">
 
-            <div class="icon">🚓</div>
+            <div class="icon">
+                🚓
+            </div>
 
-            <h3>Viele Fraktionen</h3>
+            <h3>
+                Viele Fraktionen
+            </h3>
 
             <p>
-                Polizei, Feuerwehr, Rettungsdienst
-                und viele weitere Möglichkeiten.
+
+                Polizei, Feuerwehr,
+                Rettungsdienst und
+                viele weitere Möglichkeiten.
+
             </p>
 
         </div>
 
 
+
         <div class="card">
 
-            <div class="icon">🌐</div>
+            <div class="icon">
+                🌐
+            </div>
 
-            <h3>Aktive Community</h3>
+            <h3>
+                Aktive Community
+            </h3>
 
             <p>
-                Spiele gemeinsam mit anderen Spielern
-                und erlebe dynamische Situationen.
+
+                Spiele gemeinsam
+                mit anderen Spielern
+                und erlebe dynamische
+                Situationen.
+
             </p>
 
         </div>
+
 
     </div>
 
 </section>
 
 
-<!-- FRAKTIONEN -->
 
-<section id="fraktionen">
+<!-- =========================================================
+     FRAKTIONEN
+     ========================================================= -->
+
+<section
+    id="fraktionen">
+
 
     <div class="section-title">
 
-        <h2>Fraktionen</h2>
+        <h2>
+            Fraktionen
+        </h2>
 
         <p>
             Finde deinen Platz in der Stadt.
@@ -747,77 +1313,114 @@
     </div>
 
 
+
     <div class="cards">
 
+
         <div class="card">
 
-            <div class="icon">🚓</div>
+            <div class="icon">
+                🚓
+            </div>
 
-            <h3>Polizei</h3>
+            <h3>
+                Polizei
+            </h3>
 
             <p>
-                Sorge für Sicherheit, bearbeite
-                Einsätze und halte dich an die Gesetze.
+
+                Sorge für Sicherheit,
+                bearbeite Einsätze und
+                halte dich an die Gesetze.
+
             </p>
 
         </div>
 
 
+
         <div class="card">
 
-            <div class="icon">🚒</div>
+            <div class="icon">
+                🚒
+            </div>
 
-            <h3>Feuerwehr</h3>
+            <h3>
+                Feuerwehr
+            </h3>
 
             <p>
-                Brände, technische Hilfeleistungen
-                und spannende Rettungseinsätze.
+
+                Brände, technische
+                Hilfeleistungen und
+                spannende Einsätze.
+
             </p>
 
         </div>
 
 
+
         <div class="card">
 
-            <div class="icon">🚑</div>
+            <div class="icon">
+                🚑
+            </div>
 
-            <h3>Rettungsdienst</h3>
+            <h3>
+                Rettungsdienst
+            </h3>
 
             <p>
-                Versorge Verletzte und arbeite
-                mit anderen Einsatzkräften zusammen.
+
+                Versorge Verletzte
+                und arbeite mit anderen
+                Einsatzkräften zusammen.
+
             </p>
 
         </div>
+
 
     </div>
 
 </section>
 
 
-<!-- LIVE STATS -->
+
+<!-- =========================================================
+     LIVE STATS
+     ========================================================= -->
 
 <section>
 
+
     <div class="section-title">
 
-        <h2>Server live</h2>
+        <h2>
+            Server live
+        </h2>
 
         <p>
-            Diese Werte werden automatisch aktualisiert.
+            Diese Werte werden automatisch
+            aktualisiert.
         </p>
 
     </div>
 
 
+
     <div class="stats">
+
 
         <div class="stat">
 
             <div
                 class="stat-number"
                 id="statPlayers">
+
                 0
+
             </div>
 
             <div class="stat-label">
@@ -827,12 +1430,15 @@
         </div>
 
 
+
         <div class="stat">
 
             <div
                 class="stat-number"
                 id="statJobs">
+
                 4
+
             </div>
 
             <div class="stat-label">
@@ -842,12 +1448,15 @@
         </div>
 
 
+
         <div class="stat">
 
             <div
                 class="stat-number"
                 id="statUptime">
+
                 —
+
             </div>
 
             <div class="stat-label">
@@ -857,12 +1466,15 @@
         </div>
 
 
+
         <div class="stat">
 
             <div
                 class="stat-number"
                 id="statPing">
+
                 —
+
             </div>
 
             <div class="stat-label">
@@ -871,18 +1483,26 @@
 
         </div>
 
+
     </div>
 
 </section>
 
 
-<!-- NEWS -->
 
-<section id="news">
+<!-- =========================================================
+     NEWS
+     ========================================================= -->
+
+<section
+    id="news">
+
 
     <div class="section-title">
 
-        <h2>News</h2>
+        <h2>
+            News
+        </h2>
 
         <p>
             Neuigkeiten aus unserer Stadt.
@@ -891,27 +1511,9 @@
     </div>
 
 
+
     <div class="news">
 
-        <div class="news-card">
-
-            <div class="news-image"></div>
-
-            <div class="news-content">
-
-                <small>SERVER</small>
-
-                <h3>Willkommen auf DEINRP</h3>
-
-                <p>
-                    Unser neuer Roleplay Server ist
-                    für euch geöffnet.
-                </p>
-
-            </div>
-
-        </div>
-
 
         <div class="news-card">
 
@@ -919,18 +1521,26 @@
 
             <div class="news-content">
 
-                <small>COMMUNITY</small>
+                <small>
+                    SERVER
+                </small>
 
-                <h3>Neue Fraktionen</h3>
+                <h3>
+                    Willkommen auf DEINRP
+                </h3>
 
                 <p>
-                    Weitere Organisationen und
-                    Fraktionen werden bald hinzugefügt.
+
+                    Unser neuer Roleplay
+                    Server ist für euch
+                    geöffnet.
+
                 </p>
 
             </div>
 
         </div>
+
 
 
         <div class="news-card">
@@ -939,31 +1549,74 @@
 
             <div class="news-content">
 
-                <small>UPDATE</small>
+                <small>
+                    COMMUNITY
+                </small>
 
-                <h3>Live-System</h3>
+                <h3>
+                    Neue Fraktionen
+                </h3>
 
                 <p>
-                    Die Webseite ist jetzt direkt
-                    mit dem Server verbunden.
+
+                    Weitere Organisationen
+                    und Fraktionen werden
+                    bald hinzugefügt.
+
                 </p>
 
             </div>
 
         </div>
+
+
+
+        <div class="news-card">
+
+            <div class="news-image"></div>
+
+            <div class="news-content">
+
+                <small>
+                    UPDATE
+                </small>
+
+                <h3>
+                    Live-System
+                </h3>
+
+                <p>
+
+                    Die Webseite wird
+                    direkt mit dem
+                    FiveM Server verbunden.
+
+                </p>
+
+            </div>
+
+        </div>
+
 
     </div>
 
 </section>
 
 
-<!-- REGELN -->
 
-<section id="regeln">
+<!-- =========================================================
+     REGELN
+     ========================================================= -->
+
+<section
+    id="regeln">
+
 
     <div class="section-title">
 
-        <h2>Serverregeln</h2>
+        <h2>
+            Serverregeln
+        </h2>
 
         <p>
             Fair Play steht an erster Stelle.
@@ -972,55 +1625,82 @@
     </div>
 
 
+
     <div class="cards">
 
+
         <div class="card">
 
-            <div class="icon">⚖️</div>
+            <div class="icon">
+                ⚖️
+            </div>
 
-            <h3>Respekt</h3>
+            <h3>
+                Respekt
+            </h3>
 
             <p>
-                Behandle andere Spieler respektvoll
-                und fair.
+
+                Behandle andere Spieler
+                respektvoll und fair.
+
             </p>
 
         </div>
 
 
+
         <div class="card">
 
-            <div class="icon">🎭</div>
+            <div class="icon">
+                🎭
+            </div>
 
-            <h3>Roleplay</h3>
+            <h3>
+                Roleplay
+            </h3>
 
             <p>
-                Bleibe im Charakter und spiele
-                realistisch.
+
+                Bleibe im Charakter
+                und spiele realistisch.
+
             </p>
 
         </div>
 
 
+
         <div class="card">
 
-            <div class="icon">🚫</div>
+            <div class="icon">
+                🚫
+            </div>
 
-            <h3>Kein Trolling</h3>
+            <h3>
+                Kein Trolling
+            </h3>
 
             <p>
-                Absichtliches Stören des Roleplays
-                ist nicht erlaubt.
+
+                Absichtliches Stören
+                des Roleplays ist
+                nicht erlaubt.
+
             </p>
 
         </div>
+
 
     </div>
 
 </section>
 
 
-<!-- FOOTER -->
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
 
 <footer>
 
@@ -1035,7 +1715,10 @@
 </footer>
 
 
-<!-- LIVE CONNECTION -->
+
+<!-- =========================================================
+     LIVE CONNECTION BOX
+     ========================================================= -->
 
 <div class="live-box">
 
@@ -1044,20 +1727,43 @@
         id="liveLight">
     </span>
 
-    <span id="liveText">
-        Verbinde mit Server...
+    <span
+        id="liveText">
+
+        Verbinde mit Live-System...
+
     </span>
 
 </div>
 
 
-<!-- LOGIN MODAL -->
 
-<div class="modal" id="loginModal">
+<!-- =========================================================
+     TOAST CONTAINER
+     ========================================================= -->
+
+<div
+    class="toast-container"
+    id="toastContainer">
+</div>
+
+
+
+<!-- =========================================================
+     LOGIN MODAL
+     ========================================================= -->
+
+<div
+    class="modal"
+    id="loginModal">
+
 
     <div class="modal-box">
 
-        <h2>Login</h2>
+        <h2>
+            Login
+        </h2>
+
 
         <input
             class="input"
@@ -1065,24 +1771,31 @@
             type="email"
             placeholder="E-Mail">
 
+
         <input
             class="input"
             id="loginPassword"
             type="password"
             placeholder="Passwort">
 
+
         <div class="modal-actions">
 
             <button
                 class="btn btn-secondary"
                 onclick="closeLogin()">
+
                 Abbrechen
+
             </button>
+
 
             <button
                 class="btn btn-primary"
                 onclick="login()">
+
                 Einloggen
+
             </button>
 
         </div>
@@ -1092,18 +1805,28 @@
 </div>
 
 
-<!-- APPLICATION MODAL -->
 
-<div class="modal" id="applicationModal">
+<!-- =========================================================
+     WHITELIST MODAL
+     ========================================================= -->
+
+<div
+    class="modal"
+    id="applicationModal">
+
 
     <div class="modal-box">
 
-        <h2>Whitelist Bewerbung</h2>
+        <h2>
+            Whitelist Bewerbung
+        </h2>
+
 
         <input
             class="input"
             id="applicationName"
             placeholder="Dein Name">
+
 
         <input
             class="input"
@@ -1111,25 +1834,31 @@
             type="number"
             placeholder="Alter">
 
+
         <textarea
             class="input"
             id="applicationReason"
             rows="5"
-            placeholder="Warum möchtest du bei uns spielen?">
-        </textarea>
+            placeholder="Warum möchtest du bei uns spielen?"></textarea>
+
 
         <div class="modal-actions">
 
             <button
                 class="btn btn-secondary"
                 onclick="closeApplication()">
+
                 Abbrechen
+
             </button>
+
 
             <button
                 class="btn btn-primary"
                 onclick="sendApplication()">
+
                 Bewerbung senden
+
             </button>
 
         </div>
@@ -1139,105 +1868,386 @@
 </div>
 
 
+
 <script>
 
 /* =========================================================
-   LIVE FIVE M SERVER CONNECTION
+   KONFIGURATION
    ========================================================= */
 
-const BACKEND_URL = "http://DEINE-VPS-IP:3000";
+/*
+    HIER DIE IP ODER DOMAIN DEINES VPS EINTRAGEN.
 
-let socket;
+    Beispiel:
+
+    const BACKEND_URL =
+        "http://123.123.123.123:3000";
+
+    Bei HTTPS später:
+
+    const BACKEND_URL =
+        "https://rp.deinedomain.de";
+*/
+
+const BACKEND_URL =
+    "http://DEINE-VPS-IP:3000";
 
 
 /*
-   Verbindung zum Node.js Backend
+    FiveM Serveradresse
 */
+
+const FIVEM_SERVER_IP =
+    "DEINE-SERVER-IP:30120";
+
+
+
+/* =========================================================
+   GLOBALE VARIABLEN
+   ========================================================= */
+
+let socket = null;
+
+let connected = false;
+
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+function showToast(
+    message,
+    type = "success"
+) {
+
+    const container =
+        document.getElementById(
+            "toastContainer"
+        );
+
+
+    const toast =
+        document.createElement(
+            "div"
+        );
+
+
+    toast.className =
+        "toast " + type;
+
+
+    toast.textContent =
+        message;
+
+
+    container.appendChild(
+        toast
+    );
+
+
+    setTimeout(() => {
+
+        toast.remove();
+
+    }, 3500);
+
+}
+
+
+
+/* =========================================================
+   LIVE SOCKET.IO VERBINDUNG
+   ========================================================= */
 
 function connectLive() {
 
+    console.log(
+        "Verbinde mit:",
+        BACKEND_URL
+    );
+
+
     try {
 
-        socket = io(BACKEND_URL, {
-            transports: ["websocket", "polling"]
-        });
+        socket = io(
+            BACKEND_URL,
+            {
+                transports: [
+                    "websocket",
+                    "polling"
+                ],
+
+                reconnection: true,
+
+                reconnectionAttempts:
+                    Infinity,
+
+                reconnectionDelay:
+                    1000,
+
+                reconnectionDelayMax:
+                    5000
+            }
+        );
 
 
-        socket.on("connect", () => {
 
-            console.log("Live-System verbunden");
+        /* -----------------------------------------------------
+           VERBUNDEN
+           ----------------------------------------------------- */
 
-            setLiveStatus(
-                true,
-                "Live verbunden"
-            );
+        socket.on(
+            "connect",
+            () => {
 
-            setServerStatus(
-                true,
-                "ONLINE"
-            );
-
-        });
+                connected = true;
 
 
-        socket.on("disconnect", () => {
-
-            console.log("Live-System getrennt");
-
-            setLiveStatus(
-                false,
-                "Verbindung getrennt"
-            );
-
-            setServerStatus(
-                false,
-                "OFFLINE"
-            );
-
-        });
+                console.log(
+                    "Live-System verbunden."
+                );
 
 
-        /*
-           LIVE SPIELER UPDATE
-        */
-
-        socket.on("serverUpdate", (data) => {
-
-            updateServer(data);
-
-        });
+                setLiveStatus(
+                    true,
+                    "Live verbunden"
+                );
 
 
-        /*
+                setServerStatus(
+                    true,
+                    "ONLINE"
+                );
+
+
+                document.getElementById(
+                    "serverConnection"
+                ).textContent =
+                    "Verbunden";
+
+
+
+                /*
+                    Serverdaten anfordern
+                */
+
+                socket.emit(
+                    "requestServerStatus"
+                );
+
+            }
+        );
+
+
+
+        /* -----------------------------------------------------
+           GETRENNT
+           ----------------------------------------------------- */
+
+        socket.on(
+            "disconnect",
+            () => {
+
+                connected = false;
+
+
+                console.log(
+                    "Live-System getrennt."
+                );
+
+
+                setLiveStatus(
+                    false,
+                    "Verbindung getrennt"
+                );
+
+
+                setServerStatus(
+                    false,
+                    "OFFLINE"
+                );
+
+
+                document.getElementById(
+                    "serverConnection"
+                ).textContent =
+                    "Getrennt";
+
+            }
+        );
+
+
+
+        /* -----------------------------------------------------
+           VERBINDUNGSFEHLER
+           ----------------------------------------------------- */
+
+        socket.on(
+            "connect_error",
+            error => {
+
+                console.error(
+                    "Socket Fehler:",
+                    error
+                );
+
+
+                setLiveStatus(
+                    false,
+                    "Server nicht erreichbar"
+                );
+
+            }
+        );
+
+
+
+        /* -----------------------------------------------------
+           SERVER UPDATE
+           ----------------------------------------------------- */
+
+        socket.on(
+            "serverUpdate",
+            data => {
+
+                console.log(
+                    "Server Update:",
+                    data
+                );
+
+
+                updateServer(
+                    data
+                );
+
+            }
+        );
+
+
+
+        /* -----------------------------------------------------
            SERVER ONLINE
-        */
+           ----------------------------------------------------- */
 
-        socket.on("serverOnline", (data) => {
+        socket.on(
+            "serverOnline",
+            data => {
 
-            updateServer(data);
+                updateServer(
+                    data
+                );
 
-        });
+            }
+        );
 
 
-        /*
+
+        /* -----------------------------------------------------
            SERVER OFFLINE
-        */
+           ----------------------------------------------------- */
 
-        socket.on("serverOffline", () => {
+        socket.on(
+            "serverOffline",
+            () => {
 
-            updateServer({
-                online: false,
-                players: 0,
-                maxPlayers: 64
-            });
+                updateServer({
 
-        });
+                    online: false,
+
+                    players: 0,
+
+                    maxPlayers: 64
+
+                });
+
+            }
+        );
+
+
+
+        /* -----------------------------------------------------
+           SPIELER JOIN
+           ----------------------------------------------------- */
+
+        socket.on(
+            "playerJoined",
+            data => {
+
+                if (
+                    data &&
+                    data.players !== undefined
+                ) {
+
+                    updateServer(
+                        data
+                    );
+
+                }
+
+            }
+        );
+
+
+
+        /* -----------------------------------------------------
+           SPIELER LEAVE
+           ----------------------------------------------------- */
+
+        socket.on(
+            "playerLeft",
+            data => {
+
+                if (
+                    data &&
+                    data.players !== undefined
+                ) {
+
+                    updateServer(
+                        data
+                    );
+
+                }
+
+            }
+        );
+
+
+
+        /* -----------------------------------------------------
+           ALLGEMEINES LIVE UPDATE
+           ----------------------------------------------------- */
+
+        socket.on(
+            "liveUpdate",
+            data => {
+
+                if (!data) {
+                    return;
+                }
+
+
+                if (
+                    data.server
+                ) {
+
+                    updateServer(
+                        data.server
+                    );
+
+                }
+
+            }
+        );
 
     }
 
     catch(error) {
 
-        console.error(error);
+        console.error(
+            error
+        );
+
 
         setLiveStatus(
             false,
@@ -1249,39 +2259,65 @@ function connectLive() {
 }
 
 
+
 /* =========================================================
-   SERVER UPDATE
+   SERVERDATEN AKTUALISIEREN
    ========================================================= */
 
-function updateServer(data) {
+function updateServer(
+    data
+) {
+
+    if (!data) {
+        return;
+    }
+
 
     const players =
-        Number(data.players || 0);
+        Number(
+            data.players ?? 0
+        );
+
 
     const maxPlayers =
-        Number(data.maxPlayers || 64);
+        Number(
+            data.maxPlayers ?? 64
+        );
 
+
+
+    /* Spieler */
 
     document.getElementById(
         "players"
-    ).textContent = players;
+    ).textContent =
+        players;
 
 
     document.getElementById(
         "maxPlayers"
-    ).textContent = maxPlayers;
+    ).textContent =
+        maxPlayers;
 
 
     document.getElementById(
         "statPlayers"
-    ).textContent = players;
+    ).textContent =
+        players;
 
+
+
+    /* Fortschrittsbalken */
 
     const percentage =
-        Math.min(
-            100,
-            (players / maxPlayers) * 100
-        );
+        maxPlayers > 0
+            ? Math.min(
+                100,
+                (players /
+                maxPlayers) *
+                100
+            )
+            : 0;
 
 
     document.getElementById(
@@ -1290,7 +2326,12 @@ function updateServer(data) {
         percentage + "%";
 
 
-    if (data.online === false) {
+
+    /* Serverstatus */
+
+    if (
+        data.online === false
+    ) {
 
         setServerStatus(
             false,
@@ -1298,6 +2339,7 @@ function updateServer(data) {
         );
 
     }
+
     else {
 
         setServerStatus(
@@ -1308,7 +2350,12 @@ function updateServer(data) {
     }
 
 
-    if (data.version) {
+
+    /* Version */
+
+    if (
+        data.version
+    ) {
 
         document.getElementById(
             "serverVersion"
@@ -1318,7 +2365,12 @@ function updateServer(data) {
     }
 
 
-    if (data.ping !== undefined) {
+
+    /* Ping */
+
+    if (
+        data.ping !== undefined
+    ) {
 
         document.getElementById(
             "serverPing"
@@ -1334,7 +2386,12 @@ function updateServer(data) {
     }
 
 
-    if (data.uptime) {
+
+    /* Uptime */
+
+    if (
+        data.uptime
+    ) {
 
         document.getElementById(
             "statUptime"
@@ -1346,44 +2403,66 @@ function updateServer(data) {
 }
 
 
+
 /* =========================================================
-   STATUS
+   SERVERSTATUS
    ========================================================= */
 
-function setServerStatus(online, text) {
+function setServerStatus(
+    online,
+    text
+) {
 
     const status =
         document.getElementById(
             "serverStatus"
         );
 
+
     const statusText =
         document.getElementById(
             "statusText"
         );
 
+
     if (online) {
 
-        status.classList.remove("offline");
+        status.classList.remove(
+            "offline"
+        );
 
     }
+
     else {
 
-        status.classList.add("offline");
+        status.classList.add(
+            "offline"
+        );
 
     }
 
-    statusText.textContent = text;
+
+    statusText.textContent =
+        text;
 
 }
 
 
-function setLiveStatus(online, text) {
+
+/* =========================================================
+   LIVE STATUS
+   ========================================================= */
+
+function setLiveStatus(
+    online,
+    text
+) {
 
     const light =
         document.getElementById(
             "liveLight"
         );
+
 
     const liveText =
         document.getElementById(
@@ -1393,19 +2472,26 @@ function setLiveStatus(online, text) {
 
     if (online) {
 
-        light.classList.remove("offline");
+        light.classList.remove(
+            "offline"
+        );
 
     }
+
     else {
 
-        light.classList.add("offline");
+        light.classList.add(
+            "offline"
+        );
 
     }
 
 
-    liveText.textContent = text;
+    liveText.textContent =
+        text;
 
 }
+
 
 
 /* =========================================================
@@ -1415,19 +2501,29 @@ function setLiveStatus(online, text) {
 function openLogin() {
 
     document
-        .getElementById("loginModal")
-        .classList.add("active");
+        .getElementById(
+            "loginModal"
+        )
+        .classList.add(
+            "active"
+        );
 
 }
+
 
 
 function closeLogin() {
 
     document
-        .getElementById("loginModal")
-        .classList.remove("active");
+        .getElementById(
+            "loginModal"
+        )
+        .classList.remove(
+            "active"
+        );
 
 }
+
 
 
 async function login() {
@@ -1435,7 +2531,8 @@ async function login() {
     const email =
         document.getElementById(
             "loginEmail"
-        ).value;
+        ).value.trim();
+
 
     const password =
         document.getElementById(
@@ -1443,45 +2540,68 @@ async function login() {
         ).value;
 
 
-    if (!email || !password) {
 
-        alert("Bitte alle Felder ausfüllen.");
+    if (
+        !email ||
+        !password
+    ) {
+
+        showToast(
+            "Bitte alle Felder ausfüllen.",
+            "error"
+        );
 
         return;
 
     }
 
 
+
     try {
 
         const response =
             await fetch(
-                BACKEND_URL + "/api/login",
+                BACKEND_URL +
+                "/api/login",
                 {
-                    method: "POST",
+
+                    method:
+                        "POST",
 
                     headers: {
+
                         "Content-Type":
                             "application/json"
+
                     },
 
-                    body: JSON.stringify({
-                        email,
-                        password
-                    })
+                    body:
+                        JSON.stringify({
+
+                            email:
+                                email,
+
+                            password:
+                                password
+
+                        })
+
                 }
             );
+
 
 
         const data =
             await response.json();
 
 
+
         if (!response.ok) {
 
-            alert(
+            showToast(
                 data.message ||
-                "Login fehlgeschlagen."
+                "Login fehlgeschlagen.",
+                "error"
             );
 
             return;
@@ -1489,13 +2609,36 @@ async function login() {
         }
 
 
-        localStorage.setItem(
-            "rp_token",
+
+        if (
             data.token
-        );
+        ) {
+
+            localStorage.setItem(
+                "rp_token",
+                data.token
+            );
+
+        }
 
 
-        alert(
+
+        if (
+            data.user
+        ) {
+
+            localStorage.setItem(
+                "rp_user",
+                JSON.stringify(
+                    data.user
+                )
+            );
+
+        }
+
+
+
+        showToast(
             "Erfolgreich eingeloggt!"
         );
 
@@ -1506,13 +2649,20 @@ async function login() {
 
     catch(error) {
 
-        alert(
-            "Backend nicht erreichbar."
+        console.error(
+            error
+        );
+
+
+        showToast(
+            "Backend nicht erreichbar.",
+            "error"
         );
 
     }
 
 }
+
 
 
 /* =========================================================
@@ -1522,19 +2672,29 @@ async function login() {
 function openApplication() {
 
     document
-        .getElementById("applicationModal")
-        .classList.add("active");
+        .getElementById(
+            "applicationModal"
+        )
+        .classList.add(
+            "active"
+        );
 
 }
+
 
 
 function closeApplication() {
 
     document
-        .getElementById("applicationModal")
-        .classList.remove("active");
+        .getElementById(
+            "applicationModal"
+        )
+        .classList.remove(
+            "active"
+        );
 
 }
+
 
 
 async function sendApplication() {
@@ -1542,23 +2702,31 @@ async function sendApplication() {
     const name =
         document.getElementById(
             "applicationName"
-        ).value;
+        ).value.trim();
+
 
     const age =
         document.getElementById(
             "applicationAge"
         ).value;
 
+
     const reason =
         document.getElementById(
             "applicationReason"
-        ).value;
+        ).value.trim();
 
 
-    if (!name || !age || !reason) {
 
-        alert(
-            "Bitte alle Felder ausfüllen."
+    if (
+        !name ||
+        !age ||
+        !reason
+    ) {
+
+        showToast(
+            "Bitte alle Felder ausfüllen.",
+            "error"
         );
 
         return;
@@ -1566,38 +2734,69 @@ async function sendApplication() {
     }
 
 
+
     try {
+
+        const token =
+            localStorage.getItem(
+                "rp_token"
+            );
+
 
         const response =
             await fetch(
                 BACKEND_URL +
                 "/api/applications",
                 {
-                    method: "POST",
+
+                    method:
+                        "POST",
 
                     headers: {
+
                         "Content-Type":
-                            "application/json"
+                            "application/json",
+
+                        ...(token
+                            ? {
+                                Authorization:
+                                "Bearer " +
+                                token
+                            }
+                            : {})
+
                     },
 
-                    body: JSON.stringify({
-                        name,
-                        age,
-                        reason
-                    })
+                    body:
+                        JSON.stringify({
+
+                            name:
+                                name,
+
+                            age:
+                                age,
+
+                            reason:
+                                reason
+
+                        })
+
                 }
             );
+
 
 
         const data =
             await response.json();
 
 
+
         if (!response.ok) {
 
-            alert(
+            showToast(
                 data.message ||
-                "Bewerbung konnte nicht gesendet werden."
+                "Bewerbung konnte nicht gesendet werden.",
+                "error"
             );
 
             return;
@@ -1605,19 +2804,41 @@ async function sendApplication() {
         }
 
 
-        alert(
+
+        showToast(
             "Bewerbung erfolgreich gesendet!"
         );
 
 
         closeApplication();
 
+
+        document.getElementById(
+            "applicationName"
+        ).value = "";
+
+
+        document.getElementById(
+            "applicationAge"
+        ).value = "";
+
+
+        document.getElementById(
+            "applicationReason"
+        ).value = "";
+
     }
 
     catch(error) {
 
-        alert(
-            "Backend nicht erreichbar."
+        console.error(
+            error
+        );
+
+
+        showToast(
+            "Backend nicht erreichbar.",
+            "error"
         );
 
     }
@@ -1625,39 +2846,103 @@ async function sendApplication() {
 }
 
 
+
 /* =========================================================
-   MODAL CLICK OUTSIDE
+   MODAL AUSSERHALB KLICKEN
    ========================================================= */
 
 document
-    .querySelectorAll(".modal")
-    .forEach(modal => {
+    .querySelectorAll(
+        ".modal"
+    )
+    .forEach(
+        modal => {
 
-        modal.addEventListener(
-            "click",
-            event => {
+            modal.addEventListener(
+                "click",
+                event => {
 
-                if (
-                    event.target === modal
-                ) {
+                    if (
+                        event.target ===
+                        modal
+                    ) {
 
-                    modal.classList.remove(
-                        "active"
-                    );
+                        modal.classList.remove(
+                            "active"
+                        );
+
+                    }
 
                 }
+            );
 
-            }
-        );
+        }
+    );
 
-    });
 
 
 /* =========================================================
-   START
+   ESC-TASTE
+   ========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            document
+                .querySelectorAll(
+                    ".modal.active"
+                )
+                .forEach(
+                    modal => {
+
+                        modal.classList.remove(
+                            "active"
+                        );
+
+                    }
+                );
+
+        }
+
+    }
+);
+
+
+
+/* =========================================================
+   AUTOMATISCH VERBINDEN
    ========================================================= */
 
 connectLive();
+
+
+
+/* =========================================================
+   FALLS SOCKET.IO NOCH NICHT VERFÜGBAR IST
+   ========================================================= */
+
+setTimeout(
+    () => {
+
+        if (
+            !connected
+        ) {
+
+            setLiveStatus(
+                false,
+                "Warte auf Live-System..."
+            );
+
+        }
+
+    },
+    3000
+);
 
 </script>
 
