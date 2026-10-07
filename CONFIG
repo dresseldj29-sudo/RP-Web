@@ -1,0 +1,130 @@
+const CONFIG = {
+
+    /* =========================
+       WEBSEITE
+    ========================= */
+
+    siteName: "NovaRP",
+
+    siteVersion: "1.0.0",
+
+    siteDescription:
+        "Modernes FiveM Roleplay mit aktiver Community.",
+
+
+    /* =========================
+       FIVEM SERVER
+    ========================= */
+
+    serverIP: "127.0.0.1:30120",
+
+    serverName: "NovaRP",
+
+    maxPlayers: 128,
+
+    serverVersion: "1.0.0",
+
+    serverStatus: "online",
+
+
+    /* =========================
+       DISCORD
+    ========================= */
+
+    discord: "https://discord.gg/DEIN-COMMUNITY-CODE",
+
+
+    /* =========================
+       FRAKTIONS-DISCORDS
+       
+       Hier nur deine Discord-
+       Einladungslinks eintragen.
+    ========================= */
+
+    factionDiscords: {
+
+        polizei:
+            "https://discord.gg/POLIZEI-CODE",
+
+        feuerwehr:
+            "https://discord.gg/FEUERWEHR-CODE",
+
+        rettungsdienst:
+            "https://discord.gg/RETTUNG-CODE",
+
+        mechaniker:
+            "https://discord.gg/MECHANIKER-CODE",
+
+        taxi:
+            "https://discord.gg/TAXI-CODE",
+
+        unternehmen:
+            "https://discord.gg/UNTERNEHMEN-CODE"
+
+    },
+
+
+    /* =========================
+       SERVER-OPTIONEN
+    ========================= */
+
+    enableApplications: true,
+
+    enableWhitelist: true,
+
+    enableNews: true,
+
+    enableFactions: true,
+
+    enableRules: true,
+
+    enableAdminPanel: true,
+
+
+    /* =========================
+       LIVE-SYSTEM
+       
+       false = Demo-Daten
+       true  = später echte API
+    ========================= */
+
+    liveServerData: false,
+
+    livePlayers: false,
+
+    livePing: false,
+
+
+    /* =========================
+       DESIGN
+    ========================= */
+
+    theme: "dark",
+
+    accentColor: "#6d5dfc",
+
+    accentColor2: "#477cff",
+
+
+    /* =========================
+       ROLEPLAY
+    ========================= */
+
+    cityName: "Nova City",
+
+    country: "Deutschland",
+
+    roleplayType: "Serious RP",
+
+
+    /* =========================
+       WEITERE SERVERDATEN
+    ========================= */
+
+    serverPort: 30120,
+
+    websiteLanguage: "de",
+
+    timezone: "Europe/Berlin"
+
+};
