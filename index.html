@@ -1,1040 +1,1325 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>NovaRP – FiveM Roleplay</title>
-
-<style>
-
-:root{
-    --bg:#070914;
-    --bg2:#0d1020;
-    --card:#11162a;
-    --card2:#171d35;
-    --border:rgba(255,255,255,.08);
-    --text:#f5f7ff;
-    --muted:#9299b5;
-    --primary:#6d5dfc;
-    --primary2:#477cff;
-    --success:#20d68b;
-    --danger:#ff4d67;
-    --warning:#ffb84d;
-    --shadow:0 20px 60px rgba(0,0,0,.35);
-}
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-html{
-    scroll-behavior:smooth;
-}
-
-body{
-    font-family:Inter,Arial,sans-serif;
-    background:
-        radial-gradient(circle at 10% 10%,rgba(109,93,252,.14),transparent 30%),
-        radial-gradient(circle at 90% 20%,rgba(71,124,255,.12),transparent 30%),
-        var(--bg);
-    color:var(--text);
-    min-height:100vh;
-}
-
-button,
-input,
-textarea,
-select{
-    font:inherit;
-}
-
-button{
-    cursor:pointer;
-}
-
-.hidden{
-    display:none!important;
-}
-
-/* =========================
-   NAVBAR
-========================= */
-
-.navbar{
-    position:sticky;
-    top:0;
-    z-index:1000;
-    height:72px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 5%;
-    background:rgba(7,9,20,.82);
-    backdrop-filter:blur(20px);
-    border-bottom:1px solid var(--border);
-}
-
-.logo{
-    font-size:23px;
-    font-weight:900;
-    letter-spacing:-1px;
-}
-
-.logo span{
-    color:var(--primary);
-}
-
-.nav-links{
-    display:flex;
-    gap:25px;
-    align-items:center;
-}
-
-.nav-links a{
-    color:var(--muted);
-    text-decoration:none;
-    transition:.2s;
-}
-
-.nav-links a:hover{
-    color:white;
-}
-
-.nav-actions{
-    display:flex;
-    gap:10px;
-}
-
-/* =========================
-   BUTTONS
-========================= */
-
-.btn{
-    border:0;
-    border-radius:12px;
-    padding:11px 17px;
-    color:white;
-    background:var(--card2);
-    border:1px solid var(--border);
-    transition:.2s;
-}
-
-.btn:hover{
-    transform:translateY(-2px);
-}
-
-.btn-primary{
-    background:linear-gradient(135deg,var(--primary),var(--primary2));
-    border:0;
-}
-
-.btn-success{
-    background:var(--success);
-    color:#07130e;
-}
-
-.btn-danger{
-    background:var(--danger);
-}
-
-.btn-warning{
-    background:var(--warning);
-    color:#191000;
-}
-
-/* =========================
-   HERO
-========================= */
-
-.hero{
-    min-height:650px;
-    display:flex;
-    align-items:center;
-    padding:80px 7%;
-}
-
-.hero-content{
-    max-width:850px;
-}
-
-.badge{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:8px 13px;
-    border-radius:999px;
-    background:rgba(109,93,252,.12);
-    border:1px solid rgba(109,93,252,.3);
-    color:#bcb5ff;
-    margin-bottom:22px;
-}
-
-.hero h1{
-    font-size:clamp(48px,7vw,90px);
-    line-height:.95;
-    letter-spacing:-4px;
-    margin-bottom:25px;
-}
-
-.hero h1 span{
-    background:linear-gradient(135deg,#fff,var(--primary),var(--primary2));
-    -webkit-background-clip:text;
-    color:transparent;
-}
-
-.hero p{
-    color:var(--muted);
-    font-size:19px;
-    line-height:1.7;
-    max-width:700px;
-}
-
-.hero-buttons{
-    display:flex;
-    gap:12px;
-    margin-top:30px;
-    flex-wrap:wrap;
-}
-
-/* =========================
-   SERVER STATUS
-========================= */
-
-.server-status{
-    margin-top:35px;
-    display:flex;
-    flex-wrap:wrap;
-    gap:12px;
-}
-
-.status-card{
-    min-width:170px;
-    padding:18px;
-    background:rgba(255,255,255,.04);
-    border:1px solid var(--border);
-    border-radius:16px;
-}
-
-.status-title{
-    color:var(--muted);
-    font-size:13px;
-}
-
-.status-value{
-    font-size:22px;
-    font-weight:800;
-    margin-top:5px;
-}
-
-.online{
-    color:var(--success);
-}
-
-.offline{
-    color:var(--danger);
-}
-
-/* =========================
-   SECTIONS
-========================= */
-
-section{
-    padding:90px 7%;
-}
-
-.section-title{
-    font-size:40px;
-    margin-bottom:10px;
-}
-
-.section-subtitle{
-    color:var(--muted);
-    margin-bottom:35px;
-}
-
-/* =========================
-   CARDS
-========================= */
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
-}
-
-.card{
-    background:linear-gradient(
-        145deg,
-        rgba(255,255,255,.05),
-        rgba(255,255,255,.02)
-    );
-    border:1px solid var(--border);
-    border-radius:20px;
-    padding:25px;
-    box-shadow:var(--shadow);
-}
-
-.card h3{
-    margin-bottom:10px;
-}
-
-.card p{
-    color:var(--muted);
-    line-height:1.6;
-}
-
-/* =========================
-   FACTIONS
-========================= */
-
-.faction-card{
-    position:relative;
-    overflow:hidden;
-}
-
-.faction-icon{
-    font-size:45px;
-    margin-bottom:15px;
-}
-
-.faction-card .btn{
-    margin-top:18px;
-}
-
-/* =========================
-   NEWS
-========================= */
-
-.news-list{
-    display:grid;
-    gap:15px;
-}
-
-.news-item{
-    padding:22px;
-    border:1px solid var(--border);
-    background:var(--card);
-    border-radius:16px;
-}
-
-.news-date{
-    color:var(--primary);
-    font-size:13px;
-    margin-bottom:7px;
-}
-
-/* =========================
-   RULES
-========================= */
-
-.rules{
-    display:grid;
-    gap:12px;
-}
-
-.rule{
-    padding:18px;
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:14px;
-}
-
-/* =========================
-   MODALS
-========================= */
-
-.modal{
-    position:fixed;
-    inset:0;
-    z-index:2000;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    background:rgba(0,0,0,.72);
-    backdrop-filter:blur(10px);
-}
-
-.modal-box{
-    width:100%;
-    max-width:650px;
-    max-height:90vh;
-    overflow:auto;
-    background:#0d1122;
-    border:1px solid var(--border);
-    border-radius:22px;
-    padding:28px;
-    box-shadow:0 30px 100px rgba(0,0,0,.6);
-}
-
-.modal-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:25px;
-}
-
-.close{
-    background:none;
-    border:0;
-    color:white;
-    font-size:25px;
-}
-
-/* =========================
-   FORMS
-========================= */
-
-.form-group{
-    margin-bottom:17px;
-}
-
-.form-group label{
-    display:block;
-    margin-bottom:7px;
-    color:#cdd2e8;
-}
-
-.form-group input,
-.form-group textarea,
-.form-group select{
-    width:100%;
-    padding:13px;
-    background:#080b17;
-    border:1px solid var(--border);
-    border-radius:11px;
-    color:white;
-    outline:none;
-}
-
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus{
-    border-color:var(--primary);
-}
-
-textarea{
-    resize:vertical;
-    min-height:110px;
-}
-
-/* =========================
-   ADMIN
-========================= */
-
-#adminPanel{
-    display:none;
-}
-
-.admin-layout{
-    display:grid;
-    grid-template-columns:240px 1fr;
-    min-height:calc(100vh - 72px);
-}
-
-.admin-sidebar{
-    background:#090c18;
-    border-right:1px solid var(--border);
-    padding:22px;
-}
-
-.admin-sidebar h2{
-    margin-bottom:25px;
-}
-
-.admin-menu{
-    display:grid;
-    gap:7px;
-}
-
-.admin-menu button{
-    text-align:left;
-    background:none;
-    color:var(--muted);
-    border:0;
-    padding:12px;
-    border-radius:10px;
-}
-
-.admin-menu button:hover,
-.admin-menu button.active{
-    background:rgba(109,93,252,.14);
-    color:white;
-}
-
-.admin-content{
-    padding:35px;
-    min-width:0;
-}
-
-.admin-page{
-    display:none;
-}
-
-.admin-page.active{
-    display:block;
-}
-
-.admin-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:25px;
-    gap:15px;
-    flex-wrap:wrap;
-}
-
-.role-badge{
-    display:inline-block;
-    padding:7px 11px;
-    border-radius:999px;
-    font-size:12px;
-    font-weight:800;
-}
-
-.role-owner{
-    background:rgba(255,184,77,.15);
-    color:var(--warning);
-}
-
-.role-admin{
-    background:rgba(71,124,255,.15);
-    color:#80a7ff;
-}
-
-/* =========================
-   STATS
-========================= */
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:15px;
-    margin-bottom:25px;
-}
-
-.stat{
-    padding:20px;
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:17px;
-}
-
-.stat small{
-    color:var(--muted);
-}
-
-.stat strong{
-    display:block;
-    font-size:30px;
-    margin-top:5px;
-}
-
-/* =========================
-   TABLE
-========================= */
-
-.table-wrapper{
-    overflow:auto;
-    border:1px solid var(--border);
-    border-radius:15px;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-    min-width:650px;
-}
-
-th,
-td{
-    text-align:left;
-    padding:14px;
-    border-bottom:1px solid var(--border);
-}
-
-th{
-    color:var(--muted);
-    font-size:13px;
-}
-
-td{
-    color:#e8ebf7;
-}
-
-/* =========================
-   TOAST
-========================= */
-
-#toastContainer{
-    position:fixed;
-    right:20px;
-    bottom:20px;
-    z-index:5000;
-    display:grid;
-    gap:10px;
-}
-
-.toast{
-    min-width:270px;
-    padding:15px 18px;
-    border-radius:13px;
-    background:#151a2d;
-    border:1px solid var(--border);
-    box-shadow:var(--shadow);
-    animation:toastIn .25s ease;
-}
-
-@keyframes toastIn{
-    from{
-        transform:translateY(20px);
-        opacity:0;
-    }
-    to{
-        transform:translateY(0);
-        opacity:1;
-    }
-}
-
-/* =========================
-   FOOTER
-========================= */
-
-footer{
-    padding:35px 7%;
-    border-top:1px solid var(--border);
-    color:var(--muted);
-    text-align:center;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media(max-width:1000px){
-
-    .grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .stats{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .admin-layout{
-        grid-template-columns:1fr;
-    }
-
-    .admin-sidebar{
-        border-right:0;
-        border-bottom:1px solid var(--border);
-    }
-
-}
-
-@media(max-width:700px){
-
-    .nav-links{
-        display:none;
-    }
-
-    .hero{
-        padding-top:60px;
-    }
-
-    .hero h1{
-        font-size:50px;
-        letter-spacing:-2px;
-    }
-
-    .grid{
-        grid-template-columns:1fr;
-    }
-
-    .stats{
-        grid-template-columns:1fr;
-    }
-
-    .admin-content{
-        padding:20px;
-    }
-
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NovaRP</title>
+    <meta name="description" content="NovaRP – Dein deutscher FiveM Roleplay Server">
+    <meta name="theme-color" content="#0b1020">
+
+    <style>
+        :root {
+            --bg: #070b14;
+            --bg2: #0c1220;
+            --card: rgba(16, 23, 38, .92);
+            --card2: rgba(20, 29, 48, .96);
+            --border: rgba(255,255,255,.09);
+            --text: #f4f7fb;
+            --muted: #9ca8bb;
+            --primary: #5865f2;
+            --primary2: #7280ff;
+            --success: #25d366;
+            --danger: #ff4d5f;
+            --warning: #ffb020;
+            --info: #36a3ff;
+            --shadow: 0 20px 60px rgba(0,0,0,.35);
+            --radius: 18px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Inter, Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at 10% 0%, rgba(88,101,242,.18), transparent 30%),
+                radial-gradient(circle at 90% 10%, rgba(0,180,255,.10), transparent 25%),
+                var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* =========================
+           SCROLLBAR
+        ========================= */
+
+        ::-webkit-scrollbar {
+            width: 9px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #080c15;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #26304a;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b486b;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(18px);
+            background: rgba(7,11,20,.82);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            max-width: 1250px;
+            margin: auto;
+            min-height: 74px;
+            padding: 0 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 900;
+            font-size: 21px;
+            letter-spacing: -.5px;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 13px;
+            background: linear-gradient(135deg, var(--primary), #8b5cf6);
+            box-shadow: 0 10px 30px rgba(88,101,242,.35);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .nav-links a,
+        .nav-links button {
+            border: 0;
+            background: transparent;
+            color: var(--muted);
+            padding: 10px 13px;
+            border-radius: 10px;
+            transition: .2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links button:hover {
+            color: white;
+            background: rgba(255,255,255,.06);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .mobile-menu {
+            display: none;
+        }
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .btn {
+            border: 1px solid transparent;
+            padding: 11px 17px;
+            border-radius: 11px;
+            color: white;
+            background: #1a2337;
+            transition: .2s;
+            font-weight: 700;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.08);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #725cff);
+            box-shadow: 0 10px 30px rgba(88,101,242,.22);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #17b957, #20d06b);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #e6384b, #ff5364);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #df8b00, #ffb52e);
+            color: #17120a;
+        }
+
+        .btn-outline {
+            border-color: var(--border);
+            background: rgba(255,255,255,.025);
+        }
+
+        .btn-small {
+            padding: 7px 10px;
+            font-size: 12px;
+            border-radius: 8px;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            max-width: 1250px;
+            margin: auto;
+            padding: 90px 22px 70px;
+            display: grid;
+            grid-template-columns: 1.2fr .8fr;
+            align-items: center;
+            gap: 55px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 11px;
+            border: 1px solid rgba(88,101,242,.25);
+            background: rgba(88,101,242,.09);
+            border-radius: 999px;
+            color: #bfc5ff;
+            font-size: 12px;
+            font-weight: 800;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 6vw, 76px);
+            line-height: .96;
+            letter-spacing: -3px;
+            margin-bottom: 22px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #fff, #8f9aff, #62c9ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            max-width: 650px;
+            color: var(--muted);
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 28px;
+        }
+
+        .hero-panel {
+            position: relative;
+            background:
+                linear-gradient(145deg, rgba(88,101,242,.16), rgba(255,255,255,.02)),
+                var(--card);
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            padding: 28px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .hero-panel::before {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: rgba(88,101,242,.16);
+            filter: blur(50px);
+            right: -40px;
+            top: -40px;
+        }
+
+        .server-title {
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .server-name-big {
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+
+        .status-line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .status-online {
+            color: var(--success);
+        }
+
+        .status-offline {
+            color: var(--danger);
+        }
+
+        .dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 7px;
+            background: currentColor;
+            box-shadow: 0 0 12px currentColor;
+        }
+
+        /* =========================
+           SECTIONS
+        ========================= */
+
+        .section {
+            max-width: 1250px;
+            margin: auto;
+            padding: 75px 22px;
+        }
+
+        .section-title {
+            margin-bottom: 35px;
+        }
+
+        .section-title span {
+            color: var(--primary2);
+            font-size: 12px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .section-title h2 {
+            font-size: 38px;
+            margin-top: 7px;
+        }
+
+        .section-title p {
+            color: var(--muted);
+            margin-top: 9px;
+        }
+
+        /* =========================
+           SERVER CARDS
+        ========================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .stat-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 22px;
+        }
+
+        .stat-label {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .stat-value {
+            font-size: 27px;
+            font-weight: 900;
+            margin-top: 8px;
+        }
+
+        /* =========================
+           FEATURE GRID
+        ========================= */
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: 0 10px 35px rgba(0,0,0,.15);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: rgba(88,101,242,.12);
+            font-size: 22px;
+            margin-bottom: 17px;
+        }
+
+        .card h3 {
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        /* =========================
+           FACTIONS
+        ========================= */
+
+        .faction-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .faction-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 17px;
+        }
+
+        .faction-icon {
+            width: 52px;
+            height: 52px;
+            display: grid;
+            place-items: center;
+            border-radius: 15px;
+            background: rgba(255,255,255,.06);
+            font-size: 27px;
+        }
+
+        .faction-card h3 {
+            font-size: 20px;
+        }
+
+        .faction-card p {
+            min-height: 72px;
+        }
+
+        /* =========================
+           NEWS
+        ========================= */
+
+        .news-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .news-card {
+            display: flex;
+            justify-content: space-between;
+            gap: 25px;
+            align-items: flex-start;
+        }
+
+        .news-date {
+            color: var(--primary2);
+            font-size: 12px;
+            font-weight: 800;
+            margin-bottom: 7px;
+        }
+
+        /* =========================
+           RULES
+        ========================= */
+
+        .rules {
+            display: grid;
+            gap: 12px;
+        }
+
+        .rule {
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 17px;
+        }
+
+        .rule-number {
+            width: 31px;
+            height: 31px;
+            flex: 0 0 auto;
+            display: grid;
+            place-items: center;
+            border-radius: 9px;
+            background: rgba(88,101,242,.15);
+            color: #abb3ff;
+            font-weight: 900;
+        }
+
+        .rule p {
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+
+        .footer-inner {
+            max-width: 1250px;
+            margin: auto;
+            padding: 30px 22px;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        /* =========================
+           MODAL
+        ========================= */
+
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 3000;
+            background: rgba(0,0,0,.72);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 18px;
+        }
+
+        .modal {
+            width: min(580px, 100%);
+            max-height: 90vh;
+            overflow: auto;
+            background: #0d1423;
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            box-shadow: 0 30px 100px rgba(0,0,0,.55);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 21px 23px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-header button {
+            border: 0;
+            background: transparent;
+            color: var(--muted);
+            font-size: 25px;
+        }
+
+        .modal-body {
+            padding: 23px;
+        }
+
+        /* =========================
+           FORMS
+        ========================= */
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            color: #c9d0de;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 7px;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            border: 1px solid var(--border);
+            background: #080e19;
+            color: white;
+            padding: 12px 13px;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: rgba(88,101,242,.65);
+            box-shadow: 0 0 0 3px rgba(88,101,242,.09);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 9px;
+            margin-top: 20px;
+        }
+
+        /* =========================
+           ADMIN
+        ========================= */
+
+        #adminArea {
+            display: none;
+        }
+
+        .admin-layout {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+        }
+
+        .admin-sidebar {
+            background: #080d18;
+            border-right: 1px solid var(--border);
+            padding: 22px 14px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .admin-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            margin-bottom: 25px;
+            font-weight: 900;
+        }
+
+        .admin-nav {
+            display: grid;
+            gap: 5px;
+        }
+
+        .admin-nav button {
+            width: 100%;
+            border: 0;
+            background: transparent;
+            color: var(--muted);
+            text-align: left;
+            padding: 12px;
+            border-radius: 10px;
+        }
+
+        .admin-nav button:hover,
+        .admin-nav button.active {
+            background: rgba(88,101,242,.12);
+            color: white;
+        }
+
+        .admin-main {
+            padding: 30px;
+            overflow: auto;
+        }
+
+        .admin-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 28px;
+        }
+
+        .admin-top h1 {
+            font-size: 30px;
+        }
+
+        .admin-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,.04);
+            border: 1px solid var(--border);
+            padding: 9px 13px;
+            border-radius: 12px;
+        }
+
+        .role {
+            font-size: 10px;
+            padding: 4px 7px;
+            border-radius: 6px;
+            font-weight: 900;
+            text-transform: uppercase;
+            background: rgba(88,101,242,.15);
+            color: #abb3ff;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .admin-page {
+            display: none;
+        }
+
+        .admin-page.active {
+            display: block;
+        }
+
+        .page-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .page-head h2 {
+            font-size: 23px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
+        }
+
+        th,
+        td {
+            padding: 13px 14px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+            font-size: 13px;
+        }
+
+        th {
+            color: #cbd3e3;
+            background: rgba(255,255,255,.025);
+        }
+
+        td {
+            color: var(--muted);
+        }
+
+        tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .empty {
+            padding: 35px;
+            text-align: center;
+            color: var(--muted);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 5px 8px;
+            border-radius: 7px;
+            background: rgba(255,255,255,.06);
+            font-size: 11px;
+        }
+
+        /* =========================
+           TOAST
+        ========================= */
+
+        .toast-container {
+            position: fixed;
+            right: 18px;
+            bottom: 18px;
+            z-index: 5000;
+            display: grid;
+            gap: 9px;
+        }
+
+        .toast {
+            min-width: 260px;
+            max-width: 380px;
+            background: #121b2d;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 16px;
+            box-shadow: var(--shadow);
+            animation: toastIn .25s ease;
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--danger);
+        }
+
+        .toast.info {
+            border-left: 4px solid var(--info);
+        }
+
+        @keyframes toastIn {
+            from {
+                transform: translateY(10px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1000px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .stats,
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .hero {
+                padding-top: 55px;
+            }
+
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+
+            .stats,
+            .dashboard-grid,
+            .grid,
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .admin-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-sidebar {
+                position: relative;
+                height: auto;
+                border-right: 0;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .admin-nav {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .admin-main {
+                padding: 18px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- =========================
-     NAVBAR
-========================= -->
-
-<nav class="navbar">
-
-    <div class="logo">
-        Nova<span>RP</span>
-    </div>
-
-    <div class="nav-links">
-        <a href="#home">Home</a>
-        <a href="#features">Features</a>
-        <a href="#factions">Fraktionen</a>
-        <a href="#news">News</a>
-        <a href="#rules">Regeln</a>
-    </div>
-
-    <div class="nav-actions">
-
-        <button class="btn" onclick="openLogin()">
-            Login
-        </button>
-
-        <button class="btn btn-primary" onclick="openApplication()">
-            Bewerben
-        </button>
-
-    </div>
-
-</nav>
-
-
-<!-- =========================
+<!-- =========================================================
      PUBLIC WEBSITE
-========================= -->
+========================================================= -->
 
-<div id="publicWebsite">
+<div id="publicSite">
 
-<section class="hero" id="home">
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-inner">
 
-    <div class="hero-content">
+            <a href="#home" class="logo">
+                <span class="logo-icon">N</span>
+                <span id="navSiteName">NovaRP</span>
+            </a>
 
-        <div class="badge">
-            🟢 FiveM Roleplay
-        </div>
+            <div class="nav-links">
+                <a href="#home">Start</a>
+                <a href="#features">Features</a>
+                <a href="#factions">Fraktionen</a>
+                <a href="#news">News</a>
+                <a href="#rules">Regeln</a>
+            </div>
 
-        <h1>
-            Deine Stadt.<br>
-            <span>Deine Geschichte.</span>
-        </h1>
+            <div class="nav-actions">
+                <button class="btn btn-outline" onclick="openLogin()">
+                    🔐 Login
+                </button>
 
-        <p>
-            Willkommen bei NovaRP. Erlebe realistisches
-            Roleplay, spannende Fraktionen und eine aktive
-            Community auf unserem FiveM Server.
-        </p>
-
-        <div class="hero-buttons">
-
-            <button
-                class="btn btn-primary"
-                onclick="openApplication()">
-                Jetzt bewerben
-            </button>
-
-            <button
-                class="btn"
-                onclick="openDiscord()">
-                Discord
-            </button>
+                <button class="btn btn-primary" onclick="openWhitelist()">
+                    Whitelist
+                </button>
+            </div>
 
         </div>
+    </nav>
 
-        <div class="server-status">
+    <!-- HERO -->
+    <section class="hero" id="home">
 
-            <div class="status-card">
-
-                <div class="status-title">
-                    Server
-                </div>
-
-                <div
-                    class="status-value online"
-                    id="serverStatus">
-                    ONLINE
-                </div>
-
+        <div>
+            <div class="badge">
+                ● DEUTSCHER ROLEPLAY SERVER
             </div>
 
-            <div class="status-card">
+            <h1>
+                Willkommen bei
+                <span class="gradient-text">NovaRP</span>
+            </h1>
 
-                <div class="status-title">
-                    Spieler
-                </div>
+            <p>
+                Erlebe modernes FiveM Roleplay mit Polizei, Feuerwehr,
+                Rettungsdienst, Unternehmen und einer aktiven Community.
+            </p>
 
-                <div
-                    class="status-value"
-                    id="playerCount">
-                    0 / 128
-                </div>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="openWhitelist()">
+                    📝 Whitelist beantragen
+                </button>
 
+                <button class="btn btn-outline" onclick="scrollToSection('factions')">
+                    🚓 Fraktionen ansehen
+                </button>
+            </div>
+        </div>
+
+        <div class="hero-panel">
+
+            <div class="server-title">
+                SERVERSTATUS
             </div>
 
-            <div class="status-card">
-
-                <div class="status-title">
-                    Ping
-                </div>
-
-                <div
-                    class="status-value"
-                    id="serverPing">
-                    24 ms
-                </div>
-
+            <div class="server-name-big" id="heroServerName">
+                NovaRP
             </div>
 
-            <div class="status-card">
+            <div class="status-line">
+                <span>Status</span>
+                <strong id="heroServerStatus" class="status-online">
+                    <span class="dot"></span>Online
+                </strong>
+            </div>
 
-                <div class="status-title">
-                    Server-IP
-                </div>
+            <div class="status-line">
+                <span>Server-IP</span>
+                <strong id="heroServerIP">
+                    145.224.72.197:30120
+                </strong>
+            </div>
 
-                <div
-                    class="status-value"
-                    id="serverIP">
-                    127.0.0.1:30120
-                </div>
-
+            <div class="status-line">
+                <span>Spieler</span>
+                <strong id="heroPlayers">
+                    Manuell
+                </strong>
             </div>
 
         </div>
 
-    </div>
+    </section>
 
-</section>
+    <!-- SERVER -->
+    <section class="section" id="server">
 
-
-<!-- FEATURES -->
-
-<section id="features">
-
-    <h2 class="section-title">
-        Was dich erwartet
-    </h2>
-
-    <p class="section-subtitle">
-        Alles, was du für ein modernes RP-Erlebnis brauchst.
-    </p>
-
-    <div class="grid">
-
-        <div class="card">
-            <h3>🎭 Realistisches RP</h3>
-            <p>
-                Erstelle deinen Charakter und schreibe
-                deine eigene Geschichte.
-            </p>
+        <div class="section-title">
+            <span>Server</span>
+            <h2>NovaRP auf einen Blick</h2>
+            <p>Alle wichtigen Informationen zu unserem Server.</p>
         </div>
 
-        <div class="card">
-            <h3>🚓 Fraktionen</h3>
-            <p>
-                Polizei, Feuerwehr, Rettungsdienst und
-                weitere Organisationen.
-            </p>
+        <div class="stats">
+
+            <div class="stat-card">
+                <div class="stat-label">Serverstatus</div>
+                <div class="stat-value status-online" id="serverStatus">
+                    Online
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">Spieler</div>
+                <div class="stat-value" id="playerCount">
+                    Manuell
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">Server-IP</div>
+                <div class="stat-value" style="font-size:18px" id="serverIP">
+                    145.224.72.197:30120
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">Version</div>
+                <div class="stat-value" id="serverVersion">
+                    1.0.0
+                </div>
+            </div>
+
         </div>
 
-        <div class="card">
-            <h3>👥 Community</h3>
-            <p>
-                Spiele gemeinsam mit anderen Spielern
-                und werde Teil der Community.
-            </p>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="section" id="features">
+
+        <div class="section-title">
+            <span>Features</span>
+            <h2>Deine Roleplay-Welt</h2>
+            <p>Entdecke die wichtigsten Systeme von NovaRP.</p>
         </div>
 
-        <div class="card">
-            <h3>🌐 Aktiver Server</h3>
-            <p>
-                Live-Spielerzahlen und regelmäßige
-                Updates.
-            </p>
+        <div class="grid">
+
+            <div class="card">
+                <div class="card-icon">🚓</div>
+                <h3>Polizei</h3>
+                <p>
+                    Sorge für Sicherheit, bearbeite Einsätze und erlebe
+                    abwechslungsreiches Police-RP.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🚒</div>
+                <h3>Feuerwehr</h3>
+                <p>
+                    Retten, löschen, bergen und schützen – mit spannenden
+                    Einsätzen für deine Feuerwehrkarriere.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🚑</div>
+                <h3>Rettungsdienst</h3>
+                <p>
+                    Versorge Patienten und fahre realistische
+                    Rettungsdiensteinsätze.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🔧</div>
+                <h3>Mechaniker</h3>
+                <p>
+                    Betreibe deine Werkstatt, repariere Fahrzeuge und baue
+                    dir einen eigenen Kundenstamm auf.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🏢</div>
+                <h3>Unternehmen</h3>
+                <p>
+                    Gründe Unternehmen und entwickle deine eigene Geschichte
+                    innerhalb der Stadt.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🎭</div>
+                <h3>Freies Roleplay</h3>
+                <p>
+                    Schreibe deine eigene Geschichte und entscheide selbst,
+                    welchen Weg dein Charakter nimmt.
+                </p>
+            </div>
+
         </div>
 
-        <div class="card">
-            <h3>📋 Whitelist</h3>
-            <p>
-                Bewerbe dich direkt über unsere Webseite.
-            </p>
+    </section>
+
+    <!-- FACTIONS -->
+    <section class="section" id="factions">
+
+        <div class="section-title">
+            <span>Fraktionen</span>
+            <h2>Werde Teil einer Fraktion</h2>
+            <p>Wähle deinen Bereich und bewirb dich direkt.</p>
         </div>
 
-        <div class="card">
-            <h3>🎮 FiveM</h3>
-            <p>
-                Moderne FiveM Roleplay Infrastruktur.
-            </p>
+        <div class="grid" id="publicFactions"></div>
+
+    </section>
+
+    <!-- NEWS -->
+    <section class="section" id="news">
+
+        <div class="section-title">
+            <span>Neuigkeiten</span>
+            <h2>Aktuelle News</h2>
+            <p>Was passiert aktuell bei NovaRP?</p>
         </div>
 
-    </div>
+        <div class="news-list" id="publicNews"></div>
 
-</section>
+    </section>
 
+    <!-- RULES -->
+    <section class="section" id="rules">
 
-<!-- FRACTIONS -->
-
-<section id="factions">
-
-    <h2 class="section-title">
-        Fraktionen
-    </h2>
-
-    <p class="section-subtitle">
-        Wähle deine Laufbahn.
-    </p>
-
-    <div
-        class="grid"
-        id="factionPublicList">
-    </div>
-
-</section>
-
-
-<!-- NEWS -->
-
-<section id="news">
-
-    <h2 class="section-title">
-        News
-    </h2>
-
-    <p class="section-subtitle">
-        Neuigkeiten aus NovaRP.
-    </p>
-
-    <div
-        class="news-list"
-        id="newsPublicList">
-    </div>
-
-</section>
-
-
-<!-- RULES -->
-
-<section id="rules">
-
-    <h2 class="section-title">
-        Regeln
-    </h2>
-
-    <p class="section-subtitle">
-        Bitte halte dich an unsere Serverregeln.
-    </p>
-
-    <div class="rules">
-
-        <div class="rule">
-            <b>01 – Respekt</b>
-            <p>
-                Behandle andere Spieler respektvoll.
-            </p>
+        <div class="section-title">
+            <span>Regeln</span>
+            <h2>NovaRP Regeln</h2>
+            <p>Ein faires Miteinander ist die Grundlage unseres Servers.</p>
         </div>
 
-        <div class="rule">
-            <b>02 – Roleplay</b>
-            <p>
-                Bleibe während des Spiels im Roleplay.
-            </p>
+        <div class="rules">
+
+            <div class="rule">
+                <div class="rule-number">1</div>
+                <p>
+                    Respektiere alle Spieler und Teammitglieder.
+                </p>
+            </div>
+
+            <div class="rule">
+                <div class="rule-number">2</div>
+                <p>
+                    Kein RDM oder VDM. Situationen sollen realistisch
+                    ausgespielt werden.
+                </p>
+            </div>
+
+            <div class="rule">
+                <div class="rule-number">3</div>
+                <p>
+                    Kein Metagaming oder Powergaming.
+                </p>
+            </div>
+
+            <div class="rule">
+                <div class="rule-number">4</div>
+                <p>
+                    Nutze keine Cheats, Exploits oder unerlaubte Programme.
+                </p>
+            </div>
+
+            <div class="rule">
+                <div class="rule-number">5</div>
+                <p>
+                    Befolge die Anweisungen des Serverteams.
+                </p>
+            </div>
+
+            <div class="rule">
+                <div class="rule-number">6</div>
+                <p>
+                    Spiele deinen Charakter nachvollziehbar und
+                    situationsgerecht.
+                </p>
+            </div>
+
         </div>
 
-        <div class="rule">
-            <b>03 – Kein Trolling</b>
-            <p>
-                Absichtliches Stören anderer Spieler
-                ist nicht erlaubt.
-            </p>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+
+        <div class="footer-inner">
+            <div>
+                © <span id="footerYear"></span> NovaRP
+            </div>
+
+            <div>
+                IP: 145.224.72.197:30120
+            </div>
+
+            <div>
+                Alle Rechte vorbehalten.
+            </div>
         </div>
 
-        <div class="rule">
-            <b>04 – Anweisungen</b>
-            <p>
-                Folge den Anweisungen des Serverteams.
-            </p>
-        </div>
-
-    </div>
-
-</section>
+    </footer>
 
 </div>
 
 
-<!-- =========================
-     ADMIN PANEL
-========================= -->
+<!-- =========================================================
+     ADMIN AREA
+========================================================= -->
 
-<div id="adminPanel">
+<div id="adminArea">
 
     <div class="admin-layout">
 
+        <!-- SIDEBAR -->
         <aside class="admin-sidebar">
 
-            <h2>
-                NovaRP Admin
-            </h2>
+            <div class="admin-brand">
+                <span class="logo-icon">N</span>
+                <span>NovaRP Admin</span>
+            </div>
 
-            <div id="adminUserInfo"></div>
-
-            <br>
-
-            <div class="admin-menu">
+            <div class="admin-nav">
 
                 <button
                     class="active"
                     data-page="dashboard"
-                    onclick="showAdminPage('dashboard')">
+                    onclick="showAdminPage('dashboard', this)"
+                >
                     📊 Dashboard
                 </button>
 
                 <button
                     data-page="whitelist"
-                    onclick="showAdminPage('whitelist')">
-                    📋 Whitelist
+                    onclick="showAdminPage('whitelist', this)"
+                >
+                    📝 Whitelist
                 </button>
 
                 <button
-                    class="owner-only"
-                    data-page="server"
-                    onclick="showAdminPage('server')">
-                    🖥 Server
-                </button>
-
-                <button
-                    class="owner-only"
                     data-page="players"
-                    onclick="showAdminPage('players')">
+                    onclick="showAdminPage('players', this)"
+                >
                     👥 Spieler
                 </button>
 
                 <button
-                    class="owner-only"
                     data-page="factions"
-                    onclick="showAdminPage('factions')">
+                    onclick="showAdminPage('factions', this)"
+                >
                     🚓 Fraktionen
                 </button>
 
                 <button
-                    class="owner-only"
                     data-page="news"
-                    onclick="showAdminPage('news')">
+                    onclick="showAdminPage('news', this)"
+                >
                     📰 News
                 </button>
 
                 <button
-                    class="owner-only"
                     data-page="admins"
-                    onclick="showAdminPage('admins')">
-                    🛡 Admins
+                    onclick="showAdminPage('admins', this)"
+                >
+                    👑 Admins
                 </button>
 
                 <button
-                    class="owner-only"
+                    data-page="server"
+                    onclick="showAdminPage('server', this)"
+                >
+                    🖥️ Server
+                </button>
+
+                <button
                     data-page="settings"
-                    onclick="showAdminPage('settings')">
+                    onclick="showAdminPage('settings', this)"
+                >
                     ⚙️ Einstellungen
                 </button>
 
@@ -1047,506 +1332,415 @@ footer{
         </aside>
 
 
-        <main class="admin-content">
+        <!-- MAIN -->
+        <main class="admin-main">
+
+            <div class="admin-top">
+
+                <div>
+                    <h1 id="adminPageTitle">
+                        Dashboard
+                    </h1>
+
+                    <div style="color:var(--muted); margin-top:5px">
+                        NovaRP Verwaltung
+                    </div>
+                </div>
+
+                <div class="admin-user">
+
+                    <div id="adminUserName">
+                        Benutzer
+                    </div>
+
+                    <span class="role" id="adminUserRole">
+                        Admin
+                    </span>
+
+                </div>
+
+            </div>
 
 
             <!-- DASHBOARD -->
+            <section class="admin-page active" id="page-dashboard">
 
-            <div
-                class="admin-page active"
-                id="page-dashboard">
+                <div class="dashboard-grid">
 
-                <div class="admin-top">
-
-                    <div>
-                        <h1>Dashboard</h1>
-                        <p>
-                            Verwaltung von NovaRP
-                        </p>
-                    </div>
-
-                    <button
-                        class="btn"
-                        onclick="refreshDashboard()">
-                        ↻ Aktualisieren
-                    </button>
-
-                </div>
-
-                <div class="stats">
-
-                    <div class="stat">
-                        <small>Spieler</small>
-                        <strong id="adminPlayers">
+                    <div class="stat-card">
+                        <div class="stat-label">Whitelist</div>
+                        <div class="stat-value" id="adminWhitelist">
                             0
-                        </strong>
+                        </div>
                     </div>
 
-                    <div class="stat">
-                        <small>Whitelist</small>
-                        <strong id="adminWhitelist">
+                    <div class="stat-card">
+                        <div class="stat-label">Admins</div>
+                        <div class="stat-value" id="adminCount">
                             0
-                        </strong>
+                        </div>
                     </div>
 
-                    <div class="stat">
-                        <small>Admins</small>
-                        <strong id="adminCount">
+                    <div class="stat-card">
+                        <div class="stat-label">Spieler</div>
+                        <div class="stat-value" id="adminPlayers">
                             0
-                        </strong>
+                        </div>
                     </div>
 
-                    <div class="stat">
-                        <small>Status</small>
-                        <strong
-                            class="online"
-                            id="adminServerStatus">
-                            ONLINE
-                        </strong>
+                    <div class="stat-card">
+                        <div class="stat-label">Server</div>
+                        <div class="stat-value status-online" id="adminServerStatus">
+                            Online
+                        </div>
                     </div>
 
                 </div>
 
                 <div class="card">
 
-                    <h3>
-                        Serverinformationen
+                    <h3 style="margin-bottom:15px">
+                        Serverübersicht
                     </h3>
 
-                    <br>
-
-                    <p>
-                        Server:
-                        <b id="dashServerName">
+                    <div class="status-line">
+                        <span>Servername</span>
+                        <strong id="dashServerName">
                             NovaRP
-                        </b>
-                    </p>
+                        </strong>
+                    </div>
 
-                    <br>
+                    <div class="status-line">
+                        <span>Server-IP</span>
+                        <strong id="dashServerIP">
+                            145.224.72.197:30120
+                        </strong>
+                    </div>
 
-                    <p>
-                        IP:
-                        <b id="dashServerIP">
-                            127.0.0.1:30120
-                        </b>
-                    </p>
-
-                    <br>
-
-                    <p>
-                        Version:
-                        <b id="dashVersion">
+                    <div class="status-line">
+                        <span>Version</span>
+                        <strong id="dashVersion">
                             1.0.0
-                        </b>
-                    </p>
+                        </strong>
+                    </div>
+
+                    <div class="status-line">
+                        <span>Spielerzählung</span>
+                        <strong>
+                            Manuell
+                        </strong>
+                    </div>
 
                 </div>
 
-            </div>
+            </section>
 
 
             <!-- WHITELIST -->
+            <section class="admin-page" id="page-whitelist">
 
-            <div
-                class="admin-page"
-                id="page-whitelist">
+                <div class="page-head">
+                    <h2>Whitelist-Bewerbungen</h2>
 
-                <div class="admin-top">
-
-                    <div>
-                        <h1>Whitelist</h1>
-                        <p>
-                            Bewerbungen verwalten
-                        </p>
-                    </div>
-
+                    <button class="btn btn-danger btn-small"
+                            onclick="clearWhitelist()">
+                        Alle löschen
+                    </button>
                 </div>
-
-                <div class="table-wrapper">
-
-                    <table>
-
-                        <thead>
-
-                            <tr>
-                                <th>Name</th>
-                                <th>Discord</th>
-                                <th>Fraktion</th>
-                                <th>Status</th>
-                                <th>Aktion</th>
-                            </tr>
-
-                        </thead>
-
-                        <tbody id="whitelistTable">
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-            </div>
-
-
-            <!-- SERVER -->
-
-            <div
-                class="admin-page owner-only"
-                id="page-server">
-
-                <h1>Server</h1>
-
-                <br>
 
                 <div class="card">
-
-                    <div class="form-group">
-                        <label>Servername</label>
-                        <input
-                            id="serverNameInput"
-                            type="text">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Server-IP</label>
-                        <input
-                            id="serverIPInput"
-                            type="text">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Maximale Spieler</label>
-                        <input
-                            id="maxPlayersInput"
-                            type="number">
-                    </div>
-
-                    <button
-                        class="btn btn-primary"
-                        onclick="saveServerSettings()">
-                        Speichern
-                    </button>
-
-                    <button
-                        class="btn btn-success"
-                        onclick="setServerStatus('online')">
-                        Online
-                    </button>
-
-                    <button
-                        class="btn btn-warning"
-                        onclick="setServerStatus('maintenance')">
-                        Wartung
-                    </button>
-
-                    <button
-                        class="btn btn-danger"
-                        onclick="setServerStatus('offline')">
-                        Offline
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <!-- PLAYERS -->
-
-            <div
-                class="admin-page owner-only"
-                id="page-players">
-
-                <h1>Spieler</h1>
-
-                <br>
-
-                <div class="table-wrapper">
-
-                    <table>
-
-                        <thead>
-
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Ping</th>
-                                <th>Aktion</th>
-                            </tr>
-
-                        </thead>
-
-                        <tbody id="playersTable">
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-            </div>
-
-
-            <!-- FACTIONS -->
-
-            <div
-                class="admin-page owner-only"
-                id="page-factions">
-
-                <h1>Fraktionen</h1>
-
-                <br>
-
-                <div id="factionAdminList"></div>
-
-            </div>
-
-
-            <!-- NEWS -->
-
-            <div
-                class="admin-page owner-only"
-                id="page-news">
-
-                <h1>News</h1>
-
-                <br>
-
-                <div class="card">
-
-                    <div class="form-group">
-                        <label>Titel</label>
-                        <input
-                            id="newsTitle">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Text</label>
-                        <textarea
-                            id="newsText"></textarea>
-                    </div>
-
-                    <button
-                        class="btn btn-primary"
-                        onclick="addNews()">
-                        News veröffentlichen
-                    </button>
-
-                </div>
-
-                <br>
-
-                <div id="adminNewsList"></div>
-
-            </div>
-
-
-            <!-- ADMINS -->
-
-            <div
-                class="admin-page owner-only"
-                id="page-admins">
-
-                <div class="admin-top">
-
-                    <div>
-
-                        <h1>Admins verwalten</h1>
-
-                        <p>
-                            Admin-Konten werden lokal
-                            in dieser Webseite gespeichert.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="card">
-
-                    <h3>
-                        Neuen Admin erstellen
-                    </h3>
-
-                    <br>
-
-                    <div class="form-group">
-
-                        <label>
-                            Name
-                        </label>
-
-                        <input
-                            id="newAdminName"
-                            type="text"
-                            placeholder="Max Mustermann">
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            E-Mail
-                        </label>
-
-                        <input
-                            id="newAdminEmail"
-                            type="email"
-                            placeholder="admin@example.com">
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Passwort
-                        </label>
-
-                        <input
-                            id="newAdminPassword"
-                            type="password"
-                            placeholder="Passwort">
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Rolle
-                        </label>
-
-                        <select id="newAdminRole">
-
-                            <option value="admin">
-                                Admin – nur Whitelist
-                            </option>
-
-                            <option value="owner">
-                                Owner – vollständiger Zugriff
-                            </option>
-
-                        </select>
-
-                    </div>
-
-
-                    <button
-                        class="btn btn-primary"
-                        onclick="createAdmin()">
-
-                        Admin erstellen
-
-                    </button>
-
-                </div>
-
-
-                <br>
-
-
-                <div class="card">
-
-                    <h3>
-                        Gespeicherte Admins
-                    </h3>
-
-                    <br>
-
-                    <div
-                        class="table-wrapper">
-
+                    <div class="table-wrap">
                         <table>
 
                             <thead>
-
                                 <tr>
-
                                     <th>Name</th>
-                                    <th>E-Mail</th>
-                                    <th>Rolle</th>
-                                    <th>Aktion</th>
-
+                                    <th>Discord</th>
+                                    <th>Alter</th>
+                                    <th>Fraktion</th>
+                                    <th>Status</th>
+                                    <th>Datum</th>
+                                    <th>Aktionen</th>
                                 </tr>
-
                             </thead>
 
-                            <tbody
-                                id="adminsTable">
-                            </tbody>
+                            <tbody id="whitelistTable"></tbody>
 
                         </table>
+                    </div>
+                </div>
 
+            </section>
+
+
+            <!-- PLAYERS -->
+            <section class="admin-page" id="page-players">
+
+                <div class="page-head">
+                    <h2>Spielerverwaltung</h2>
+
+                    <button class="btn btn-primary"
+                            onclick="openPlayerModal()">
+                        + Spieler hinzufügen
+                    </button>
+                </div>
+
+                <div class="card">
+
+                    <p style="color:var(--muted); margin-bottom:15px">
+                        Diese Spielerübersicht ist bewusst manuell.
+                        Es wird keine FiveM-API abgefragt.
+                    </p>
+
+                    <div class="table-wrap">
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>ID</th>
+                                    <th>Fraktion</th>
+                                    <th>Status</th>
+                                    <th>Aktionen</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="playersTable"></tbody>
+
+                        </table>
                     </div>
 
                 </div>
 
-            </div>
+            </section>
 
 
-            <!-- SETTINGS -->
+            <!-- FACTIONS -->
+            <section class="admin-page" id="page-factions">
 
-            <div
-                class="admin-page owner-only"
-                id="page-settings">
+                <div class="page-head">
 
-                <h1>Einstellungen</h1>
+                    <h2>Fraktionen</h2>
 
-                <br>
-
-                <div class="card">
-
-                    <div class="form-group">
-
-                        <label>
-                            Webseite
-                        </label>
-
-                        <input
-                            id="siteNameInput">
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Discord
-                        </label>
-
-                        <input
-                            id="discordInput">
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Stadt
-                        </label>
-
-                        <input
-                            id="cityInput">
-
-                    </div>
-
-
-                    <button
-                        class="btn btn-primary"
-                        onclick="saveWebsiteSettings()">
-
-                        Einstellungen speichern
-
+                    <button class="btn btn-primary"
+                            onclick="openFactionModal()">
+                        + Fraktion hinzufügen
                     </button>
 
                 </div>
 
-            </div>
+                <div class="card">
 
+                    <div class="table-wrap">
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th>Icon</th>
+                                    <th>Name</th>
+                                    <th>Beschreibung</th>
+                                    <th>Discord</th>
+                                    <th>Aktionen</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="factionsTable"></tbody>
+
+                        </table>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- NEWS -->
+            <section class="admin-page" id="page-news">
+
+                <div class="page-head">
+
+                    <h2>News</h2>
+
+                    <button class="btn btn-primary"
+                            onclick="openNewsModal()">
+                        + News erstellen
+                    </button>
+
+                </div>
+
+                <div class="card">
+
+                    <div class="table-wrap">
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th>Titel</th>
+                                    <th>Text</th>
+                                    <th>Datum</th>
+                                    <th>Aktionen</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="newsTable"></tbody>
+
+                        </table>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ADMINS -->
+            <section class="admin-page" id="page-admins">
+
+                <div class="page-head">
+
+                    <h2>Admins</h2>
+
+                    <button class="btn btn-primary"
+                            onclick="openAdminModal()">
+                        + Admin erstellen
+                    </button>
+
+                </div>
+
+                <div class="card">
+
+                    <div class="table-wrap">
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>E-Mail</th>
+                                    <th>Rolle</th>
+                                    <th>Aktionen</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="adminsTable"></tbody>
+
+                        </table>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- SERVER -->
+            <section class="admin-page" id="page-server">
+
+                <div class="page-head">
+                    <h2>Server</h2>
+                </div>
+
+                <div class="card">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+                            <label>Servername</label>
+                            <input id="serverNameInput">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Server-IP</label>
+                            <input
+                                id="serverIPInput"
+                                value="145.224.72.197:30120"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Maximale Spieler</label>
+                            <input
+                                id="maxPlayersInput"
+                                type="number"
+                                min="1"
+                                max="1000"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Spielerzahl</label>
+                            <input
+                                id="manualPlayersInput"
+                                type="number"
+                                min="0"
+                                max="1000"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Status</label>
+
+                            <select id="serverStatusInput">
+                                <option value="online">Online</option>
+                                <option value="offline">Offline</option>
+                                <option value="maintenance">Wartung</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Version</label>
+                            <input id="serverVersionInput">
+                        </div>
+
+                    </div>
+
+                    <div class="form-actions">
+
+                        <button class="btn btn-primary"
+                                onclick="saveServerSettings()">
+                            💾 Speichern
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- SETTINGS -->
+            <section class="admin-page" id="page-settings">
+
+                <div class="page-head">
+                    <h2>Einstellungen</h2>
+                </div>
+
+                <div class="card">
+
+                    <div class="form-group">
+                        <label>Discord-Link</label>
+                        <input id="discordInput">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Stadtname</label>
+                        <input id="cityNameInput">
+                    </div>
+
+                    <div class="form-actions">
+
+                        <button class="btn btn-primary"
+                                onclick="saveGeneralSettings()">
+                            💾 Speichern
+                        </button>
+
+                        <button class="btn btn-danger"
+                                onclick="resetLocalData()">
+                            Daten zurücksetzen
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
 
         </main>
 
@@ -1555,219 +1749,595 @@ footer{
 </div>
 
 
-<!-- =========================
-     APPLICATION MODAL
-========================= -->
-
-<div
-    class="modal hidden"
-    id="applicationModal">
-
-    <div class="modal-box">
-
-        <div class="modal-header">
-
-            <h2>
-                Whitelist-Bewerbung
-            </h2>
-
-            <button
-                class="close"
-                onclick="closeModal('applicationModal')">
-                ×
-            </button>
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>
-                Charaktername
-            </label>
-
-            <input
-                id="applicationName"
-                placeholder="Max Mustermann">
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>
-                Discord-Name
-            </label>
-
-            <input
-                id="applicationDiscord"
-                placeholder="max123">
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>
-                Alter des Charakters
-            </label>
-
-            <input
-                id="applicationAge"
-                type="number">
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>
-                Wunsch-Fraktion
-            </label>
-
-            <select id="applicationFaction">
-            </select>
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>
-                Warum möchtest du auf NovaRP spielen?
-            </label>
-
-            <textarea
-                id="applicationReason">
-            </textarea>
-
-        </div>
-
-
-        <button
-            class="btn btn-primary"
-            onclick="submitApplication()">
-
-            Bewerbung absenden
-
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- =========================
+<!-- =========================================================
      LOGIN MODAL
-========================= -->
+========================================================= -->
 
-<div
-    class="modal hidden"
-    id="loginModal">
+<div class="modal-backdrop hidden" id="loginModal">
 
-    <div class="modal-box">
+    <div class="modal">
 
         <div class="modal-header">
 
-            <h2>
-                Login
-            </h2>
+            <h2>NovaRP Login</h2>
 
-            <button
-                class="close"
-                onclick="closeModal('loginModal')">
+            <button onclick="closeModal('loginModal')">
                 ×
             </button>
 
         </div>
 
+        <div class="modal-body">
 
-        <div class="form-group">
+            <form onsubmit="login(event)">
 
-            <label>
-                E-Mail
-            </label>
+                <div class="form-group">
 
-            <input
-                id="loginEmail"
-                type="email"
-                placeholder="E-Mail">
+                    <label>E-Mail</label>
+
+                    <input
+                        id="loginEmail"
+                        type="email"
+                        placeholder="E-Mail"
+                        required
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Passwort</label>
+
+                    <input
+                        id="loginPassword"
+                        type="password"
+                        placeholder="Passwort"
+                        required
+                    >
+
+                </div>
+
+                <div class="form-actions">
+
+                    <button
+                        type="button"
+                        class="btn btn-outline"
+                        onclick="closeModal('loginModal')"
+                    >
+                        Abbrechen
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        Einloggen
+                    </button>
+
+                </div>
+
+            </form>
 
         </div>
-
-
-        <div class="form-group">
-
-            <label>
-                Passwort
-            </label>
-
-            <input
-                id="loginPassword"
-                type="password"
-                placeholder="Passwort">
-
-        </div>
-
-
-        <button
-            class="btn btn-primary"
-            onclick="login()">
-
-            Einloggen
-
-        </button>
 
     </div>
 
 </div>
 
 
-<div id="toastContainer"></div>
+<!-- =========================================================
+     WHITELIST MODAL
+========================================================= -->
+
+<div class="modal-backdrop hidden" id="whitelistModal">
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h2>Whitelist-Bewerbung</h2>
+
+            <button onclick="closeModal('whitelistModal')">
+                ×
+            </button>
+
+        </div>
+
+        <div class="modal-body">
+
+            <form onsubmit="submitWhitelist(event)">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label>Vor- und Nachname</label>
+
+                        <input
+                            id="wlName"
+                            required
+                            placeholder="Max Mustermann"
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Discord</label>
+
+                        <input
+                            id="wlDiscord"
+                            required
+                            placeholder="max.mustermann"
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Alter</label>
+
+                        <input
+                            id="wlAge"
+                            type="number"
+                            min="13"
+                            max="99"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Wunschfraktion</label>
+
+                        <select id="wlFaction"></select>
+
+                    </div>
+
+                    <div class="form-group full">
+
+                        <label>Warum möchtest du auf NovaRP spielen?</label>
+
+                        <textarea
+                            id="wlReason"
+                            required
+                            placeholder="Schreibe etwas über dich..."
+                        ></textarea>
+
+                    </div>
+
+                    <div class="form-group full">
+
+                        <label>RP-Erfahrung</label>
+
+                        <textarea
+                            id="wlExperience"
+                            placeholder="Hast du bereits Roleplay-Erfahrung?"
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+                <div class="form-actions">
+
+                    <button
+                        type="button"
+                        class="btn btn-outline"
+                        onclick="closeModal('whitelistModal')"
+                    >
+                        Abbrechen
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        Bewerbung senden
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
 
 
-<footer>
+<!-- =========================================================
+     ADMIN MODAL
+========================================================= -->
 
-    © 2026 NovaRP · FiveM Roleplay
+<div class="modal-backdrop hidden" id="adminModal">
 
-</footer>
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h2>Admin erstellen</h2>
+
+            <button onclick="closeModal('adminModal')">
+                ×
+            </button>
+
+        </div>
+
+        <div class="modal-body">
+
+            <form onsubmit="createAdmin(event)">
+
+                <div class="form-group">
+                    <label>Name</label>
+
+                    <input
+                        id="newAdminName"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>E-Mail</label>
+
+                    <input
+                        id="newAdminEmail"
+                        type="email"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Passwort</label>
+
+                    <input
+                        id="newAdminPassword"
+                        type="password"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Rolle</label>
+
+                    <select id="newAdminRole">
+                        <option value="admin">Admin</option>
+                        <option value="owner">Owner</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+
+                    <button
+                        type="button"
+                        class="btn btn-outline"
+                        onclick="closeModal('adminModal')"
+                    >
+                        Abbrechen
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        Admin erstellen
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     FACTION MODAL
+========================================================= -->
+
+<div class="modal-backdrop hidden" id="factionModal">
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h2 id="factionModalTitle">Fraktion erstellen</h2>
+
+            <button onclick="closeModal('factionModal')">
+                ×
+            </button>
+
+        </div>
+
+        <div class="modal-body">
+
+            <form onsubmit="saveFaction(event)">
+
+                <input type="hidden" id="factionEditId">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label>Icon</label>
+
+                        <input
+                            id="factionIcon"
+                            placeholder="🚓"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Name</label>
+
+                        <input
+                            id="factionName"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="form-group full">
+
+                        <label>Beschreibung</label>
+
+                        <textarea
+                            id="factionDescription"
+                            required
+                        ></textarea>
+
+                    </div>
+
+                    <div class="form-group full">
+
+                        <label>Discord-Link</label>
+
+                        <input
+                            id="factionDiscord"
+                            placeholder="https://discord.gg/..."
+                        >
+
+                    </div>
+
+                </div>
+
+                <div class="form-actions">
+
+                    <button
+                        type="button"
+                        class="btn btn-outline"
+                        onclick="closeModal('factionModal')"
+                    >
+                        Abbrechen
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        Speichern
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     NEWS MODAL
+========================================================= -->
+
+<div class="modal-backdrop hidden" id="newsModal">
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h2>News erstellen</h2>
+
+            <button onclick="closeModal('newsModal')">
+                ×
+            </button>
+
+        </div>
+
+        <div class="modal-body">
+
+            <form onsubmit="saveNews(event)">
+
+                <input type="hidden" id="newsEditId">
+
+                <div class="form-group">
+
+                    <label>Titel</label>
+
+                    <input
+                        id="newsTitle"
+                        required
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Text</label>
+
+                    <textarea
+                        id="newsText"
+                        required
+                    ></textarea>
+
+                </div>
+
+                <div class="form-actions">
+
+                    <button
+                        type="button"
+                        class="btn btn-outline"
+                        onclick="closeModal('newsModal')"
+                    >
+                        Abbrechen
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        Speichern
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     PLAYER MODAL
+========================================================= -->
+
+<div class="modal-backdrop hidden" id="playerModal">
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h2>Spieler hinzufügen</h2>
+
+            <button onclick="closeModal('playerModal')">
+                ×
+            </button>
+
+        </div>
+
+        <div class="modal-body">
+
+            <form onsubmit="savePlayer(event)">
+
+                <div class="form-group">
+
+                    <label>Name</label>
+
+                    <input
+                        id="playerName"
+                        required
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Spieler-ID</label>
+
+                    <input
+                        id="playerId"
+                        required
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Fraktion</label>
+
+                    <select id="playerFaction"></select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Status</label>
+
+                    <select id="playerStatus">
+
+                        <option value="online">
+                            Online
+                        </option>
+
+                        <option value="offline">
+                            Offline
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="form-actions">
+
+                    <button
+                        type="button"
+                        class="btn btn-outline"
+                        onclick="closeModal('playerModal')"
+                    >
+                        Abbrechen
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        Spieler speichern
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- TOASTS -->
+<div class="toast-container" id="toastContainer"></div>
 
 
 <script>
-
-/* =====================================================
+/* =========================================================
    CONFIG
-===================================================== */
+========================================================= */
 
 const CONFIG = {
-
     siteName: "NovaRP",
-
     siteVersion: "1.0.0",
 
     serverName: "NovaRP",
-
-    serverIP: "127.0.0.1:30120",
+    serverIP: "145.224.72.197:30120",
 
     maxPlayers: 128,
 
-    discord:
-        "https://discord.gg/DEIN-COMMUNITY-CODE",
+    discord: "https://discord.gg/DEIN-COMMUNITY-CODE",
 
-    cityName:
-        "Nova City",
-
-    liveServerData: false
-
+    cityName: "Nova City"
 };
 
 
-/* =====================================================
+/* =========================================================
    DEFAULT ADMINS
-===================================================== */
+========================================================= */
 
 const DEFAULT_ADMINS = [
-
     {
         id: "owner-main",
         name: "Owner",
@@ -1775,7 +2345,6 @@ const DEFAULT_ADMINS = [
         password: "Owner!!",
         role: "owner"
     },
-
     {
         id: "admin-main",
         name: "Admin",
@@ -1783,568 +2352,407 @@ const DEFAULT_ADMINS = [
         password: "299120",
         role: "admin"
     }
-
 ];
 
 
-/* =====================================================
-   LOCAL STORAGE
-===================================================== */
+/* =========================================================
+   DEFAULT FACTIONS
+========================================================= */
 
-function loadAdmins(){
+const DEFAULT_FACTIONS = [
+    {
+        id: "polizei",
+        name: "Polizei",
+        icon: "🚓",
+        description: "Sorge für Sicherheit und Ordnung.",
+        discord: "https://discord.gg/POLIZEI-CODE"
+    },
+    {
+        id: "feuerwehr",
+        name: "Feuerwehr",
+        icon: "🚒",
+        description: "Retten, löschen, bergen und schützen.",
+        discord: "https://discord.gg/FEUERWEHR-CODE"
+    },
+    {
+        id: "rettungsdienst",
+        name: "Rettungsdienst",
+        icon: "🚑",
+        description: "Versorge verletzte Personen.",
+        discord: "https://discord.gg/RETTUNG-CODE"
+    },
+    {
+        id: "mechaniker",
+        name: "Mechaniker",
+        icon: "🔧",
+        description: "Repariere Fahrzeuge und betreibe deine Werkstatt.",
+        discord: "https://discord.gg/MECHANIKER-CODE"
+    },
+    {
+        id: "taxi",
+        name: "Taxi",
+        icon: "🚕",
+        description: "Bringe Bürger sicher ans Ziel.",
+        discord: "https://discord.gg/TAXI-CODE"
+    },
+    {
+        id: "unternehmen",
+        name: "Unternehmen",
+        icon: "🏢",
+        description: "Baue dein eigenes Unternehmen auf.",
+        discord: "https://discord.gg/UNTERNEHMEN-CODE"
+    }
+];
 
-    const saved =
-        localStorage.getItem("novarp_admins");
 
-    if(!saved){
+/* =========================================================
+   STORAGE HELPERS
+========================================================= */
 
-        localStorage.setItem(
-            "novarp_admins",
-            JSON.stringify(DEFAULT_ADMINS)
-        );
+function getStorage(key, fallback) {
 
-        return [...DEFAULT_ADMINS];
+    const value = localStorage.getItem(key);
+
+    if (value === null) {
+        return fallback;
     }
 
-    try{
-
-        return JSON.parse(saved);
-
-    }catch{
-
-        localStorage.setItem(
-            "novarp_admins",
-            JSON.stringify(DEFAULT_ADMINS)
-        );
-
-        return [...DEFAULT_ADMINS];
-
+    try {
+        return JSON.parse(value);
+    } catch {
+        return fallback;
     }
-
 }
 
 
-let admins = loadAdmins();
-
-
-function saveAdmins(){
+function setStorage(key, value) {
 
     localStorage.setItem(
+        key,
+        JSON.stringify(value)
+    );
+}
+
+
+/* =========================================================
+   ADMINS
+========================================================= */
+
+let admins = getStorage(
+    "novarp_admins",
+    DEFAULT_ADMINS
+);
+
+if (!Array.isArray(admins) || admins.length === 0) {
+
+    admins = [...DEFAULT_ADMINS];
+
+    setStorage(
         "novarp_admins",
-        JSON.stringify(admins)
+        admins
     );
-
 }
 
 
-/* =====================================================
-   OTHER DATA
-===================================================== */
+/* =========================================================
+   CURRENT USER
+========================================================= */
 
-let currentUser =
-    JSON.parse(
-        localStorage.getItem("novarp_current_user")
-        || "null"
+let currentUser = getStorage(
+    "novarp_current_user",
+    null
+);
+
+
+/* =========================================================
+   WHITELIST
+========================================================= */
+
+let whitelist = getStorage(
+    "novarp_whitelist",
+    []
+);
+
+
+/* =========================================================
+   NEWS
+========================================================= */
+
+let news = getStorage(
+    "novarp_news",
+    []
+);
+
+
+/* =========================================================
+   FACTIONS
+========================================================= */
+
+let factions = getStorage(
+    "novarp_factions",
+    DEFAULT_FACTIONS
+);
+
+if (!Array.isArray(factions) || factions.length === 0) {
+
+    factions = [...DEFAULT_FACTIONS];
+
+    setStorage(
+        "novarp_factions",
+        factions
     );
+}
 
 
-let whitelist =
-    JSON.parse(
-        localStorage.getItem("novarp_whitelist")
-        || "[]"
-    );
+/* =========================================================
+   PLAYERS
+========================================================= */
+
+let players = getStorage(
+    "novarp_players",
+    []
+);
 
 
-let news =
-    JSON.parse(
-        localStorage.getItem("novarp_news")
-        || "[]"
-    );
+/* =========================================================
+   SERVER DATA
+========================================================= */
 
-
-let serverData =
-    JSON.parse(
-        localStorage.getItem("novarp_server")
-        || "null"
-    );
-
-
-if(!serverData){
-
-    serverData = {
-
+let serverData = getStorage(
+    "novarp_server",
+    {
         name: CONFIG.serverName,
-
         ip: CONFIG.serverIP,
-
         maxPlayers: CONFIG.maxPlayers,
-
         status: "online",
-
-        players: 42,
-
-        ping: 24,
-
+        players: 0,
         version: CONFIG.siteVersion
+    }
+);
 
-    };
 
+/* =========================================================
+   GENERAL SETTINGS
+========================================================= */
+
+let generalSettings = getStorage(
+    "novarp_settings",
+    {
+        discord: CONFIG.discord,
+        cityName: CONFIG.cityName
+    }
+);
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    init
+);
+
+
+function init() {
+
+    document.title = CONFIG.siteName;
+
+    document.getElementById("navSiteName").textContent =
+        CONFIG.siteName;
+
+    document.getElementById("footerYear").textContent =
+        new Date().getFullYear();
+
+    updatePublicServer();
+
+    renderPublicFactions();
+
+    renderFactionSelect();
+
+    renderPublicNews();
+
+    renderAllAdmin();
+
+    checkLoginState();
 }
 
 
-let factions = [
+/* =========================================================
+   PUBLIC SERVER
+========================================================= */
 
-    {
-        id:"polizei",
-        name:"Polizei",
-        icon:"🚓",
-        description:
-            "Sorge für Sicherheit und Ordnung.",
-        discord:
-            "https://discord.gg/POLIZEI-CODE"
-    },
+function updatePublicServer() {
 
-    {
-        id:"feuerwehr",
-        name:"Feuerwehr",
-        icon:"🚒",
-        description:
-            "Retten, löschen, bergen und schützen.",
-        discord:
-            "https://discord.gg/FEUERWEHR-CODE"
-    },
+    const status = serverData.status || "online";
 
-    {
-        id:"rettungsdienst",
-        name:"Rettungsdienst",
-        icon:"🚑",
-        description:
-            "Versorge verletzte Personen.",
-        discord:
-            "https://discord.gg/RETTUNG-CODE"
-    },
+    let statusText = "Online";
 
-    {
-        id:"mechaniker",
-        name:"Mechaniker",
-        icon:"🔧",
-        description:
-            "Repariere Fahrzeuge und betreibe deine Werkstatt.",
-        discord:
-            "https://discord.gg/MECHANIKER-CODE"
-    },
-
-    {
-        id:"taxi",
-        name:"Taxi",
-        icon:"🚕",
-        description:
-            "Bringe Bürger sicher ans Ziel.",
-        discord:
-            "https://discord.gg/TAXI-CODE"
-    },
-
-    {
-        id:"unternehmen",
-        name:"Unternehmen",
-        icon:"🏢",
-        description:
-            "Baue dein eigenes Unternehmen auf.",
-        discord:
-            "https://discord.gg/UNTERNEHMEN-CODE"
+    if (status === "offline") {
+        statusText = "Offline";
     }
 
-];
+    if (status === "maintenance") {
+        statusText = "Wartung";
+    }
+
+    const statusClass =
+        status === "online"
+            ? "status-online"
+            : "status-offline";
 
 
-/* =====================================================
-   SAVE SERVER
-===================================================== */
+    document.getElementById("heroServerName").textContent =
+        serverData.name;
 
-function saveServer(){
+    document.getElementById("heroServerIP").textContent =
+        serverData.ip;
 
-    localStorage.setItem(
-        "novarp_server",
-        JSON.stringify(serverData)
-    );
+    document.getElementById("heroPlayers").textContent =
+        `${serverData.players} / ${serverData.maxPlayers}`;
 
+    document.getElementById("serverStatus").textContent =
+        statusText;
+
+    document.getElementById("serverStatus").className =
+        `stat-value ${statusClass}`;
+
+    document.getElementById("playerCount").textContent =
+        `${serverData.players} / ${serverData.maxPlayers}`;
+
+    document.getElementById("serverIP").textContent =
+        serverData.ip;
+
+    document.getElementById("serverVersion").textContent =
+        serverData.version;
+
+    document.getElementById("heroServerStatus").className =
+        statusClass;
+
+    document.getElementById("heroServerStatus").innerHTML =
+        `<span class="dot"></span>${statusText}`;
 }
 
 
-/* =====================================================
-   TOAST
-===================================================== */
-
-function toast(message){
-
-    const container =
-        document.getElementById(
-            "toastContainer"
-        );
-
-    const item =
-        document.createElement("div");
-
-    item.className = "toast";
-
-    item.textContent = message;
-
-    container.appendChild(item);
-
-    setTimeout(()=>{
-
-        item.remove();
-
-    },3500);
-
-}
-
-
-/* =====================================================
-   ESCAPE HTML
-===================================================== */
-
-function escapeHTML(value){
-
-    return String(value ?? "")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-
-}
-
-
-/* =====================================================
-   MODALS
-===================================================== */
-
-function openApplication(){
-
-    document
-        .getElementById("applicationModal")
-        .classList.remove("hidden");
-
-}
-
-
-function openLogin(){
-
-    document
-        .getElementById("loginModal")
-        .classList.remove("hidden");
-
-}
-
-
-function closeModal(id){
-
-    document
-        .getElementById(id)
-        .classList.add("hidden");
-
-}
-
-
-function openDiscord(){
-
-    window.open(
-        CONFIG.discord,
-        "_blank"
-    );
-
-}
-
-
-/* =====================================================
+/* =========================================================
    LOGIN
-===================================================== */
+========================================================= */
 
-function login(){
+function openLogin() {
+
+    document.getElementById("loginModal")
+        .classList.remove("hidden");
+
+    setTimeout(() => {
+        document.getElementById("loginEmail").focus();
+    }, 100);
+}
+
+
+function login(event) {
+
+    event.preventDefault();
 
     const email =
-        document
-        .getElementById("loginEmail")
-        .value
-        .trim();
+        document.getElementById("loginEmail")
+            .value
+            .trim()
+            .toLowerCase();
 
     const password =
-        document
-        .getElementById("loginPassword")
-        .value;
-
-    const account =
-        admins.find(
-            admin =>
-                admin.email.toLowerCase()
-                === email.toLowerCase()
-                &&
-                admin.password
-                === password
-        );
+        document.getElementById("loginPassword")
+            .value;
 
 
-    if(!account){
+    const user = admins.find(admin =>
+        admin.email.toLowerCase() === email &&
+        admin.password === password
+    );
 
-        toast(
-            "E-Mail oder Passwort ist falsch."
+
+    if (!user) {
+
+        showToast(
+            "E-Mail oder Passwort ist falsch.",
+            "error"
         );
 
         return;
-
     }
 
 
     currentUser = {
-
-        id: account.id,
-
-        name: account.name,
-
-        email: account.email,
-
-        role: account.role
-
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role
     };
 
 
-    localStorage.setItem(
+    setStorage(
         "novarp_current_user",
-        JSON.stringify(currentUser)
+        currentUser
     );
 
 
     closeModal("loginModal");
 
-    openAdminPanel();
+    showAdmin();
 
-    toast(
-        "Willkommen " +
-        account.name +
-        "!"
+    showToast(
+        `Willkommen ${user.name}!`,
+        "success"
     );
-
 }
 
 
-/* =====================================================
-   OPEN ADMIN
-===================================================== */
+/* =========================================================
+   LOGIN STATE
+========================================================= */
 
-function openAdminPanel(){
+function checkLoginState() {
 
-    if(!currentUser){
-
-        openLogin();
-
-        return;
-
+    if (currentUser) {
+        showAdmin();
+    } else {
+        showPublic();
     }
+}
 
 
-    document
-        .getElementById("publicWebsite")
+function showAdmin() {
+
+    document.getElementById("publicSite")
         .style.display = "none";
 
-
-    document
-        .getElementById("adminPanel")
+    document.getElementById("adminArea")
         .style.display = "block";
 
+    document.getElementById("adminUserName")
+        .textContent = currentUser.name;
 
-    updateAdminPermissions();
+    document.getElementById("adminUserRole")
+        .textContent = currentUser.role;
 
-    updateAdminUser();
-
-    refreshDashboard();
-
-    renderWhitelist();
-
-    renderAdmins();
-
-    renderPlayers();
-
-    renderFactionsAdmin();
-
-    renderNewsAdmin();
-
-    showAdminPage("dashboard");
-
+    renderAllAdmin();
 }
 
 
-/* =====================================================
-   ADMIN USER
-===================================================== */
+function showPublic() {
 
-function updateAdminUser(){
+    document.getElementById("publicSite")
+        .style.display = "block";
 
-    const box =
-        document.getElementById(
-            "adminUserInfo"
-        );
-
-
-    if(!currentUser){
-
-        box.innerHTML = "";
-
-        return;
-
-    }
-
-
-    const roleText =
-        currentUser.role === "owner"
-        ? "OWNER"
-        : "ADMIN";
-
-
-    const roleClass =
-        currentUser.role === "owner"
-        ? "role-owner"
-        : "role-admin";
-
-
-    box.innerHTML = `
-
-        <div>
-            ${escapeHTML(currentUser.name)}
-        </div>
-
-        <br>
-
-        <span class="role-badge ${roleClass}">
-            ${roleText}
-        </span>
-
-    `;
-
+    document.getElementById("adminArea")
+        .style.display = "none";
 }
 
 
-/* =====================================================
-   PERMISSIONS
-===================================================== */
-
-function updateAdminPermissions(){
-
-    const ownerElements =
-        document.querySelectorAll(
-            ".owner-only"
-        );
-
-
-    ownerElements.forEach(element => {
-
-        if(currentUser &&
-           currentUser.role === "owner"){
-
-            element.classList.remove(
-                "hidden"
-            );
-
-            element.style.display = "";
-
-        }else{
-
-            element.classList.add(
-                "hidden"
-            );
-
-        }
-
-    });
-
-}
-
-
-/* =====================================================
-   ADMIN PAGES
-===================================================== */
-
-function showAdminPage(page){
-
-    if(
-        currentUser?.role !== "owner"
-        &&
-        [
-            "server",
-            "players",
-            "factions",
-            "news",
-            "admins",
-            "settings"
-        ].includes(page)
-    ){
-
-        toast(
-            "Nur der Owner hat Zugriff."
-        );
-
-        return;
-
-    }
-
-
-    document
-        .querySelectorAll(".admin-page")
-        .forEach(element => {
-
-            element.classList.remove(
-                "active"
-            );
-
-        });
-
-
-    const target =
-        document.getElementById(
-            "page-" + page
-        );
-
-
-    if(target){
-
-        target.classList.add(
-            "active"
-        );
-
-    }
-
-
-    document
-        .querySelectorAll(
-            ".admin-menu button"
-        )
-        .forEach(button => {
-
-            button.classList.remove(
-                "active"
-            );
-
-            if(
-                button.dataset.page
-                === page
-            ){
-
-                button.classList.add(
-                    "active"
-                );
-
-            }
-
-        });
-
-}
-
-
-/* =====================================================
+/* =========================================================
    LOGOUT
-===================================================== */
+========================================================= */
 
-function logout(){
+function logout() {
 
     currentUser = null;
 
@@ -2352,219 +2760,245 @@ function logout(){
         "novarp_current_user"
     );
 
+    showPublic();
 
-    document
-        .getElementById("adminPanel")
-        .style.display = "none";
-
-
-    document
-        .getElementById("publicWebsite")
-        .style.display = "block";
-
-
-    toast("Du wurdest ausgeloggt.");
-
-}
-
-
-/* =====================================================
-   APPLICATION
-===================================================== */
-
-function renderFactionSelect(){
-
-    const select =
-        document.getElementById(
-            "applicationFaction"
-        );
-
-
-    select.innerHTML = "";
-
-    factions.forEach(faction => {
-
-        const option =
-            document.createElement("option");
-
-        option.value = faction.id;
-
-        option.textContent =
-            faction.name;
-
-        select.appendChild(option);
-
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
     });
 
+    showToast(
+        "Du wurdest ausgeloggt.",
+        "info"
+    );
 }
 
 
-function submitApplication(){
+/* =========================================================
+   PERMISSIONS
+========================================================= */
 
-    const name =
-        document
-        .getElementById("applicationName")
-        .value
-        .trim();
+function isOwner() {
 
-
-    const discord =
-        document
-        .getElementById("applicationDiscord")
-        .value
-        .trim();
+    return currentUser &&
+        currentUser.role === "owner";
+}
 
 
-    const age =
-        document
-        .getElementById("applicationAge")
-        .value;
+function isAdmin() {
+
+    return currentUser &&
+        (
+            currentUser.role === "admin" ||
+            currentUser.role === "owner"
+        );
+}
 
 
-    const faction =
-        document
-        .getElementById("applicationFaction")
-        .value;
+function requireOwner() {
 
+    if (!isOwner()) {
 
-    const reason =
-        document
-        .getElementById("applicationReason")
-        .value
-        .trim();
-
-
-    if(
-        !name ||
-        !discord ||
-        !age ||
-        !reason
-    ){
-
-        toast(
-            "Bitte fülle alle Felder aus."
+        showToast(
+            "Diese Funktion ist nur für den Owner verfügbar.",
+            "error"
         );
 
-        return;
+        return false;
+    }
 
+    return true;
+}
+
+
+/* =========================================================
+   ADMIN NAVIGATION
+========================================================= */
+
+function showAdminPage(page, button) {
+
+    if (!isAdmin()) {
+        return;
     }
 
 
-    const factionObject =
-        factions.find(
-            f => f.id === faction
+    if (
+        ["admins", "server", "players", "factions", "news", "settings"]
+            .includes(page)
+        && !isOwner()
+    ) {
+
+        showToast(
+            "Diese Seite ist nur für den Owner verfügbar.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    document.querySelectorAll(".admin-page")
+        .forEach(element => {
+
+            element.classList.remove("active");
+
+        });
+
+
+    const target =
+        document.getElementById(
+            `page-${page}`
         );
 
 
-    whitelist.push({
-
-        id:
-            "WL-" +
-            Date.now(),
-
-        name,
-
-        discord,
-
-        age,
-
-        faction:
-            factionObject?.name
-            || faction,
-
-        reason,
-
-        status:"pending",
-
-        date:
-            new Date()
-            .toLocaleDateString("de-DE")
-
-    });
+    if (target) {
+        target.classList.add("active");
+    }
 
 
-    localStorage.setItem(
-        "novarp_whitelist",
-        JSON.stringify(whitelist)
-    );
+    document.querySelectorAll(".admin-nav button")
+        .forEach(element => {
+
+            element.classList.remove("active");
+
+        });
 
 
-    closeModal(
-        "applicationModal"
-    );
+    if (button) {
+        button.classList.add("active");
+    }
 
 
-    document
-        .getElementById("applicationName")
-        .value = "";
-
-    document
-        .getElementById("applicationDiscord")
-        .value = "";
-
-    document
-        .getElementById("applicationAge")
-        .value = "";
-
-    document
-        .getElementById("applicationReason")
-        .value = "";
+    const titles = {
+        dashboard: "Dashboard",
+        whitelist: "Whitelist",
+        players: "Spieler",
+        factions: "Fraktionen",
+        news: "News",
+        admins: "Admins",
+        server: "Server",
+        settings: "Einstellungen"
+    };
 
 
-    toast(
-        "Bewerbung wurde eingereicht."
-    );
+    document.getElementById("adminPageTitle")
+        .textContent = titles[page] || "Dashboard";
 
 
-    renderWhitelist();
-
-    refreshDashboard();
-
+    renderAllAdmin();
 }
 
 
-/* =====================================================
-   WHITELIST
-===================================================== */
+/* =========================================================
+   WHITELIST PUBLIC
+========================================================= */
 
-function renderWhitelist(){
+function openWhitelist() {
 
-    const table =
-        document.getElementById(
-            "whitelistTable"
-        );
+    renderFactionSelect();
 
-
-    if(!table) return;
+    document.getElementById("whitelistModal")
+        .classList.remove("hidden");
+}
 
 
-    if(whitelist.length === 0){
+function submitWhitelist(event) {
 
-        table.innerHTML = `
+    event.preventDefault();
 
+
+    const application = {
+
+        id:
+            "wl-" +
+            Date.now() +
+            "-" +
+            Math.random()
+                .toString(36)
+                .substring(2, 7),
+
+        name:
+            document.getElementById("wlName").value.trim(),
+
+        discord:
+            document.getElementById("wlDiscord").value.trim(),
+
+        age:
+            document.getElementById("wlAge").value,
+
+        faction:
+            document.getElementById("wlFaction").value,
+
+        reason:
+            document.getElementById("wlReason").value.trim(),
+
+        experience:
+            document.getElementById("wlExperience").value.trim(),
+
+        status: "Offen",
+
+        date:
+            new Date().toLocaleString("de-DE")
+
+    };
+
+
+    whitelist.unshift(application);
+
+    setStorage(
+        "novarp_whitelist",
+        whitelist
+    );
+
+
+    event.target.reset();
+
+    closeModal("whitelistModal");
+
+    renderAllAdmin();
+
+    showToast(
+        "Deine Whitelist-Bewerbung wurde gespeichert.",
+        "success"
+    );
+}
+
+
+/* =========================================================
+   WHITELIST ADMIN
+========================================================= */
+
+function renderWhitelist() {
+
+    const tbody =
+        document.getElementById("whitelistTable");
+
+    if (!tbody) return;
+
+
+    if (whitelist.length === 0) {
+
+        tbody.innerHTML = `
             <tr>
-
-                <td colspan="5">
-                    Keine Bewerbungen vorhanden.
+                <td colspan="7">
+                    <div class="empty">
+                        Keine Bewerbungen vorhanden.
+                    </div>
                 </td>
-
             </tr>
-
         `;
 
         return;
-
     }
 
 
-    table.innerHTML =
-        whitelist
-        .map(application => `
+    tbody.innerHTML =
+        whitelist.map(application => `
 
             <tr>
 
                 <td>
-                    ${escapeHTML(application.name)}
+                    <strong>${escapeHTML(application.name)}</strong>
                 </td>
 
                 <td>
@@ -2572,7 +3006,13 @@ function renderWhitelist(){
                 </td>
 
                 <td>
-                    ${escapeHTML(application.faction)}
+                    ${escapeHTML(application.age)}
+                </td>
+
+                <td>
+                    <span class="tag">
+                        ${escapeHTML(application.faction)}
+                    </span>
                 </td>
 
                 <td>
@@ -2580,59 +3020,43 @@ function renderWhitelist(){
                 </td>
 
                 <td>
+                    ${escapeHTML(application.date)}
+                </td>
 
-                    ${
-                        application.status
-                        === "pending"
-                        ?
+                <td>
 
-                        `
+                    <button
+                        class="btn btn-success btn-small"
+                        onclick="setWhitelistStatus('${application.id}', 'Angenommen')"
+                    >
+                        ✓
+                    </button>
 
-                        <button
-                            class="btn btn-success"
-                            onclick="changeWhitelist('${application.id}','approved')">
-                            ✓
-                        </button>
+                    <button
+                        class="btn btn-warning btn-small"
+                        onclick="setWhitelistStatus('${application.id}', 'Abgelehnt')"
+                    >
+                        ✕
+                    </button>
 
-                        <button
-                            class="btn btn-danger"
-                            onclick="changeWhitelist('${application.id}','rejected')">
-                            ✕
-                        </button>
-
-                        `
-
-                        :
-
-                        "—"
-
-                    }
+                    <button
+                        class="btn btn-danger btn-small"
+                        onclick="deleteWhitelist('${application.id}')"
+                    >
+                        🗑
+                    </button>
 
                 </td>
 
             </tr>
 
-        `)
-        .join("");
-
+        `).join("");
 }
 
 
-function changeWhitelist(id,status){
+function setWhitelistStatus(id, status) {
 
-    if(
-        !currentUser ||
-        !["owner","admin"]
-        .includes(currentUser.role)
-    ){
-
-        toast(
-            "Keine Berechtigung."
-        );
-
-        return;
-
-    }
+    if (!isAdmin()) return;
 
 
     const application =
@@ -2641,241 +3065,134 @@ function changeWhitelist(id,status){
         );
 
 
-    if(!application) return;
+    if (!application) return;
 
 
     application.status = status;
 
 
-    localStorage.setItem(
+    setStorage(
         "novarp_whitelist",
-        JSON.stringify(whitelist)
+        whitelist
     );
 
 
     renderWhitelist();
 
-    refreshDashboard();
+    updateDashboard();
+
+    showToast(
+        `Bewerbung: ${status}`,
+        "success"
+    );
+}
 
 
-    toast(
-        status === "approved"
-        ? "Bewerbung angenommen."
-        : "Bewerbung abgelehnt."
+function deleteWhitelist(id) {
+
+    if (!isAdmin()) return;
+
+
+    whitelist =
+        whitelist.filter(
+            item => item.id !== id
+        );
+
+
+    setStorage(
+        "novarp_whitelist",
+        whitelist
     );
 
+
+    renderWhitelist();
+
+    updateDashboard();
+
+    showToast(
+        "Bewerbung gelöscht.",
+        "success"
+    );
 }
 
 
-/* =====================================================
-   SERVER
-===================================================== */
+function clearWhitelist() {
 
-function loadServerInputs(){
-
-    const name =
-        document.getElementById(
-            "serverNameInput"
+    if (!isOwner()) {
+        showToast(
+            "Nur der Owner darf alle Bewerbungen löschen.",
+            "error"
         );
 
-    const ip =
-        document.getElementById(
-            "serverIPInput"
-        );
-
-    const max =
-        document.getElementById(
-            "maxPlayersInput"
-        );
+        return;
+    }
 
 
-    if(name)
-        name.value =
-            serverData.name;
-
-    if(ip)
-        ip.value =
-            serverData.ip;
-
-    if(max)
-        max.value =
-            serverData.maxPlayers;
-
-}
+    if (!confirm(
+        "Wirklich alle Whitelist-Bewerbungen löschen?"
+    )) {
+        return;
+    }
 
 
-function saveServerSettings(){
+    whitelist = [];
 
-    serverData.name =
-        document
-        .getElementById(
-            "serverNameInput"
-        )
-        .value
-        .trim();
-
-
-    serverData.ip =
-        document
-        .getElementById(
-            "serverIPInput"
-        )
-        .value
-        .trim();
-
-
-    serverData.maxPlayers =
-        Number(
-            document
-            .getElementById(
-                "maxPlayersInput"
-            )
-            .value
-        );
-
-
-    saveServer();
-
-    updatePublicServer();
-
-    refreshDashboard();
-
-    toast(
-        "Servereinstellungen gespeichert."
+    setStorage(
+        "novarp_whitelist",
+        whitelist
     );
 
-}
 
+    renderWhitelist();
 
-function setServerStatus(status){
+    updateDashboard();
 
-    serverData.status = status;
-
-    saveServer();
-
-    updatePublicServer();
-
-    refreshDashboard();
-
-
-    toast(
-        "Serverstatus: " +
-        status
+    showToast(
+        "Alle Bewerbungen wurden gelöscht.",
+        "success"
     );
-
 }
 
 
-/* =====================================================
-   PLAYERS
-===================================================== */
+/* =========================================================
+   FACTIONS PUBLIC
+========================================================= */
 
-function renderPlayers(){
-
-    const table =
-        document.getElementById(
-            "playersTable"
-        );
-
-
-    if(!table) return;
-
-
-    const players = [
-
-        {
-            id:1,
-            name:"Alex_Müller",
-            ping:24
-        },
-
-        {
-            id:2,
-            name:"Max_RP",
-            ping:31
-        },
-
-        {
-            id:3,
-            name:"Feuerwehr01",
-            ping:19
-        },
-
-        {
-            id:4,
-            name:"Police_Unit",
-            ping:27
-        }
-
-    ];
-
-
-    table.innerHTML =
-        players
-        .map(player => `
-
-            <tr>
-
-                <td>
-                    ${player.id}
-                </td>
-
-                <td>
-                    ${escapeHTML(player.name)}
-                </td>
-
-                <td>
-                    ${player.ping} ms
-                </td>
-
-                <td>
-
-                    <button
-                        class="btn btn-danger"
-                        onclick="kickPlayer('${escapeHTML(player.name)}')">
-                        Kicken
-                    </button>
-
-                </td>
-
-            </tr>
-
-        `)
-        .join("");
-
-}
-
-
-function kickPlayer(name){
-
-    toast(
-        name +
-        " wurde vom Server gekickt."
-    );
-
-}
-
-
-/* =====================================================
-   FACTIONS
-===================================================== */
-
-function renderPublicFactions(){
+function renderPublicFactions() {
 
     const container =
-        document.getElementById(
-            "factionPublicList"
-        );
+        document.getElementById("publicFactions");
+
+    if (!container) return;
+
+
+    if (factions.length === 0) {
+
+        container.innerHTML = `
+            <div class="card">
+                <p>Keine Fraktionen vorhanden.</p>
+            </div>
+        `;
+
+        return;
+    }
 
 
     container.innerHTML =
-        factions
-        .map(faction => `
+        factions.map(faction => `
 
             <div class="card faction-card">
 
-                <div class="faction-icon">
-                    ${faction.icon}
+                <div class="faction-top">
+
+                    <div class="faction-icon">
+                        ${escapeHTML(faction.icon)}
+                    </div>
+
+                    <span class="tag">
+                        Fraktion
+                    </span>
+
                 </div>
 
                 <h3>
@@ -2886,135 +3203,390 @@ function renderPublicFactions(){
                     ${escapeHTML(faction.description)}
                 </p>
 
-                <button
-                    class="btn btn-primary"
-                    onclick="openFactionDiscord('${faction.id}')">
+                <div style="
+                    display:flex;
+                    gap:8px;
+                    flex-wrap:wrap;
+                    margin-top:17px;
+                ">
 
-                    Discord öffnen
+                    <button
+                        class="btn btn-primary btn-small"
+                        onclick="selectFactionForWhitelist('${faction.id}')"
+                    >
+                        Bewerben
+                    </button>
 
-                </button>
+                    ${
+                        faction.discord
+                        ? `
+                            <button
+                                class="btn btn-outline btn-small"
+                                onclick="openFactionDiscord('${faction.id}')"
+                            >
+                                Discord
+                            </button>
+                        `
+                        : ""
+                    }
+
+                </div>
 
             </div>
 
-        `)
-        .join("");
-
+        `).join("");
 }
 
 
-function openFactionDiscord(id){
+function selectFactionForWhitelist(id) {
+
+    openWhitelist();
+
+    setTimeout(() => {
+
+        const select =
+            document.getElementById("wlFaction");
+
+        if (select) {
+            select.value = id;
+        }
+
+    }, 50);
+}
+
+
+function openFactionDiscord(id) {
 
     const faction =
         factions.find(
-            f => f.id === id
+            item => item.id === id
         );
 
 
-    if(!faction) return;
+    if (!faction || !faction.discord) {
+
+        showToast(
+            "Kein Discord-Link hinterlegt.",
+            "error"
+        );
+
+        return;
+    }
 
 
     window.open(
         faction.discord,
-        "_blank"
+        "_blank",
+        "noopener,noreferrer"
     );
-
 }
 
 
-function renderFactionsAdmin(){
+/* =========================================================
+   FACTION SELECTS
+========================================================= */
 
-    const container =
-        document.getElementById(
-            "factionAdminList"
-        );
+function renderFactionSelect() {
+
+    const selects = [
+        document.getElementById("wlFaction"),
+        document.getElementById("playerFaction")
+    ];
 
 
-    if(!container) return;
+    selects.forEach(select => {
+
+        if (!select) return;
 
 
-    container.innerHTML =
-        factions
-        .map(faction => `
+        const current =
+            select.value;
 
-            <div class="card"
-                 style="margin-bottom:15px">
 
-                <h3>
-                    ${faction.icon}
-                    ${escapeHTML(faction.name)}
-                </h3>
+        select.innerHTML = `
+            <option value="">
+                Keine / frei
+            </option>
+        `;
 
-                <br>
 
-                <div class="form-group">
+        factions.forEach(faction => {
 
-                    <label>
-                        Beschreibung
-                    </label>
+            const option =
+                document.createElement("option");
 
-                    <textarea
-                        id="desc-${faction.id}">${escapeHTML(faction.description)}</textarea>
+            option.value = faction.id;
 
-                </div>
+            option.textContent =
+                `${faction.icon} ${faction.name}`;
 
-                <div class="form-group">
+            select.appendChild(option);
 
-                    <label>
-                        Discord
-                    </label>
+        });
 
-                    <input
-                        id="discord-${faction.id}"
-                        value="${escapeHTML(faction.discord)}">
 
-                </div>
+        if (current) {
+            select.value = current;
+        }
 
-                <button
-                    class="btn btn-primary"
-                    onclick="saveFaction('${faction.id}')">
-
-                    Speichern
-
-                </button>
-
-            </div>
-
-        `)
-        .join("");
-
+    });
 }
 
 
-function saveFaction(id){
+/* =========================================================
+   FACTION ADMIN
+========================================================= */
+
+function renderFactionsAdmin() {
+
+    const tbody =
+        document.getElementById("factionsTable");
+
+    if (!tbody) return;
+
+
+    if (factions.length === 0) {
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5">
+                    <div class="empty">
+                        Keine Fraktionen vorhanden.
+                    </div>
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+
+    tbody.innerHTML =
+        factions.map(faction => `
+
+            <tr>
+
+                <td style="font-size:22px">
+                    ${escapeHTML(faction.icon)}
+                </td>
+
+                <td>
+                    <strong>
+                        ${escapeHTML(faction.name)}
+                    </strong>
+                </td>
+
+                <td>
+                    ${escapeHTML(faction.description)}
+                </td>
+
+                <td>
+                    ${
+                        faction.discord
+                        ? `<span class="tag">Vorhanden</span>`
+                        : `<span class="tag">Keiner</span>`
+                    }
+                </td>
+
+                <td>
+
+                    <button
+                        class="btn btn-outline btn-small"
+                        onclick="editFaction('${faction.id}')"
+                    >
+                        Bearbeiten
+                    </button>
+
+                    <button
+                        class="btn btn-danger btn-small"
+                        onclick="deleteFaction('${faction.id}')"
+                    >
+                        Löschen
+                    </button>
+
+                </td>
+
+            </tr>
+
+        `).join("");
+}
+
+
+function openFactionModal() {
+
+    if (!requireOwner()) return;
+
+
+    document.getElementById("factionEditId").value = "";
+
+    document.getElementById("factionIcon").value = "";
+
+    document.getElementById("factionName").value = "";
+
+    document.getElementById("factionDescription").value = "";
+
+    document.getElementById("factionDiscord").value = "";
+
+
+    document.getElementById("factionModalTitle")
+        .textContent = "Fraktion erstellen";
+
+
+    document.getElementById("factionModal")
+        .classList.remove("hidden");
+}
+
+
+function editFaction(id) {
+
+    if (!requireOwner()) return;
+
 
     const faction =
         factions.find(
-            f => f.id === id
+            item => item.id === id
         );
 
 
-    if(!faction) return;
+    if (!faction) return;
 
 
-    faction.description =
-        document
-        .getElementById(
-            "desc-" + id
-        )
-        .value;
+    document.getElementById("factionEditId").value =
+        faction.id;
+
+    document.getElementById("factionIcon").value =
+        faction.icon;
+
+    document.getElementById("factionName").value =
+        faction.name;
+
+    document.getElementById("factionDescription").value =
+        faction.description;
+
+    document.getElementById("factionDiscord").value =
+        faction.discord || "";
 
 
-    faction.discord =
-        document
-        .getElementById(
-            "discord-" + id
-        )
-        .value;
+    document.getElementById("factionModalTitle")
+        .textContent = "Fraktion bearbeiten";
 
 
-    localStorage.setItem(
+    document.getElementById("factionModal")
+        .classList.remove("hidden");
+}
+
+
+function saveFaction(event) {
+
+    event.preventDefault();
+
+
+    if (!requireOwner()) return;
+
+
+    const editId =
+        document.getElementById("factionEditId").value;
+
+
+    const data = {
+
+        id:
+            editId ||
+            "faction-" +
+            Date.now(),
+
+        icon:
+            document.getElementById("factionIcon")
+                .value
+                .trim(),
+
+        name:
+            document.getElementById("factionName")
+                .value
+                .trim(),
+
+        description:
+            document.getElementById("factionDescription")
+                .value
+                .trim(),
+
+        discord:
+            document.getElementById("factionDiscord")
+                .value
+                .trim()
+
+    };
+
+
+    if (editId) {
+
+        const index =
+            factions.findIndex(
+                item => item.id === editId
+            );
+
+        if (index !== -1) {
+            factions[index] = data;
+        }
+
+    } else {
+
+        factions.push(data);
+
+    }
+
+
+    setStorage(
         "novarp_factions",
-        JSON.stringify(factions)
+        factions
+    );
+
+
+    closeModal("factionModal");
+
+    renderPublicFactions();
+
+    renderFactionSelect();
+
+    renderFactionsAdmin();
+
+    showToast(
+        "Fraktion gespeichert.",
+        "success"
+    );
+}
+
+
+function deleteFaction(id) {
+
+    if (!requireOwner()) return;
+
+
+    const faction =
+        factions.find(
+            item => item.id === id
+        );
+
+
+    if (!faction) return;
+
+
+    if (!confirm(
+        `Fraktion "${faction.name}" wirklich löschen?`
+    )) {
+        return;
+    }
+
+
+    factions =
+        factions.filter(
+            item => item.id !== id
+        );
+
+
+    setStorage(
+        "novarp_factions",
+        factions
     );
 
 
@@ -3022,206 +3594,274 @@ function saveFaction(id){
 
     renderFactionSelect();
 
-    toast(
-        "Fraktion gespeichert."
-    );
+    renderFactionsAdmin();
 
+    showToast(
+        "Fraktion gelöscht.",
+        "success"
+    );
 }
 
 
-/* =====================================================
-   NEWS
-===================================================== */
+/* =========================================================
+   NEWS PUBLIC
+========================================================= */
 
-function renderPublicNews(){
+function renderPublicNews() {
 
     const container =
-        document.getElementById(
-            "newsPublicList"
-        );
+        document.getElementById("publicNews");
+
+    if (!container) return;
 
 
-    if(news.length === 0){
+    if (news.length === 0) {
 
         container.innerHTML = `
-
             <div class="card">
-
-                <h3>
-                    Willkommen bei NovaRP
-                </h3>
-
-                <p>
-                    Die Webseite ist bereit.
+                <h3>Willkommen bei NovaRP</h3>
+                <p style="margin-top:8px">
+                    Aktuell gibt es noch keine News.
                 </p>
-
             </div>
-
         `;
 
         return;
-
     }
 
 
     container.innerHTML =
-        news
-        .map(item => `
+        news.map(item => `
 
-            <div class="news-item">
+            <article class="card news-card">
 
-                <div class="news-date">
-                    ${escapeHTML(item.date)}
+                <div>
+
+                    <div class="news-date">
+                        ${escapeHTML(item.date)}
+                    </div>
+
+                    <h3>
+                        ${escapeHTML(item.title)}
+                    </h3>
+
+                    <p style="
+                        color:var(--muted);
+                        margin-top:8px;
+                        line-height:1.6;
+                    ">
+                        ${escapeHTML(item.text)}
+                    </p>
+
                 </div>
 
-                <h3>
-                    ${escapeHTML(item.title)}
-                </h3>
+            </article>
 
-                <br>
-
-                <p>
-                    ${escapeHTML(item.text)}
-                </p>
-
-            </div>
-
-        `)
-        .join("");
-
+        `).join("");
 }
 
 
-function renderNewsAdmin(){
+/* =========================================================
+   NEWS ADMIN
+========================================================= */
 
-    const container =
-        document.getElementById(
-            "adminNewsList"
-        );
+function renderNewsAdmin() {
 
+    const tbody =
+        document.getElementById("newsTable");
 
-    if(!container) return;
-
-
-    container.innerHTML =
-        news
-        .map(item => `
-
-            <div class="card"
-                 style="margin-bottom:12px">
-
-                <small>
-                    ${escapeHTML(item.date)}
-                </small>
-
-                <h3>
-                    ${escapeHTML(item.title)}
-                </h3>
-
-                <br>
-
-                <p>
-                    ${escapeHTML(item.text)}
-                </p>
-
-                <br>
-
-                <button
-                    class="btn btn-danger"
-                    onclick="deleteNews('${item.id}')">
-
-                    Löschen
-
-                </button>
-
-            </div>
-
-        `)
-        .join("");
-
-}
+    if (!tbody) return;
 
 
-function addNews(){
+    if (news.length === 0) {
 
-    const title =
-        document
-        .getElementById(
-            "newsTitle"
-        )
-        .value
-        .trim();
-
-
-    const text =
-        document
-        .getElementById(
-            "newsText"
-        )
-        .value
-        .trim();
-
-
-    if(!title || !text){
-
-        toast(
-            "Titel und Text ausfüllen."
-        );
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="4">
+                    <div class="empty">
+                        Keine News vorhanden.
+                    </div>
+                </td>
+            </tr>
+        `;
 
         return;
-
     }
 
 
-    news.unshift({
+    tbody.innerHTML =
+        news.map(item => `
+
+            <tr>
+
+                <td>
+                    <strong>
+                        ${escapeHTML(item.title)}
+                    </strong>
+                </td>
+
+                <td>
+                    ${escapeHTML(item.text)}
+                </td>
+
+                <td>
+                    ${escapeHTML(item.date)}
+                </td>
+
+                <td>
+
+                    <button
+                        class="btn btn-outline btn-small"
+                        onclick="editNews('${item.id}')"
+                    >
+                        Bearbeiten
+                    </button>
+
+                    <button
+                        class="btn btn-danger btn-small"
+                        onclick="deleteNews('${item.id}')"
+                    >
+                        Löschen
+                    </button>
+
+                </td>
+
+            </tr>
+
+        `).join("");
+}
+
+
+function openNewsModal() {
+
+    if (!requireOwner()) return;
+
+
+    document.getElementById("newsEditId").value = "";
+
+    document.getElementById("newsTitle").value = "";
+
+    document.getElementById("newsText").value = "";
+
+
+    document.getElementById("newsModal")
+        .classList.remove("hidden");
+}
+
+
+function editNews(id) {
+
+    if (!requireOwner()) return;
+
+
+    const item =
+        news.find(
+            newsItem => newsItem.id === id
+        );
+
+
+    if (!item) return;
+
+
+    document.getElementById("newsEditId").value =
+        item.id;
+
+    document.getElementById("newsTitle").value =
+        item.title;
+
+    document.getElementById("newsText").value =
+        item.text;
+
+
+    document.getElementById("newsModal")
+        .classList.remove("hidden");
+}
+
+
+function saveNews(event) {
+
+    event.preventDefault();
+
+
+    if (!requireOwner()) return;
+
+
+    const editId =
+        document.getElementById("newsEditId").value;
+
+
+    const data = {
 
         id:
-            "NEWS-" +
+            editId ||
+            "news-" +
             Date.now(),
 
-        title,
+        title:
+            document.getElementById("newsTitle")
+                .value
+                .trim(),
 
-        text,
+        text:
+            document.getElementById("newsText")
+                .value
+                .trim(),
 
         date:
             new Date()
-            .toLocaleDateString("de-DE")
+                .toLocaleDateString("de-DE")
 
-    });
+    };
 
 
-    localStorage.setItem(
+    if (editId) {
+
+        const index =
+            news.findIndex(
+                item => item.id === editId
+            );
+
+        if (index !== -1) {
+            news[index] = data;
+        }
+
+    } else {
+
+        news.unshift(data);
+
+    }
+
+
+    setStorage(
         "novarp_news",
-        JSON.stringify(news)
+        news
     );
 
 
-    document
-        .getElementById(
-            "newsTitle"
-        )
-        .value = "";
-
-    document
-        .getElementById(
-            "newsText"
-        )
-        .value = "";
-
-
-    renderNewsAdmin();
+    closeModal("newsModal");
 
     renderPublicNews();
 
+    renderNewsAdmin();
 
-    toast(
-        "News veröffentlicht."
+    showToast(
+        "News gespeichert.",
+        "success"
     );
-
 }
 
 
-function deleteNews(id){
+function deleteNews(id) {
+
+    if (!requireOwner()) return;
+
+
+    if (!confirm(
+        "Diese News wirklich löschen?"
+    )) {
+        return;
+    }
+
 
     news =
         news.filter(
@@ -3229,46 +3869,44 @@ function deleteNews(id){
         );
 
 
-    localStorage.setItem(
+    setStorage(
         "novarp_news",
-        JSON.stringify(news)
+        news
     );
 
-
-    renderNewsAdmin();
 
     renderPublicNews();
 
-    toast(
-        "News gelöscht."
-    );
+    renderNewsAdmin();
 
+    showToast(
+        "News gelöscht.",
+        "success"
+    );
 }
 
 
-/* =====================================================
-   ADMIN MANAGEMENT
-===================================================== */
+/* =========================================================
+   ADMINS
+========================================================= */
 
-function renderAdmins(){
+function renderAdmins() {
 
-    const table =
-        document.getElementById(
-            "adminsTable"
-        );
+    const tbody =
+        document.getElementById("adminsTable");
 
-
-    if(!table) return;
+    if (!tbody) return;
 
 
-    table.innerHTML =
-        admins
-        .map(admin => `
+    tbody.innerHTML =
+        admins.map(admin => `
 
             <tr>
 
                 <td>
-                    ${escapeHTML(admin.name)}
+                    <strong>
+                        ${escapeHTML(admin.name)}
+                    </strong>
                 </td>
 
                 <td>
@@ -3276,223 +3914,139 @@ function renderAdmins(){
                 </td>
 
                 <td>
-
-                    <span
-                        class="role-badge ${
-                            admin.role === "owner"
-                            ? "role-owner"
-                            : "role-admin"
-                        }">
-
-                        ${
-                            admin.role === "owner"
-                            ? "OWNER"
-                            : "ADMIN"
-                        }
-
+                    <span class="role">
+                        ${escapeHTML(admin.role)}
                     </span>
-
                 </td>
 
                 <td>
 
                     ${
-                        admin.id === "owner-main"
-
-                        ?
-
-                        `<span>Haupt-Owner</span>`
-
-                        :
-
+                        admin.id !== "owner-main"
+                        ? `
+                            <button
+                                class="btn btn-danger btn-small"
+                                onclick="deleteAdmin('${admin.id}')"
+                            >
+                                Löschen
+                            </button>
                         `
-
-                        <button
-                            class="btn btn-danger"
-                            onclick="deleteAdmin('${admin.id}')">
-
-                            Löschen
-
-                        </button>
-
+                        : `
+                            <span class="tag">
+                                Haupt-Owner
+                            </span>
                         `
-
                     }
 
                 </td>
 
             </tr>
 
-        `)
-        .join("");
-
+        `).join("");
 }
 
 
-function createAdmin(){
+function openAdminModal() {
 
-    if(
-        !currentUser ||
-        currentUser.role !== "owner"
-    ){
+    if (!requireOwner()) return;
 
-        toast(
-            "Nur der Owner kann Admins erstellen."
-        );
 
-        return;
+    document.getElementById("newAdminName").value = "";
 
-    }
+    document.getElementById("newAdminEmail").value = "";
+
+    document.getElementById("newAdminPassword").value = "";
+
+    document.getElementById("newAdminRole").value = "admin";
+
+
+    document.getElementById("adminModal")
+        .classList.remove("hidden");
+}
+
+
+function createAdmin(event) {
+
+    event.preventDefault();
+
+
+    if (!requireOwner()) return;
 
 
     const name =
-        document
-        .getElementById(
-            "newAdminName"
-        )
-        .value
-        .trim();
-
+        document.getElementById("newAdminName")
+            .value
+            .trim();
 
     const email =
-        document
-        .getElementById(
-            "newAdminEmail"
-        )
-        .value
-        .trim();
-
+        document.getElementById("newAdminEmail")
+            .value
+            .trim();
 
     const password =
-        document
-        .getElementById(
-            "newAdminPassword"
-        )
-        .value;
-
+        document.getElementById("newAdminPassword")
+            .value;
 
     const role =
-        document
-        .getElementById(
-            "newAdminRole"
-        )
-        .value;
-
-
-    if(
-        !name ||
-        !email ||
-        !password
-    ){
-
-        toast(
-            "Bitte alle Felder ausfüllen."
-        );
-
-        return;
-
-    }
+        document.getElementById("newAdminRole")
+            .value;
 
 
     const exists =
         admins.some(
             admin =>
-                admin.email.toLowerCase()
-                === email.toLowerCase()
+                admin.email.toLowerCase() ===
+                email.toLowerCase()
         );
 
 
-    if(exists){
+    if (exists) {
 
-        toast(
-            "Diese E-Mail existiert bereits."
+        showToast(
+            "Diese E-Mail ist bereits vorhanden.",
+            "error"
         );
 
         return;
-
     }
 
 
-    const newAdmin = {
+    admins.push({
 
         id:
             "admin-" +
             Date.now(),
 
         name,
-
         email,
-
         password,
-
         role
 
-    };
+    });
 
 
-    admins.push(
-        newAdmin
+    setStorage(
+        "novarp_admins",
+        admins
     );
 
 
-    saveAdmins();
+    closeModal("adminModal");
 
     renderAdmins();
 
-    refreshDashboard();
+    updateDashboard();
 
-
-    document
-        .getElementById(
-            "newAdminName"
-        )
-        .value = "";
-
-    document
-        .getElementById(
-            "newAdminEmail"
-        )
-        .value = "";
-
-    document
-        .getElementById(
-            "newAdminPassword"
-        )
-        .value = "";
-
-
-    toast(
-        "Admin wurde gespeichert."
+    showToast(
+        "Admin wurde erstellt und gespeichert.",
+        "success"
     );
-
 }
 
 
-function deleteAdmin(id){
+function deleteAdmin(id) {
 
-    if(
-        !currentUser ||
-        currentUser.role !== "owner"
-    ){
-
-        toast(
-            "Nur der Owner kann Admins löschen."
-        );
-
-        return;
-
-    }
-
-
-    if(id === "owner-main"){
-
-        toast(
-            "Der Haupt-Owner kann nicht gelöscht werden."
-        );
-
-        return;
-
-    }
+    if (!requireOwner()) return;
 
 
     const admin =
@@ -3501,19 +4055,24 @@ function deleteAdmin(id){
         );
 
 
-    if(!admin) return;
+    if (!admin) return;
 
 
-    if(
-        !confirm(
-            "Admin " +
-            admin.name +
-            " wirklich löschen?"
-        )
-    ){
+    if (admin.id === "owner-main") {
+
+        showToast(
+            "Der Haupt-Owner kann nicht gelöscht werden.",
+            "error"
+        );
 
         return;
+    }
 
+
+    if (!confirm(
+        `Admin "${admin.name}" wirklich löschen?`
+    )) {
+        return;
     }
 
 
@@ -3523,283 +4082,493 @@ function deleteAdmin(id){
         );
 
 
-    saveAdmins();
+    setStorage(
+        "novarp_admins",
+        admins
+    );
+
 
     renderAdmins();
 
-    refreshDashboard();
+    updateDashboard();
 
-
-    toast(
-        "Admin wurde gelöscht."
+    showToast(
+        "Admin gelöscht.",
+        "success"
     );
-
 }
 
 
-/* =====================================================
-   WEBSITE SETTINGS
-===================================================== */
+/* =========================================================
+   PLAYERS
+========================================================= */
 
-function saveWebsiteSettings(){
+function renderPlayers() {
 
-    const siteName =
-        document
-        .getElementById(
-            "siteNameInput"
-        )
-        .value
-        .trim();
+    const tbody =
+        document.getElementById("playersTable");
+
+    if (!tbody) return;
 
 
-    const discord =
-        document
-        .getElementById(
-            "discordInput"
-        )
-        .value
-        .trim();
+    if (players.length === 0) {
 
-
-    const city =
-        document
-        .getElementById(
-            "cityInput"
-        )
-        .value
-        .trim();
-
-
-    localStorage.setItem(
-        "novarp_settings",
-        JSON.stringify({
-
-            siteName,
-
-            discord,
-
-            city
-
-        })
-    );
-
-
-    toast(
-        "Webseiteneinstellungen gespeichert."
-    );
-
-}
-
-
-/* =====================================================
-   DASHBOARD
-===================================================== */
-
-function refreshDashboard(){
-
-    document
-        .getElementById(
-            "adminPlayers"
-        )
-        .textContent =
-            serverData.players;
-
-
-    document
-        .getElementById(
-            "adminWhitelist"
-        )
-        .textContent =
-            whitelist.length;
-
-
-    document
-        .getElementById(
-            "adminCount"
-        )
-        .textContent =
-            admins.length;
-
-
-    document
-        .getElementById(
-            "adminServerStatus"
-        )
-        .textContent =
-            serverData.status.toUpperCase();
-
-
-    document
-        .getElementById(
-            "dashServerName"
-        )
-        .textContent =
-            serverData.name;
-
-
-    document
-        .getElementById(
-            "dashServerIP"
-        )
-        .textContent =
-            serverData.ip;
-
-
-    document
-        .getElementById(
-            "dashVersion"
-        )
-        .textContent =
-            serverData.version;
-
-
-    loadServerInputs();
-
-}
-
-
-/* =====================================================
-   PUBLIC SERVER
-===================================================== */
-
-function updatePublicServer(){
-
-    document
-        .getElementById(
-            "serverStatus"
-        )
-        .textContent =
-            serverData.status.toUpperCase();
-
-
-    document
-        .getElementById(
-            "serverStatus"
-        )
-        .className =
-            "status-value " +
-            (
-                serverData.status === "online"
-                ? "online"
-                : serverData.status === "offline"
-                ? "offline"
-                : ""
-            );
-
-
-    document
-        .getElementById(
-            "playerCount"
-        )
-        .textContent =
-            serverData.players +
-            " / " +
-            serverData.maxPlayers;
-
-
-    document
-        .getElementById(
-            "serverPing"
-        )
-        .textContent =
-            serverData.ping +
-            " ms";
-
-
-    document
-        .getElementById(
-            "serverIP"
-        )
-        .textContent =
-            serverData.ip;
-
-}
-
-
-/* =====================================================
-   LIVE DEMO
-===================================================== */
-
-function simulateLiveServer(){
-
-    if(
-        serverData.status !==
-        "online"
-    ){
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5">
+                    <div class="empty">
+                        Keine manuell eingetragenen Spieler.
+                    </div>
+                </td>
+            </tr>
+        `;
 
         return;
-
     }
 
 
-    const variation =
-        Math.floor(
-            Math.random() * 7
-        ) - 3;
+    tbody.innerHTML =
+        players.map(player => `
 
+            <tr>
 
-    serverData.players =
-        Math.max(
-            0,
-            Math.min(
-                serverData.maxPlayers,
-                serverData.players +
-                variation
-            )
-        );
+                <td>
+                    <strong>
+                        ${escapeHTML(player.name)}
+                    </strong>
+                </td>
 
+                <td>
+                    ${escapeHTML(player.id)}
+                </td>
 
-    serverData.ping =
-        Math.floor(
-            18 +
-            Math.random() * 20
-        );
+                <td>
+                    ${escapeHTML(player.faction || "Keine")}
+                </td>
 
+                <td>
+                    ${
+                        player.status === "online"
+                        ? `<span class="status-online">● Online</span>`
+                        : `<span class="status-offline">● Offline</span>`
+                    }
+                </td>
 
-    updatePublicServer();
+                <td>
 
-    refreshDashboard();
+                    <button
+                        class="btn btn-danger btn-small"
+                        onclick="deletePlayer('${player.id}')"
+                    >
+                        Löschen
+                    </button>
 
+                </td>
+
+            </tr>
+
+        `).join("");
 }
 
 
-/* =====================================================
-   INIT
-===================================================== */
+function openPlayerModal() {
 
-function init(){
-
-    const savedFactions =
-        localStorage.getItem(
-            "novarp_factions"
-        );
+    if (!requireOwner()) return;
 
 
-    if(savedFactions){
+    document.getElementById("playerName").value = "";
 
-        try{
+    document.getElementById("playerId").value = "";
 
-            factions =
-                JSON.parse(
-                    savedFactions
-                );
+    document.getElementById("playerStatus").value =
+        "online";
 
-        }catch{}
-
-    }
-
-
-    renderPublicFactions();
 
     renderFactionSelect();
 
-    renderPublicNews();
+
+    document.getElementById("playerModal")
+        .classList.remove("hidden");
+}
+
+
+function savePlayer(event) {
+
+    event.preventDefault();
+
+
+    if (!requireOwner()) return;
+
+
+    const playerId =
+        document.getElementById("playerId")
+            .value
+            .trim();
+
+
+    if (
+        players.some(
+            player => player.id === playerId
+        )
+    ) {
+
+        showToast(
+            "Diese Spieler-ID existiert bereits.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const factionId =
+        document.getElementById("playerFaction")
+            .value;
+
+
+    const faction =
+        factions.find(
+            item => item.id === factionId
+        );
+
+
+    players.push({
+
+        id: playerId,
+
+        name:
+            document.getElementById("playerName")
+                .value
+                .trim(),
+
+        faction:
+            faction
+                ? faction.name
+                : "Keine",
+
+        status:
+            document.getElementById("playerStatus")
+                .value
+
+    });
+
+
+    setStorage(
+        "novarp_players",
+        players
+    );
+
+
+    closeModal("playerModal");
+
+    renderPlayers();
+
+    updateDashboard();
+
+    showToast(
+        "Spieler gespeichert.",
+        "success"
+    );
+}
+
+
+function deletePlayer(id) {
+
+    if (!requireOwner()) return;
+
+
+    players =
+        players.filter(
+            player => player.id !== id
+        );
+
+
+    setStorage(
+        "novarp_players",
+        players
+    );
+
+
+    renderPlayers();
+
+    updateDashboard();
+
+    showToast(
+        "Spieler gelöscht.",
+        "success"
+    );
+}
+
+
+/* =========================================================
+   SERVER SETTINGS
+========================================================= */
+
+function renderServerSettings() {
+
+    const nameInput =
+        document.getElementById("serverNameInput");
+
+    if (!nameInput) return;
+
+
+    nameInput.value =
+        serverData.name;
+
+    document.getElementById("serverIPInput")
+        .value =
+        serverData.ip;
+
+    document.getElementById("maxPlayersInput")
+        .value =
+        serverData.maxPlayers;
+
+    document.getElementById("manualPlayersInput")
+        .value =
+        serverData.players;
+
+    document.getElementById("serverStatusInput")
+        .value =
+        serverData.status;
+
+    document.getElementById("serverVersionInput")
+        .value =
+        serverData.version;
+}
+
+
+function saveServerSettings() {
+
+    if (!requireOwner()) return;
+
+
+    const maxPlayers =
+        Number(
+            document.getElementById("maxPlayersInput")
+                .value
+        );
+
+
+    let playerCount =
+        Number(
+            document.getElementById("manualPlayersInput")
+                .value
+        );
+
+
+    if (!Number.isFinite(maxPlayers) || maxPlayers < 1) {
+
+        showToast(
+            "Ungültige maximale Spielerzahl.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if (!Number.isFinite(playerCount) || playerCount < 0) {
+        playerCount = 0;
+    }
+
+
+    playerCount =
+        Math.min(
+            playerCount,
+            maxPlayers
+        );
+
+
+    serverData = {
+
+        name:
+            document.getElementById("serverNameInput")
+                .value
+                .trim() ||
+            CONFIG.serverName,
+
+        ip:
+            document.getElementById("serverIPInput")
+                .value
+                .trim() ||
+            CONFIG.serverIP,
+
+        maxPlayers,
+
+        players:
+            playerCount,
+
+        status:
+            document.getElementById("serverStatusInput")
+                .value,
+
+        version:
+            document.getElementById("serverVersionInput")
+                .value
+                .trim() ||
+            CONFIG.siteVersion
+
+    };
+
+
+    setStorage(
+        "novarp_server",
+        serverData
+    );
+
 
     updatePublicServer();
 
-    renderWhitelist();
+    updateDashboard();
 
-    renderAdmins();
+    showToast(
+        "Servereinstellungen gespeichert.",
+        "success"
+    );
+}
+
+
+/* =========================================================
+   GENERAL SETTINGS
+========================================================= */
+
+function renderGeneralSettings() {
+
+    document.getElementById("discordInput")
+        .value =
+        generalSettings.discord;
+
+    document.getElementById("cityNameInput")
+        .value =
+        generalSettings.cityName;
+}
+
+
+function saveGeneralSettings() {
+
+    if (!requireOwner()) return;
+
+
+    generalSettings = {
+
+        discord:
+            document.getElementById("discordInput")
+                .value
+                .trim(),
+
+        cityName:
+            document.getElementById("cityNameInput")
+                .value
+                .trim()
+
+    };
+
+
+    setStorage(
+        "novarp_settings",
+        generalSettings
+    );
+
+
+    showToast(
+        "Einstellungen gespeichert.",
+        "success"
+    );
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function updateDashboard() {
+
+    const whitelistElement =
+        document.getElementById("adminWhitelist");
+
+    if (whitelistElement) {
+        whitelistElement.textContent =
+            whitelist.length;
+    }
+
+
+    const adminCount =
+        document.getElementById("adminCount");
+
+    if (adminCount) {
+        adminCount.textContent =
+            admins.length;
+    }
+
+
+    const playersElement =
+        document.getElementById("adminPlayers");
+
+    if (playersElement) {
+        playersElement.textContent =
+            players.length;
+    }
+
+
+    const statusElement =
+        document.getElementById("adminServerStatus");
+
+    if (statusElement) {
+
+        statusElement.textContent =
+            serverData.status === "online"
+                ? "Online"
+                : serverData.status === "maintenance"
+                    ? "Wartung"
+                    : "Offline";
+
+        statusElement.className =
+            serverData.status === "online"
+                ? "stat-value status-online"
+                : "stat-value status-offline";
+    }
+
+
+    const name =
+        document.getElementById("dashServerName");
+
+    if (name) {
+        name.textContent =
+            serverData.name;
+    }
+
+
+    const ip =
+        document.getElementById("dashServerIP");
+
+    if (ip) {
+        ip.textContent =
+            serverData.ip;
+    }
+
+
+    const version =
+        document.getElementById("dashVersion");
+
+    if (version) {
+        version.textContent =
+            serverData.version;
+    }
+}
+
+
+/* =========================================================
+   RENDER ALL ADMIN
+========================================================= */
+
+function renderAllAdmin() {
+
+    if (!currentUser) return;
+
+
+    updateDashboard();
+
+    renderWhitelist();
 
     renderPlayers();
 
@@ -3807,78 +4576,231 @@ function init(){
 
     renderNewsAdmin();
 
-    refreshDashboard();
+    renderAdmins();
 
+    renderServerSettings();
 
-    const savedSettings =
-        JSON.parse(
-            localStorage.getItem(
-                "novarp_settings"
-            )
-            || "null"
-        );
-
-
-    if(savedSettings){
-
-        const siteName =
-            document.getElementById(
-                "siteNameInput"
-            );
-
-        const discord =
-            document.getElementById(
-                "discordInput"
-            );
-
-        const city =
-            document.getElementById(
-                "cityInput"
-            );
-
-
-        if(siteName)
-            siteName.value =
-                savedSettings.siteName || "";
-
-
-        if(discord)
-            discord.value =
-                savedSettings.discord || "";
-
-
-        if(city)
-            city.value =
-                savedSettings.city || "";
-
-    }
-
-
-    /*
-       Wenn bereits eingeloggt:
-       Adminbereich wieder öffnen.
-    */
-
-    if(currentUser){
-
-        openAdminPanel();
-
-    }
-
+    renderGeneralSettings();
 }
 
 
-setInterval(
-    simulateLiveServer,
-    5000
-);
+/* =========================================================
+   MODALS
+========================================================= */
 
+function closeModal(id) {
+
+    const modal =
+        document.getElementById(id);
+
+    if (modal) {
+        modal.classList.add("hidden");
+    }
+}
+
+
+document.querySelectorAll(".modal-backdrop")
+    .forEach(backdrop => {
+
+        backdrop.addEventListener(
+            "click",
+            event => {
+
+                if (
+                    event.target === backdrop
+                ) {
+
+                    backdrop.classList.add(
+                        "hidden"
+                    );
+
+                }
+
+            }
+        );
+
+    });
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function scrollToSection(id) {
+
+    const element =
+        document.getElementById(id);
+
+    if (!element) return;
+
+
+    element.scrollIntoView({
+        behavior: "smooth"
+    });
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(message, type = "info") {
+
+    const container =
+        document.getElementById("toastContainer");
+
+
+    const toast =
+        document.createElement("div");
+
+
+    toast.className =
+        `toast ${type}`;
+
+
+    toast.textContent =
+        message;
+
+
+    container.appendChild(toast);
+
+
+    setTimeout(() => {
+
+        toast.style.opacity = "0";
+        toast.style.transform = "translateY(8px)";
+
+        setTimeout(() => {
+            toast.remove();
+        }, 250);
+
+    }, 3200);
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetLocalData() {
+
+    if (!requireOwner()) return;
+
+
+    const confirmed =
+        confirm(
+            "ACHTUNG!\n\n" +
+            "Damit werden alle lokal gespeicherten " +
+            "NovaRP-Daten dieses Browsers gelöscht.\n\n" +
+            "Fortfahren?"
+        );
+
+
+    if (!confirmed) return;
+
+
+    const keys = [
+
+        "novarp_admins",
+        "novarp_current_user",
+        "novarp_whitelist",
+        "novarp_news",
+        "novarp_factions",
+        "novarp_players",
+        "novarp_server",
+        "novarp_settings"
+
+    ];
+
+
+    keys.forEach(key => {
+        localStorage.removeItem(key);
+    });
+
+
+    location.reload();
+}
+
+
+/* =========================================================
+   HTML SECURITY
+========================================================= */
+
+function escapeHTML(value) {
+
+    if (value === null || value === undefined) {
+        return "";
+    }
+
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+
+/* =========================================================
+   ESCAPE KEY
+========================================================= */
 
 document.addEventListener(
-    "DOMContentLoaded",
-    init
+    "keydown",
+    event => {
+
+        if (event.key !== "Escape") return;
+
+
+        document.querySelectorAll(".modal-backdrop")
+            .forEach(modal => {
+
+                modal.classList.add("hidden");
+
+            });
+
+    }
 );
 
+
+/* =========================================================
+   AUTO UPDATE UI
+   KEINE FIVEM-API!
+========================================================= */
+
+setInterval(() => {
+
+    if (currentUser) {
+        updateDashboard();
+    }
+
+    updatePublicServer();
+
+}, 3000);
+
+
+/* =========================================================
+   CONSOLE INFO
+========================================================= */
+
+console.log(
+    `%c${CONFIG.siteName}`,
+    "font-size:22px;font-weight:900;color:#7280ff;"
+);
+
+console.log(
+    "NovaRP Website gestartet."
+);
+
+console.log(
+    "FiveM-API: DEAKTIVIERT"
+);
+
+console.log(
+    "Server:",
+    CONFIG.serverIP
+);
 </script>
 
 </body>
