@@ -4,135 +4,110 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>DEINRP | German Roleplay</title>
+    <title>GameRP | FiveM Roleplay</title>
 
-    <!-- Socket.IO für Live-Daten -->
+    <meta name="description" content="GameRP - Dein moderner FiveM Roleplay Server">
+
     <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
 
     <style>
-
-        /* =========================================================
-           GRUNDLAGEN
-           ========================================================= */
-
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #07090d;
+            --bg2: #0d1118;
+            --card: rgba(18, 23, 32, .88);
+            --card2: rgba(25, 31, 42, .95);
+            --border: rgba(255,255,255,.08);
+            --text: #ffffff;
+            --muted: #9ba5b5;
+            --blue: #3b82f6;
+            --blue2: #2563eb;
+            --green: #22c55e;
+            --red: #ef4444;
+            --orange: #f59e0b;
+            --shadow: 0 20px 60px rgba(0,0,0,.35);
         }
 
         html {
             scroll-behavior: smooth;
         }
 
-        :root {
-            --bg: #07090d;
-            --bg2: #0c1118;
-            --card: rgba(17, 23, 32, .88);
-            --card2: rgba(22, 29, 40, .95);
-
-            --text: #ffffff;
-            --muted: #929cab;
-
-            --accent: #e63946;
-            --accent2: #ff5964;
-
-            --green: #22c55e;
-            --red: #ef4444;
-            --yellow: #facc15;
-            --blue: #3b82f6;
-
-            --border: rgba(255,255,255,.08);
-        }
-
         body {
-            font-family:
-                Inter,
-                Arial,
-                Helvetica,
-                sans-serif;
-
+            font-family: Arial, Helvetica, sans-serif;
             background:
-                radial-gradient(
-                    circle at 15% 10%,
-                    rgba(230,57,70,.15),
-                    transparent 30%
-                ),
-                radial-gradient(
-                    circle at 85% 20%,
-                    rgba(59,130,246,.10),
-                    transparent 30%
-                ),
-                linear-gradient(
-                    180deg,
-                    #07090d,
-                    #090d13
-                );
-
+                radial-gradient(circle at 20% 10%, rgba(37,99,235,.18), transparent 30%),
+                radial-gradient(circle at 80% 30%, rgba(59,130,246,.10), transparent 25%),
+                var(--bg);
             color: var(--text);
             min-height: 100vh;
-            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
         }
 
         button,
         input,
         textarea {
-            font-family: inherit;
+            font: inherit;
         }
 
-        button,
-        .btn {
-            cursor: pointer;
-        }
-
-        /* =========================================================
-           NAVIGATION
-           ========================================================= */
+        /* NAVBAR */
 
         nav {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-
             height: 74px;
+            z-index: 1000;
 
             display: flex;
             align-items: center;
             justify-content: space-between;
 
-            padding: 0 6%;
+            padding: 0 5%;
 
-            z-index: 1000;
-
-            background:
-                rgba(7,9,13,.78);
-
-            backdrop-filter: blur(20px);
-
-            border-bottom:
-                1px solid var(--border);
+            background: rgba(7,9,13,.82);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--border);
         }
 
         .logo {
-            font-size: 23px;
-            font-weight: 950;
-            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 21px;
+            font-weight: 900;
+            letter-spacing: .5px;
         }
 
-        .logo span {
-            color: var(--accent);
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+
+            display: grid;
+            place-items: center;
+
+            background: linear-gradient(135deg, var(--blue), #60a5fa);
+            box-shadow: 0 8px 30px rgba(59,130,246,.35);
         }
 
         .nav-links {
             display: flex;
-            gap: 30px;
-            list-style: none;
+            align-items: center;
+            gap: 28px;
         }
 
         .nav-links a {
             color: #cbd5e1;
-            text-decoration: none;
             font-size: 14px;
             transition: .2s;
         }
@@ -146,26 +121,15 @@
             gap: 10px;
         }
 
+        /* BUTTONS */
+
         .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-
-            border: none;
-            text-decoration: none;
-
-            color: white;
-
-            font-weight: 800;
-
-            border-radius: 11px;
-
+            border: 0;
+            cursor: pointer;
             padding: 12px 18px;
-
-            transition:
-                transform .2s,
-                background .2s,
-                box-shadow .2s;
+            border-radius: 11px;
+            font-weight: 800;
+            transition: .2s;
         }
 
         .btn:hover {
@@ -173,259 +137,200 @@
         }
 
         .btn-primary {
-            background:
-                linear-gradient(
-                    135deg,
-                    var(--accent),
-                    var(--accent2)
-                );
-
-            box-shadow:
-                0 10px 30px
-                rgba(230,57,70,.22);
-        }
-
-        .btn-primary:hover {
-            box-shadow:
-                0 14px 35px
-                rgba(230,57,70,.35);
+            color: white;
+            background: linear-gradient(135deg, var(--blue), var(--blue2));
+            box-shadow: 0 10px 25px rgba(37,99,235,.25);
         }
 
         .btn-secondary {
-            background:
-                rgba(255,255,255,.06);
-
-            border:
-                1px solid var(--border);
+            color: white;
+            background: rgba(255,255,255,.06);
+            border: 1px solid var(--border);
         }
 
-        .btn-secondary:hover {
-            background:
-                rgba(255,255,255,.11);
+        .btn-danger {
+            background: var(--red);
+            color: white;
         }
 
-        /* =========================================================
-           HERO
-           ========================================================= */
+        /* HERO */
 
         .hero {
-            min-height: 100vh;
-
-            padding:
-                155px 6%
-                80px;
+            min-height: 760px;
+            padding: 160px 5% 100px;
 
             display: grid;
-
-            grid-template-columns:
-                minmax(0, 1.2fr)
-                minmax(350px, .8fr);
-
-            gap: 60px;
-
+            grid-template-columns: 1.2fr .8fr;
             align-items: center;
+            gap: 60px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 8px 13px;
+            margin-bottom: 22px;
+
+            border-radius: 999px;
+            background: rgba(59,130,246,.10);
+            border: 1px solid rgba(59,130,246,.25);
+
+            color: #93c5fd;
+            font-size: 13px;
+            font-weight: 700;
         }
 
         .hero h1 {
-            font-size:
-                clamp(50px, 7vw, 105px);
-
-            line-height: .92;
-
-            letter-spacing: -5px;
-
-            margin-bottom: 30px;
+            font-size: clamp(48px, 7vw, 92px);
+            line-height: .95;
+            letter-spacing: -4px;
+            margin-bottom: 25px;
         }
 
         .hero h1 span {
-            color: var(--accent);
+            color: #60a5fa;
         }
 
         .hero p {
-            max-width: 680px;
-
+            max-width: 650px;
             color: var(--muted);
-
-            font-size: 19px;
-
+            font-size: 18px;
             line-height: 1.7;
-
-            margin-bottom: 30px;
+            margin-bottom: 32px;
         }
 
         .hero-buttons {
             display: flex;
-            gap: 14px;
+            gap: 12px;
             flex-wrap: wrap;
         }
 
-        /* =========================================================
-           SERVER CARD
-           ========================================================= */
+        /* SERVER CARD */
 
         .server-card {
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(25,32,43,.96),
-                    rgba(12,16,23,.94)
-                );
-
-            border:
-                1px solid var(--border);
-
-            border-radius: 25px;
-
-            padding: 30px;
-
-            box-shadow:
-                0 35px 100px
-                rgba(0,0,0,.45);
-
             position: relative;
+            padding: 28px;
 
+            background: linear-gradient(
+                145deg,
+                rgba(20,27,38,.95),
+                rgba(10,14,21,.95)
+            );
+
+            border: 1px solid var(--border);
+            border-radius: 24px;
+
+            box-shadow: var(--shadow);
             overflow: hidden;
         }
 
         .server-card::before {
             content: "";
-
             position: absolute;
-
             width: 220px;
             height: 220px;
-
+            background: rgba(59,130,246,.12);
+            filter: blur(70px);
             top: -100px;
             right: -100px;
-
-            border-radius: 50%;
-
-            background:
-                rgba(230,57,70,.12);
-
-            filter: blur(30px);
         }
 
-        .server-header {
+        .server-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-
-            position: relative;
-
             margin-bottom: 25px;
         }
 
-        .server-header h2 {
-            font-size: 21px;
+        .server-title {
+            font-size: 20px;
+            font-weight: 900;
         }
 
         .status {
             display: flex;
             align-items: center;
             gap: 8px;
-
-            font-size: 12px;
-            font-weight: 900;
+            color: #86efac;
+            font-size: 13px;
+            font-weight: 800;
         }
 
         .status-dot {
-            width: 10px;
-            height: 10px;
-
+            width: 9px;
+            height: 9px;
             border-radius: 50%;
-
             background: var(--green);
-
-            box-shadow:
-                0 0 15px var(--green);
+            box-shadow: 0 0 15px var(--green);
         }
 
-        .status.offline .status-dot {
+        .status-dot.offline {
             background: var(--red);
-
-            box-shadow:
-                0 0 15px var(--red);
+            box-shadow: 0 0 15px var(--red);
         }
 
-        .player-number {
-            font-size: 56px;
-            font-weight: 950;
-
-            position: relative;
-        }
-
-        .player-label {
-            color: var(--muted);
-            margin-top: 3px;
-        }
-
-        .progress {
-            height: 10px;
-
-            background:
-                rgba(255,255,255,.06);
-
-            border-radius: 20px;
-
-            overflow: hidden;
-
-            margin-top: 22px;
-        }
-
-        .progress-bar {
-            width: 0%;
-            height: 100%;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    var(--accent),
-                    var(--accent2)
-                );
-
-            border-radius: inherit;
-
-            transition:
-                width .5s ease;
+        .server-ip {
+            padding: 15px;
+            background: rgba(0,0,0,.25);
+            border-radius: 12px;
+            color: #cbd5e1;
+            margin-bottom: 18px;
+            font-family: monospace;
         }
 
         .server-info {
-            margin-top: 25px;
-
             display: grid;
-
-            gap: 13px;
+            grid-template-columns: repeat(2,1fr);
+            gap: 12px;
         }
 
-        .info-row {
-            display: flex;
+        .info-box {
+            padding: 16px;
+            background: rgba(255,255,255,.035);
+            border: 1px solid var(--border);
+            border-radius: 13px;
+        }
 
-            justify-content:
-                space-between;
-
+        .info-box small {
+            display: block;
             color: var(--muted);
+            margin-bottom: 7px;
         }
 
-        .info-row strong {
-            color: white;
+        .info-box strong {
+            font-size: 21px;
         }
 
-        /* =========================================================
-           SECTIONS
-           ========================================================= */
+        .progress {
+            height: 7px;
+            margin-top: 18px;
+            border-radius: 99px;
+            background: rgba(255,255,255,.08);
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--blue), #60a5fa);
+            transition: width .5s;
+        }
+
+        /* SECTION */
 
         section {
-            padding: 100px 6%;
+            padding: 100px 5%;
         }
 
         .section-title {
             text-align: center;
-            margin-bottom: 55px;
+            margin-bottom: 50px;
         }
 
         .section-title h2 {
-            font-size: 45px;
+            font-size: clamp(32px, 5vw, 54px);
             margin-bottom: 12px;
         }
 
@@ -433,62 +338,37 @@
             color: var(--muted);
         }
 
-        /* =========================================================
-           CARDS
-           ========================================================= */
+        /* FEATURES */
 
-        .cards {
+        .grid {
             display: grid;
-
-            grid-template-columns:
-                repeat(3, minmax(0,1fr));
-
-            gap: 20px;
+            grid-template-columns: repeat(3,1fr);
+            gap: 18px;
         }
 
         .card {
-            background:
-                var(--card);
-
-            border:
-                1px solid var(--border);
-
-            border-radius: 21px;
-
-            padding: 30px;
-
-            transition:
-                transform .25s,
-                border .25s,
-                background .25s;
+            padding: 28px;
+            border-radius: 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 40px rgba(0,0,0,.15);
+            transition: .25s;
         }
 
         .card:hover {
-            transform:
-                translateY(-7px);
-
-            border-color:
-                rgba(230,57,70,.4);
-
-            background:
-                var(--card2);
+            transform: translateY(-5px);
+            border-color: rgba(59,130,246,.35);
         }
 
         .icon {
-            width: 56px;
-            height: 56px;
-
+            width: 48px;
+            height: 48px;
+            border-radius: 13px;
             display: grid;
             place-items: center;
-
-            border-radius: 16px;
-
-            font-size: 25px;
-
-            background:
-                rgba(230,57,70,.12);
-
-            margin-bottom: 20px;
+            background: rgba(59,130,246,.12);
+            font-size: 23px;
+            margin-bottom: 18px;
         }
 
         .card h3 {
@@ -497,207 +377,162 @@
 
         .card p {
             color: var(--muted);
-            line-height: 1.65;
+            line-height: 1.6;
         }
 
-        /* =========================================================
-           STATS
-           ========================================================= */
+        /* FACTIONS */
+
+        .faction {
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .faction::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(
+                    to top,
+                    rgba(0,0,0,.9),
+                    rgba(0,0,0,.05)
+                );
+        }
+
+        .faction-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .police {
+            background: linear-gradient(135deg,#111827,#1d4ed8);
+        }
+
+        .fire {
+            background: linear-gradient(135deg,#1f0b0b,#dc2626);
+        }
+
+        .ems {
+            background: linear-gradient(135deg,#0b1720,#0891b2);
+        }
+
+        /* STATS */
 
         .stats {
             display: grid;
-
-            grid-template-columns:
-                repeat(4,1fr);
-
-            gap: 20px;
+            grid-template-columns: repeat(4,1fr);
+            gap: 16px;
         }
 
         .stat {
             text-align: center;
-
-            background:
-                var(--card);
-
-            border:
-                1px solid var(--border);
-
-            padding: 35px;
-
-            border-radius: 20px;
+            padding: 30px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
         }
 
         .stat-number {
-            font-size: 42px;
-            font-weight: 950;
-
-            color: var(--accent);
+            font-size: 38px;
+            font-weight: 900;
+            margin-bottom: 6px;
         }
 
         .stat-label {
             color: var(--muted);
-            margin-top: 8px;
         }
 
-        /* =========================================================
-           NEWS
-           ========================================================= */
+        /* NEWS */
 
-        .news {
-            display: grid;
-
-            grid-template-columns:
-                repeat(3,1fr);
-
-            gap: 20px;
+        .news-date {
+            color: #60a5fa;
+            font-size: 12px;
+            font-weight: 800;
+            margin-bottom: 10px;
         }
 
-        .news-card {
-            background:
-                var(--card);
+        /* RULES */
 
-            border:
-                1px solid var(--border);
-
-            border-radius: 20px;
-
-            overflow: hidden;
+        .rules {
+            max-width: 900px;
+            margin: auto;
         }
 
-        .news-image {
-            height: 175px;
-
-            background:
-                radial-gradient(
-                    circle at 30% 30%,
-                    rgba(255,255,255,.12),
-                    transparent 25%
-                ),
-                linear-gradient(
-                    135deg,
-                    rgba(230,57,70,.85),
-                    rgba(15,20,28,.95)
-                );
+        .rule {
+            display: flex;
+            gap: 18px;
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
         }
 
-        .news-content {
-            padding: 25px;
-        }
-
-        .news-content small {
-            color: var(--accent);
+        .rule-number {
+            color: #60a5fa;
             font-weight: 900;
         }
 
-        .news-content h3 {
-            margin: 10px 0;
-        }
-
-        .news-content p {
-            color: var(--muted);
-            line-height: 1.6;
-        }
-
-        /* =========================================================
-           FOOTER
-           ========================================================= */
-
-        footer {
-            border-top:
-                1px solid var(--border);
-
-            padding:
-                40px 6%;
-
-            display: flex;
-
-            justify-content:
-                space-between;
-
+        .rule p {
             color: var(--muted);
         }
 
-        /* =========================================================
-           LIVE BOX
-           ========================================================= */
+        /* LIVE */
 
-        .live-box {
-            position: fixed;
-
-            right: 20px;
-            bottom: 20px;
-
-            z-index: 1500;
-
-            background:
-                rgba(10,15,22,.92);
-
-            border:
-                1px solid var(--border);
-
-            border-radius: 15px;
-
-            padding:
-                13px 17px;
-
+        .live-panel {
+            max-width: 1000px;
+            margin: 50px auto 0;
+            padding: 22px;
+            border-radius: 18px;
+            background: rgba(34,197,94,.05);
+            border: 1px solid rgba(34,197,94,.15);
             display: flex;
-
             align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
 
+        .live-status {
+            display: flex;
+            align-items: center;
             gap: 10px;
-
-            backdrop-filter:
-                blur(15px);
-
-            box-shadow:
-                0 15px 50px
-                rgba(0,0,0,.4);
         }
 
         .live-light {
-            width: 9px;
-            height: 9px;
-
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
-
-            background:
-                var(--green);
-
-            box-shadow:
-                0 0 12px var(--green);
+            background: var(--orange);
         }
 
-        .live-light.offline {
-            background:
-                var(--red);
+        /* FOOTER */
 
-            box-shadow:
-                0 0 12px var(--red);
+        footer {
+            padding: 40px 5%;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
-        /* =========================================================
-           MODAL
-           ========================================================= */
+        /* MODAL */
 
         .modal {
             position: fixed;
-
             inset: 0;
-
-            z-index: 3000;
+            z-index: 2000;
 
             display: none;
-
             align-items: center;
             justify-content: center;
 
             padding: 20px;
 
-            background:
-                rgba(0,0,0,.78);
-
-            backdrop-filter:
-                blur(10px);
+            background: rgba(0,0,0,.75);
+            backdrop-filter: blur(12px);
         }
 
         .modal.active {
@@ -705,184 +540,125 @@
         }
 
         .modal-box {
-            width: 100%;
-            max-width: 460px;
-
-            background:
-                #101722;
-
-            border:
-                1px solid var(--border);
-
-            border-radius: 22px;
-
+            width: min(500px,100%);
             padding: 30px;
-
-            box-shadow:
-                0 30px 100px
-                rgba(0,0,0,.6);
-
-            animation:
-                modalOpen .2s ease;
+            border-radius: 22px;
+            background: #10151e;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
         }
 
-        @keyframes modalOpen {
-
-            from {
-                opacity: 0;
-                transform:
-                    translateY(15px)
-                    scale(.97);
-            }
-
-            to {
-                opacity: 1;
-                transform:
-                    translateY(0)
-                    scale(1);
-            }
-
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
         }
 
-        .modal-box h2 {
-            margin-bottom: 20px;
-        }
-
-        .input {
-            width: 100%;
-
-            padding: 14px;
-
-            margin-bottom: 12px;
-
-            border-radius: 11px;
-
-            border:
-                1px solid var(--border);
-
-            background:
-                #080c12;
-
+        .close {
+            border: 0;
+            background: transparent;
             color: white;
+            font-size: 26px;
+            cursor: pointer;
+        }
 
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 13px;
+            color: #cbd5e1;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 13px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
             outline: none;
+            background: #080b10;
+            color: white;
+        }
 
+        .form-group textarea {
+            min-height: 120px;
             resize: vertical;
         }
 
-        .input:focus {
-            border-color:
-                var(--accent);
-
-            box-shadow:
-                0 0 0 3px
-                rgba(230,57,70,.08);
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--blue);
         }
 
-        .modal-actions {
+        .modal-footer {
             display: flex;
-
-            justify-content:
-                flex-end;
-
             gap: 10px;
-
-            margin-top: 10px;
+            margin-top: 20px;
         }
 
-        /* =========================================================
-           TOAST
-           ========================================================= */
+        /* TOAST */
 
-        .toast-container {
+        #toast {
             position: fixed;
+            right: 25px;
+            bottom: 25px;
+            z-index: 3000;
 
-            top: 90px;
-            right: 20px;
-
-            z-index: 5000;
-
-            display: grid;
-
-            gap: 10px;
-        }
-
-        .toast {
-            min-width: 280px;
+            max-width: 350px;
 
             padding: 15px 18px;
+            border-radius: 12px;
 
-            border-radius: 13px;
+            background: #151b25;
+            border: 1px solid var(--border);
 
-            background:
-                #111923;
+            box-shadow: var(--shadow);
 
-            border:
-                1px solid var(--border);
+            transform: translateY(150px);
+            opacity: 0;
 
-            box-shadow:
-                0 15px 40px
-                rgba(0,0,0,.4);
-
-            animation:
-                toastIn .25s ease;
+            transition: .3s;
         }
 
-        .toast.success {
-            border-left:
-                4px solid var(--green);
+        #toast.show {
+            transform: translateY(0);
+            opacity: 1;
         }
 
-        .toast.error {
-            border-left:
-                4px solid var(--red);
-        }
+        /* MOBILE */
 
-        @keyframes toastIn {
-
-            from {
-                opacity: 0;
-                transform:
-                    translateX(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform:
-                    translateX(0);
-            }
-
-        }
-
-        /* =========================================================
-           RESPONSIVE
-           ========================================================= */
-
-        @media(max-width: 950px) {
+        @media(max-width:900px) {
 
             .hero {
                 grid-template-columns: 1fr;
+                padding-top: 130px;
             }
 
-            .cards,
-            .news {
-                grid-template-columns: 1fr;
+            .grid {
+                grid-template-columns: 1fr 1fr;
             }
 
             .stats {
-                grid-template-columns:
-                    repeat(2,1fr);
-            }
-
-        }
-
-        @media(max-width: 650px) {
-
-            nav {
-                padding: 0 20px;
+                grid-template-columns: 1fr 1fr;
             }
 
             .nav-links {
+                display: none;
+            }
+        }
+
+        @media(max-width:600px) {
+
+            nav {
+                padding: 0 18px;
+            }
+
+            .nav-buttons .btn-secondary {
                 display: none;
             }
 
@@ -892,157 +668,99 @@
             }
 
             section {
-                padding-left: 20px;
-                padding-right: 20px;
+                padding: 70px 20px;
             }
 
-            .hero h1 {
-                font-size: 55px;
+            .grid {
+                grid-template-columns: 1fr;
             }
 
             .stats {
                 grid-template-columns: 1fr;
             }
 
-            footer {
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+
+            .server-info {
+                grid-template-columns: 1fr;
+            }
+
+            .live-panel {
                 flex-direction: column;
-                gap: 10px;
+                align-items: flex-start;
             }
-
-            .live-box {
-                right: 10px;
-                left: 10px;
-                bottom: 10px;
-                justify-content: center;
-            }
-
         }
-
     </style>
 </head>
 
-
 <body>
 
-
-<!-- =========================================================
-     NAVIGATION
-     ========================================================= -->
+<!-- NAVIGATION -->
 
 <nav>
 
-    <div class="logo">
-        DEIN<span>RP</span>
+    <a href="#" class="logo">
+        <div class="logo-icon">G</div>
+        <span>GameRP</span>
+    </a>
+
+    <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#fraktionen">Fraktionen</a>
+        <a href="#news">News</a>
+        <a href="#regeln">Regeln</a>
     </div>
 
-
-    <ul class="nav-links">
-
-        <li>
-            <a href="#start">
-                Start
-            </a>
-        </li>
-
-        <li>
-            <a href="#fraktionen">
-                Fraktionen
-            </a>
-        </li>
-
-        <li>
-            <a href="#news">
-                News
-            </a>
-        </li>
-
-        <li>
-            <a href="#regeln">
-                Regeln
-            </a>
-        </li>
-
-    </ul>
-
-
     <div class="nav-buttons">
-
-        <button
-            class="btn btn-secondary"
-            onclick="openLogin()">
-
+        <button class="btn btn-secondary" onclick="openLogin()">
             Login
-
         </button>
 
-
-        <a
-            href="#server"
-            class="btn btn-primary">
-
-            Spielen
-
-        </a>
-
+        <button class="btn btn-primary" onclick="openApplication()">
+            Whitelist
+        </button>
     </div>
 
 </nav>
 
 
+<!-- HERO -->
 
-<!-- =========================================================
-     HERO
-     ========================================================= -->
-
-<section
-    class="hero"
-    id="start">
-
+<header class="hero">
 
     <div>
 
+        <div class="hero-badge">
+            ● FiveM Roleplay
+        </div>
+
         <h1>
-
             Deine Stadt.<br>
-
-            Deine
-            <span>
-                Geschichte.
-            </span>
-
+            <span>Deine Geschichte.</span>
         </h1>
 
-
         <p>
-
-            Willkommen auf DEINRP –
-            einem modernen deutschen
-            FiveM Roleplay Server.
-
-            Erstelle deinen Charakter,
-            finde deinen Weg und werde
-            Teil unserer Community.
-
+            Willkommen auf GameRP – einem modernen FiveM Roleplay
+            Server mit Polizei, Feuerwehr, Rettungsdienst und einer
+            aktiven Community.
         </p>
-
 
         <div class="hero-buttons">
 
-            <a
-                href="#server"
-                class="btn btn-primary">
-
-                Server spielen
-
-            </a>
-
+            <button
+                class="btn btn-primary"
+                onclick="copyServerIP()"
+            >
+                Server beitreten
+            </button>
 
             <button
                 class="btn btn-secondary"
-                onclick="openApplication()">
-
-                Whitelist bewerben
-
+                onclick="openApplication()"
+            >
+                Whitelist beantragen
             </button>
 
         </div>
@@ -1050,34 +768,25 @@
     </div>
 
 
+    <!-- SERVER -->
 
-    <!-- SERVER STATUS -->
+    <div class="server-card">
 
-    <div
-        class="server-card"
-        id="server">
+        <div class="server-top">
 
+            <div class="server-title">
+                GameRP Server
+            </div>
 
-        <div class="server-header">
-
-            <h2>
-                Serverstatus
-            </h2>
-
-
-            <div
-                class="status"
-                id="serverStatus">
+            <div class="status">
 
                 <span
-                    class="status-dot">
-                </span>
+                    id="statusDot"
+                    class="status-dot"
+                ></span>
 
-                <span
-                    id="statusText">
-
-                    VERBINDE...
-
+                <span id="statusText">
+                    Verbinde...
                 </span>
 
             </div>
@@ -1085,25 +794,62 @@
         </div>
 
 
+        <div class="server-ip">
 
-        <div class="player-number">
-
-            <span id="players">
-                0
-            </span>
-
-            /
-
-            <span id="maxPlayers">
-                64
-            </span>
+            FiveM:
+            <strong id="serverAddress">
+                DEINE-SERVER-IP:30120
+            </strong>
 
         </div>
 
 
-        <div class="player-label">
+        <div class="server-info">
 
-            Spieler online
+            <div class="info-box">
+
+                <small>Spieler</small>
+
+                <strong>
+                    <span id="players">0</span>
+                    /
+                    <span id="maxPlayers">128</span>
+                </strong>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <small>Ping</small>
+
+                <strong>
+                    <span id="serverPing">--</span> ms
+                </strong>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <small>Version</small>
+
+                <strong id="serverVersion">
+                    --
+                </strong>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <small>Uptime</small>
+
+                <strong id="serverUptime">
+                    --
+                </strong>
+
+            </div>
 
         </div>
 
@@ -1111,81 +857,114 @@
         <div class="progress">
 
             <div
+                id="playerProgress"
                 class="progress-bar"
-                id="playerProgress">
-            </div>
+            ></div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- FEATURES -->
+
+<section id="features">
+
+    <div class="section-title">
+
+        <h2>Dein Roleplay</h2>
+
+        <p>
+            Alles, was du für ein modernes RP-Erlebnis brauchst.
+        </p>
+
+    </div>
+
+
+    <div class="grid">
+
+        <div class="card">
+
+            <div class="icon">🚓</div>
+
+            <h3>Polizei</h3>
+
+            <p>
+                Werde Polizist, fahnde nach Verdächtigen,
+                sichere Einsatzstellen und sorge für Ordnung.
+            </p>
 
         </div>
 
 
+        <div class="card">
 
-        <div class="server-info">
+            <div class="icon">🚒</div>
 
+            <h3>Feuerwehr</h3>
 
-            <div class="info-row">
+            <p>
+                Fahre Einsätze, rette Personen und arbeite
+                gemeinsam mit deinen Kameraden.
+            </p>
 
-                <span>
-                    Server
-                </span>
-
-                <strong>
-                    DEINRP
-                </strong>
-
-            </div>
+        </div>
 
 
-            <div class="info-row">
+        <div class="card">
 
-                <span>
-                    Modus
-                </span>
+            <div class="icon">🚑</div>
 
-                <strong>
-                    German RP
-                </strong>
+            <h3>Rettungsdienst</h3>
 
-            </div>
+            <p>
+                Versorge Patienten, fahre Notfalleinsätze
+                und arbeite mit anderen Behörden zusammen.
+            </p>
 
-
-            <div class="info-row">
-
-                <span>
-                    Version
-                </span>
-
-                <strong id="serverVersion">
-                    —
-                </strong>
-
-            </div>
+        </div>
 
 
-            <div class="info-row">
+        <div class="card">
 
-                <span>
-                    Ping
-                </span>
+            <div class="icon">🏙️</div>
 
-                <strong id="serverPing">
-                    —
-                </strong>
+            <h3>Offene Welt</h3>
 
-            </div>
+            <p>
+                Eine große Stadt mit zahlreichen Möglichkeiten
+                und verschiedenen Berufen.
+            </p>
+
+        </div>
 
 
-            <div class="info-row">
+        <div class="card">
 
-                <span>
-                    Status
-                </span>
+            <div class="icon">👥</div>
 
-                <strong id="serverConnection">
-                    —
-                </strong>
+            <h3>Multiplayer</h3>
 
-            </div>
+            <p>
+                Spiele gemeinsam mit anderen Spielern
+                und erlebe dynamisches Roleplay.
+            </p>
 
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">⚡</div>
+
+            <h3>Live-System</h3>
+
+            <p>
+                Spielerzahlen, Serverstatus und wichtige
+                Informationen werden live aktualisiert.
+            </p>
 
         </div>
 
@@ -1194,233 +973,96 @@
 </section>
 
 
+<!-- FRAKTIONEN -->
 
-<!-- =========================================================
-     FEATURES
-     ========================================================= -->
+<section id="fraktionen">
+
+    <div class="section-title">
+
+        <h2>Fraktionen</h2>
+
+        <p>
+            Entscheide selbst, welchen Weg du gehen möchtest.
+        </p>
+
+    </div>
+
+
+    <div class="grid">
+
+        <div class="card faction police">
+
+            <div class="faction-content">
+
+                <h3>🚓 Polizei</h3>
+
+                <p>
+                    Law Enforcement
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card faction fire">
+
+            <div class="faction-content">
+
+                <h3>🚒 Feuerwehr</h3>
+
+                <p>
+                    Fire & Rescue
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card faction ems">
+
+            <div class="faction-content">
+
+                <h3>🚑 Rettungsdienst</h3>
+
+                <p>
+                    Medical Services
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- LIVE STATS -->
 
 <section>
 
-
     <div class="section-title">
 
-        <h2>
-            Dein Roleplay
-        </h2>
+        <h2>Live Server</h2>
 
         <p>
-            Alles, was du für dein
-            nächstes Abenteuer brauchst.
+            Aktuelle Informationen direkt vom Server.
         </p>
 
     </div>
-
-
-
-    <div class="cards">
-
-
-        <div class="card">
-
-            <div class="icon">
-                🎭
-            </div>
-
-            <h3>
-                Realistisches RP
-            </h3>
-
-            <p>
-
-                Erstelle deinen eigenen
-                Charakter und schreibe
-                deine persönliche Geschichte.
-
-            </p>
-
-        </div>
-
-
-
-        <div class="card">
-
-            <div class="icon">
-                🚓
-            </div>
-
-            <h3>
-                Viele Fraktionen
-            </h3>
-
-            <p>
-
-                Polizei, Feuerwehr,
-                Rettungsdienst und
-                viele weitere Möglichkeiten.
-
-            </p>
-
-        </div>
-
-
-
-        <div class="card">
-
-            <div class="icon">
-                🌐
-            </div>
-
-            <h3>
-                Aktive Community
-            </h3>
-
-            <p>
-
-                Spiele gemeinsam
-                mit anderen Spielern
-                und erlebe dynamische
-                Situationen.
-
-            </p>
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     FRAKTIONEN
-     ========================================================= -->
-
-<section
-    id="fraktionen">
-
-
-    <div class="section-title">
-
-        <h2>
-            Fraktionen
-        </h2>
-
-        <p>
-            Finde deinen Platz in der Stadt.
-        </p>
-
-    </div>
-
-
-
-    <div class="cards">
-
-
-        <div class="card">
-
-            <div class="icon">
-                🚓
-            </div>
-
-            <h3>
-                Polizei
-            </h3>
-
-            <p>
-
-                Sorge für Sicherheit,
-                bearbeite Einsätze und
-                halte dich an die Gesetze.
-
-            </p>
-
-        </div>
-
-
-
-        <div class="card">
-
-            <div class="icon">
-                🚒
-            </div>
-
-            <h3>
-                Feuerwehr
-            </h3>
-
-            <p>
-
-                Brände, technische
-                Hilfeleistungen und
-                spannende Einsätze.
-
-            </p>
-
-        </div>
-
-
-
-        <div class="card">
-
-            <div class="icon">
-                🚑
-            </div>
-
-            <h3>
-                Rettungsdienst
-            </h3>
-
-            <p>
-
-                Versorge Verletzte
-                und arbeite mit anderen
-                Einsatzkräften zusammen.
-
-            </p>
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     LIVE STATS
-     ========================================================= -->
-
-<section>
-
-
-    <div class="section-title">
-
-        <h2>
-            Server live
-        </h2>
-
-        <p>
-            Diese Werte werden automatisch
-            aktualisiert.
-        </p>
-
-    </div>
-
 
 
     <div class="stats">
 
-
         <div class="stat">
 
             <div
+                id="statPlayers"
                 class="stat-number"
-                id="statPlayers">
-
+            >
                 0
-
             </div>
 
             <div class="stat-label">
@@ -1430,33 +1072,29 @@
         </div>
 
 
-
         <div class="stat">
 
             <div
+                id="statJobs"
                 class="stat-number"
-                id="statJobs">
-
-                4
-
+            >
+                0
             </div>
 
             <div class="stat-label">
-                Fraktionen
+                Aktive Einsätze
             </div>
 
         </div>
 
 
-
         <div class="stat">
 
             <div
+                id="statUptime"
                 class="stat-number"
-                id="statUptime">
-
-                —
-
+            >
+                --
             </div>
 
             <div class="stat-label">
@@ -1466,15 +1104,13 @@
         </div>
 
 
-
         <div class="stat">
 
             <div
+                id="statPing"
                 class="stat-number"
-                id="statPing">
-
-                —
-
+            >
+                --
             </div>
 
             <div class="stat-label">
@@ -1483,319 +1119,267 @@
 
         </div>
 
+    </div>
+
+
+    <div class="live-panel">
+
+        <div class="live-status">
+
+            <span
+                id="liveLight"
+                class="live-light"
+            ></span>
+
+            <strong id="liveText">
+                Live-System wird verbunden...
+            </strong>
+
+        </div>
+
+        <span id="serverConnection">
+            Verbindung wird hergestellt
+        </span>
 
     </div>
 
 </section>
 
 
+<!-- NEWS -->
 
-<!-- =========================================================
-     NEWS
-     ========================================================= -->
-
-<section
-    id="news">
-
+<section id="news">
 
     <div class="section-title">
 
-        <h2>
-            News
-        </h2>
+        <h2>Neuigkeiten</h2>
 
         <p>
-            Neuigkeiten aus unserer Stadt.
+            Was gibt es Neues auf GameRP?
         </p>
 
     </div>
 
 
+    <div class="grid">
 
-    <div class="news">
+        <div class="card">
 
-
-        <div class="news-card">
-
-            <div class="news-image"></div>
-
-            <div class="news-content">
-
-                <small>
-                    SERVER
-                </small>
-
-                <h3>
-                    Willkommen auf DEINRP
-                </h3>
-
-                <p>
-
-                    Unser neuer Roleplay
-                    Server ist für euch
-                    geöffnet.
-
-                </p>
-
+            <div class="news-date">
+                SERVER
             </div>
+
+            <h3>
+                Willkommen auf GameRP
+            </h3>
+
+            <p>
+                Unser Roleplay-Server befindet sich
+                im Aufbau. Weitere Funktionen folgen.
+            </p>
 
         </div>
 
 
+        <div class="card">
 
-        <div class="news-card">
-
-            <div class="news-image"></div>
-
-            <div class="news-content">
-
-                <small>
-                    COMMUNITY
-                </small>
-
-                <h3>
-                    Neue Fraktionen
-                </h3>
-
-                <p>
-
-                    Weitere Organisationen
-                    und Fraktionen werden
-                    bald hinzugefügt.
-
-                </p>
-
+            <div class="news-date">
+                UPDATE
             </div>
+
+            <h3>
+                Neues Live-System
+            </h3>
+
+            <p>
+                Spielerzahlen und Serverinformationen
+                werden jetzt automatisch aktualisiert.
+            </p>
 
         </div>
 
 
+        <div class="card">
 
-        <div class="news-card">
-
-            <div class="news-image"></div>
-
-            <div class="news-content">
-
-                <small>
-                    UPDATE
-                </small>
-
-                <h3>
-                    Live-System
-                </h3>
-
-                <p>
-
-                    Die Webseite wird
-                    direkt mit dem
-                    FiveM Server verbunden.
-
-                </p>
-
+            <div class="news-date">
+                COMMUNITY
             </div>
 
-        </div>
+            <h3>
+                Whitelist geöffnet
+            </h3>
 
+            <p>
+                Bewerbe dich jetzt und werde Teil
+                unserer RP-Community.
+            </p>
+
+        </div>
 
     </div>
 
 </section>
 
 
+<!-- REGELN -->
 
-<!-- =========================================================
-     REGELN
-     ========================================================= -->
-
-<section
-    id="regeln">
-
+<section id="regeln">
 
     <div class="section-title">
 
-        <h2>
-            Serverregeln
-        </h2>
+        <h2>Serverregeln</h2>
 
         <p>
-            Fair Play steht an erster Stelle.
+            Faires und realistisches Roleplay für alle.
         </p>
 
     </div>
 
 
+    <div class="rules">
 
-    <div class="cards">
+        <div class="rule">
 
-
-        <div class="card">
-
-            <div class="icon">
-                ⚖️
-            </div>
-
-            <h3>
-                Respekt
-            </h3>
+            <div class="rule-number">01</div>
 
             <p>
-
-                Behandle andere Spieler
-                respektvoll und fair.
-
+                Respektiere alle anderen Spieler.
             </p>
 
         </div>
 
 
+        <div class="rule">
 
-        <div class="card">
-
-            <div class="icon">
-                🎭
-            </div>
-
-            <h3>
-                Roleplay
-            </h3>
+            <div class="rule-number">02</div>
 
             <p>
-
-                Bleibe im Charakter
-                und spiele realistisch.
-
+                Kein Cheating oder Ausnutzen von Bugs.
             </p>
 
         </div>
 
 
+        <div class="rule">
 
-        <div class="card">
-
-            <div class="icon">
-                🚫
-            </div>
-
-            <h3>
-                Kein Trolling
-            </h3>
+            <div class="rule-number">03</div>
 
             <p>
-
-                Absichtliches Stören
-                des Roleplays ist
-                nicht erlaubt.
-
+                Halte dich an die Roleplay-Regeln.
             </p>
 
         </div>
 
+
+        <div class="rule">
+
+            <div class="rule-number">04</div>
+
+            <p>
+                Kein unnötiges Trollen oder Stören
+                anderer Spieler.
+            </p>
+
+        </div>
+
+
+        <div class="rule">
+
+            <div class="rule-number">05</div>
+
+            <p>
+                Entscheidungen des Serverteams sind zu respektieren.
+            </p>
+
+        </div>
 
     </div>
 
 </section>
 
 
-
-<!-- =========================================================
-     FOOTER
-     ========================================================= -->
+<!-- FOOTER -->
 
 <footer>
 
     <div>
-        © 2026 DEINRP
+        © 2026 GameRP
     </div>
 
     <div>
-        German Roleplay
+        FiveM Roleplay Community
     </div>
 
 </footer>
 
 
-
-<!-- =========================================================
-     LIVE CONNECTION BOX
-     ========================================================= -->
-
-<div class="live-box">
-
-    <span
-        class="live-light"
-        id="liveLight">
-    </span>
-
-    <span
-        id="liveText">
-
-        Verbinde mit Live-System...
-
-    </span>
-
-</div>
-
-
-
-<!-- =========================================================
-     TOAST CONTAINER
-     ========================================================= -->
+<!-- LOGIN MODAL -->
 
 <div
-    class="toast-container"
-    id="toastContainer">
-</div>
-
-
-
-<!-- =========================================================
-     LOGIN MODAL
-     ========================================================= -->
-
-<div
+    id="loginModal"
     class="modal"
-    id="loginModal">
-
+>
 
     <div class="modal-box">
 
-        <h2>
-            Login
-        </h2>
+        <div class="modal-header">
+
+            <h2>Login</h2>
+
+            <button
+                class="close"
+                onclick="closeLogin()"
+            >
+                ×
+            </button>
+
+        </div>
 
 
-        <input
-            class="input"
-            id="loginEmail"
-            type="email"
-            placeholder="E-Mail">
+        <div class="form-group">
+
+            <label>
+                E-Mail
+            </label>
+
+            <input
+                id="loginEmail"
+                type="email"
+                placeholder="E-Mail-Adresse"
+            >
+
+        </div>
 
 
-        <input
-            class="input"
-            id="loginPassword"
-            type="password"
-            placeholder="Passwort">
+        <div class="form-group">
+
+            <label>
+                Passwort
+            </label>
+
+            <input
+                id="loginPassword"
+                type="password"
+                placeholder="Passwort"
+            >
+
+        </div>
 
 
-        <div class="modal-actions">
+        <div class="modal-footer">
 
             <button
                 class="btn btn-secondary"
-                onclick="closeLogin()">
-
+                onclick="closeLogin()"
+            >
                 Abbrechen
-
             </button>
-
 
             <button
                 class="btn btn-primary"
-                onclick="login()">
-
+                onclick="login()"
+            >
                 Einloggen
-
             </button>
 
         </div>
@@ -1805,60 +1389,87 @@
 </div>
 
 
-
-<!-- =========================================================
-     WHITELIST MODAL
-     ========================================================= -->
+<!-- WHITELIST MODAL -->
 
 <div
+    id="applicationModal"
     class="modal"
-    id="applicationModal">
-
+>
 
     <div class="modal-box">
 
-        <h2>
-            Whitelist Bewerbung
-        </h2>
+        <div class="modal-header">
+
+            <h2>Whitelist</h2>
+
+            <button
+                class="close"
+                onclick="closeApplication()"
+            >
+                ×
+            </button>
+
+        </div>
 
 
-        <input
-            class="input"
-            id="applicationName"
-            placeholder="Dein Name">
+        <div class="form-group">
+
+            <label>
+                Name
+            </label>
+
+            <input
+                id="applicationName"
+                type="text"
+                placeholder="Dein Name"
+            >
+
+        </div>
 
 
-        <input
-            class="input"
-            id="applicationAge"
-            type="number"
-            placeholder="Alter">
+        <div class="form-group">
+
+            <label>
+                Alter
+            </label>
+
+            <input
+                id="applicationAge"
+                type="number"
+                placeholder="Alter"
+            >
+
+        </div>
 
 
-        <textarea
-            class="input"
-            id="applicationReason"
-            rows="5"
-            placeholder="Warum möchtest du bei uns spielen?"></textarea>
+        <div class="form-group">
+
+            <label>
+                Warum möchtest du auf GameRP spielen?
+            </label>
+
+            <textarea
+                id="applicationReason"
+                placeholder="Erzähle uns etwas über dich..."
+            ></textarea>
+
+        </div>
 
 
-        <div class="modal-actions">
+        <div class="modal-footer">
 
             <button
                 class="btn btn-secondary"
-                onclick="closeApplication()">
-
+                onclick="closeApplication()"
+            >
                 Abbrechen
-
             </button>
-
 
             <button
                 class="btn btn-primary"
-                onclick="sendApplication()">
-
+                onclick="sendApplication()"
+            >
                 Bewerbung senden
-
             </button>
 
         </div>
@@ -1867,105 +1478,654 @@
 
 </div>
 
+
+<!-- TOAST -->
+
+<div id="toast"></div>
 
 
 <script>
 
 /* =========================================================
    KONFIGURATION
-   ========================================================= */
+========================================================= */
 
-/*
-    HIER DIE IP ODER DOMAIN DEINES VPS EINTRAGEN.
+const BACKEND_URL = "http://DEINE-VPS-IP:3000";
 
-    Beispiel:
-
-    const BACKEND_URL =
-        "http://123.123.123.123:3000";
-
-    Bei HTTPS später:
-
-    const BACKEND_URL =
-        "https://rp.deinedomain.de";
-*/
-
-const BACKEND_URL =
-    "http://DEINE-VPS-IP:3000";
-
-
-/*
-    FiveM Serveradresse
-*/
-
-const FIVEM_SERVER_IP =
-    "DEINE-SERVER-IP:30120";
-
+const FIVEM_SERVER_IP = "DEINE-SERVER-IP:30120";
 
 
 /* =========================================================
-   GLOBALE VARIABLEN
-   ========================================================= */
+   ADMIN DATEN
+========================================================= */
 
-let socket = null;
+const ADMIN_EMAIL = "Admin@Game.com";
+const ADMIN_PASSWORD = "299120";
 
-let connected = false;
 
+/* =========================================================
+   ELEMENTE
+========================================================= */
+
+const statusText =
+    document.getElementById("statusText");
+
+const statusDot =
+    document.getElementById("statusDot");
+
+const playersElement =
+    document.getElementById("players");
+
+const maxPlayersElement =
+    document.getElementById("maxPlayers");
+
+const playerProgress =
+    document.getElementById("playerProgress");
+
+const serverPing =
+    document.getElementById("serverPing");
+
+const serverVersion =
+    document.getElementById("serverVersion");
+
+const serverUptime =
+    document.getElementById("serverUptime");
+
+const statPlayers =
+    document.getElementById("statPlayers");
+
+const statJobs =
+    document.getElementById("statJobs");
+
+const statUptime =
+    document.getElementById("statUptime");
+
+const statPing =
+    document.getElementById("statPing");
+
+const liveLight =
+    document.getElementById("liveLight");
+
+const liveText =
+    document.getElementById("liveText");
+
+const serverConnection =
+    document.getElementById("serverConnection");
+
+const serverAddress =
+    document.getElementById("serverAddress");
+
+
+/* =========================================================
+   SERVER IP ANZEIGEN
+========================================================= */
+
+serverAddress.textContent = FIVEM_SERVER_IP;
 
 
 /* =========================================================
    TOAST
-   ========================================================= */
+========================================================= */
 
-function showToast(
-    message,
-    type = "success"
-) {
-
-    const container =
-        document.getElementById(
-            "toastContainer"
-        );
-
+function showToast(message) {
 
     const toast =
-        document.createElement(
-            "div"
-        );
+        document.getElementById("toast");
 
+    toast.textContent = message;
 
-    toast.className =
-        "toast " + type;
-
-
-    toast.textContent =
-        message;
-
-
-    container.appendChild(
-        toast
-    );
-
+    toast.classList.add("show");
 
     setTimeout(() => {
 
-        toast.remove();
+        toast.classList.remove("show");
 
     }, 3500);
+}
+
+
+/* =========================================================
+   LOGIN MODAL
+========================================================= */
+
+function openLogin() {
+
+    document
+        .getElementById("loginModal")
+        .classList.add("active");
+
+}
+
+function closeLogin() {
+
+    document
+        .getElementById("loginModal")
+        .classList.remove("active");
 
 }
 
 
+/* =========================================================
+   APPLICATION MODAL
+========================================================= */
+
+function openApplication() {
+
+    document
+        .getElementById("applicationModal")
+        .classList.add("active");
+
+}
+
+function closeApplication() {
+
+    document
+        .getElementById("applicationModal")
+        .classList.remove("active");
+
+}
+
 
 /* =========================================================
-   LIVE SOCKET.IO VERBINDUNG
-   ========================================================= */
+   LOGIN
+========================================================= */
+
+async function login() {
+
+    const email =
+        document
+        .getElementById("loginEmail")
+        .value
+        .trim();
+
+    const password =
+        document
+        .getElementById("loginPassword")
+        .value;
+
+
+    if (!email || !password) {
+
+        showToast(
+            "Bitte E-Mail und Passwort eingeben."
+        );
+
+        return;
+    }
+
+
+    /*
+       Admin-Login:
+
+       Diese Prüfung ist nur für die Oberfläche.
+       Die echte Authentifizierung muss zusätzlich
+       auf dem Backend erfolgen.
+    */
+
+    if (
+        email.toLowerCase() ===
+        ADMIN_EMAIL.toLowerCase() &&
+        password === ADMIN_PASSWORD
+    ) {
+
+        localStorage.setItem(
+            "rp_user",
+            JSON.stringify({
+                email: ADMIN_EMAIL,
+                role: "admin"
+            })
+        );
+
+
+        showToast(
+            "Admin-Login erfolgreich."
+        );
+
+
+        setTimeout(() => {
+
+            window.location.href =
+                "admin.html";
+
+        }, 500);
+
+
+        return;
+    }
+
+
+    /* =====================================================
+       NORMALER BACKEND LOGIN
+    ===================================================== */
+
+    try {
+
+        const response =
+            await fetch(
+                BACKEND_URL + "/api/login",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        email,
+                        password
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Login fehlgeschlagen."
+            );
+
+        }
+
+
+        localStorage.setItem(
+            "rp_token",
+            data.token || ""
+        );
+
+
+        localStorage.setItem(
+            "rp_user",
+            JSON.stringify(
+                data.user || {
+                    email,
+                    role: data.role || "user"
+                }
+            )
+        );
+
+
+        showToast(
+            "Login erfolgreich."
+        );
+
+
+        /*
+           Wenn Backend Admin meldet,
+           wird das Admin-Panel geöffnet.
+        */
+
+        if (data.role === "admin") {
+
+            setTimeout(() => {
+
+                window.location.href =
+                    "admin.html";
+
+            }, 500);
+
+            return;
+        }
+
+
+        closeLogin();
+
+    }
+
+    catch (error) {
+
+        showToast(
+            error.message ||
+            "Backend nicht erreichbar."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   WHITELIST
+========================================================= */
+
+async function sendApplication() {
+
+    const name =
+        document
+        .getElementById("applicationName")
+        .value
+        .trim();
+
+    const age =
+        document
+        .getElementById("applicationAge")
+        .value
+        .trim();
+
+    const reason =
+        document
+        .getElementById("applicationReason")
+        .value
+        .trim();
+
+
+    if (!name || !age || !reason) {
+
+        showToast(
+            "Bitte alle Felder ausfüllen."
+        );
+
+        return;
+    }
+
+
+    try {
+
+        const token =
+            localStorage.getItem("rp_token");
+
+
+        const response =
+            await fetch(
+                BACKEND_URL +
+                "/api/applications",
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        ...(token
+                            ? {
+                                "Authorization":
+                                "Bearer " + token
+                            }
+                            : {})
+                    },
+
+                    body: JSON.stringify({
+
+                        name,
+                        age,
+                        reason
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Bewerbung konnte nicht gesendet werden."
+            );
+
+        }
+
+
+        showToast(
+            "Whitelist-Bewerbung wurde gesendet."
+        );
+
+
+        closeApplication();
+
+
+        document
+            .getElementById("applicationName")
+            .value = "";
+
+        document
+            .getElementById("applicationAge")
+            .value = "";
+
+        document
+            .getElementById("applicationReason")
+            .value = "";
+
+    }
+
+    catch (error) {
+
+        showToast(
+            error.message ||
+            "Backend nicht erreichbar."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   SERVER STATUS
+========================================================= */
+
+function setServerStatus(
+    online,
+    text
+) {
+
+    if (online) {
+
+        statusDot
+            .classList
+            .remove("offline");
+
+        statusText.textContent =
+            text || "Online";
+
+    }
+    else {
+
+        statusDot
+            .classList
+            .add("offline");
+
+        statusText.textContent =
+            text || "Offline";
+
+    }
+
+}
+
+
+/* =========================================================
+   LIVE STATUS
+========================================================= */
+
+function setLiveStatus(
+    connected,
+    text
+) {
+
+    if (connected) {
+
+        liveLight.style.background =
+            "var(--green)";
+
+        liveText.textContent =
+            text ||
+            "Live-System verbunden";
+
+        serverConnection.textContent =
+            "Live verbunden";
+
+    }
+    else {
+
+        liveLight.style.background =
+            "var(--red)";
+
+        liveText.textContent =
+            text ||
+            "Live-System nicht verbunden";
+
+        serverConnection.textContent =
+            "Keine Verbindung";
+
+    }
+
+}
+
+
+/* =========================================================
+   SERVER DATEN
+========================================================= */
+
+function updateServer(data) {
+
+    if (!data)
+        return;
+
+
+    const currentPlayers =
+        Number(
+            data.players ??
+            data.playerCount ??
+            0
+        );
+
+
+    const maxPlayers =
+        Number(
+            data.maxPlayers ??
+            128
+        );
+
+
+    const ping =
+        data.ping ??
+        "--";
+
+
+    const version =
+        data.version ??
+        data.serverVersion ??
+        "--";
+
+
+    const uptime =
+        data.uptime ??
+        "--";
+
+
+    const jobs =
+        Number(
+            data.jobs ??
+            data.activeJobs ??
+            0
+        );
+
+
+    playersElement.textContent =
+        currentPlayers;
+
+
+    maxPlayersElement.textContent =
+        maxPlayers;
+
+
+    statPlayers.textContent =
+        currentPlayers;
+
+
+    statPing.textContent =
+        ping;
+
+
+    statJobs.textContent =
+        jobs;
+
+
+    serverPing.textContent =
+        ping;
+
+
+    serverVersion.textContent =
+        version;
+
+
+    serverUptime.textContent =
+        uptime;
+
+
+    statUptime.textContent =
+        uptime;
+
+
+    const percentage =
+        maxPlayers > 0
+            ? Math.min(
+                100,
+                (currentPlayers /
+                maxPlayers) * 100
+            )
+            : 0;
+
+
+    playerProgress.style.width =
+        percentage + "%";
+
+
+    if (
+        data.online !== undefined
+    ) {
+
+        setServerStatus(
+            Boolean(data.online),
+            data.online
+                ? "Online"
+                : "Offline"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   SOCKET.IO
+========================================================= */
+
+let socket = null;
+
 
 function connectLive() {
 
-    console.log(
-        "Verbinde mit:",
-        BACKEND_URL
-    );
+    if (
+        !BACKEND_URL ||
+        BACKEND_URL.includes(
+            "DEINE-VPS-IP"
+        )
+    ) {
+
+        setLiveStatus(
+            false,
+            "Backend-Adresse noch nicht eingetragen"
+        );
+
+        setServerStatus(
+            false,
+            "Nicht verbunden"
+        );
+
+        return;
+    }
 
 
     try {
@@ -1976,282 +2136,133 @@ function connectLive() {
                 transports: [
                     "websocket",
                     "polling"
-                ],
-
-                reconnection: true,
-
-                reconnectionAttempts:
-                    Infinity,
-
-                reconnectionDelay:
-                    1000,
-
-                reconnectionDelayMax:
-                    5000
+                ]
             }
         );
 
-
-
-        /* -----------------------------------------------------
-           VERBUNDEN
-           ----------------------------------------------------- */
 
         socket.on(
             "connect",
             () => {
 
-                connected = true;
-
-
-                console.log(
-                    "Live-System verbunden."
-                );
-
-
                 setLiveStatus(
                     true,
-                    "Live verbunden"
+                    "Live-System verbunden"
                 );
 
-
-                setServerStatus(
-                    true,
-                    "ONLINE"
-                );
-
-
-                document.getElementById(
-                    "serverConnection"
-                ).textContent =
-                    "Verbunden";
-
-
-
-                /*
-                    Serverdaten anfordern
-                */
-
-                socket.emit(
-                    "requestServerStatus"
+                showToast(
+                    "Live-System verbunden."
                 );
 
             }
         );
 
-
-
-        /* -----------------------------------------------------
-           GETRENNT
-           ----------------------------------------------------- */
 
         socket.on(
             "disconnect",
             () => {
 
-                connected = false;
-
-
-                console.log(
-                    "Live-System getrennt."
+                setLiveStatus(
+                    false,
+                    "Live-System getrennt"
                 );
 
-
-                setLiveStatus(
+                setServerStatus(
                     false,
                     "Verbindung getrennt"
                 );
 
-
-                setServerStatus(
-                    false,
-                    "OFFLINE"
-                );
-
-
-                document.getElementById(
-                    "serverConnection"
-                ).textContent =
-                    "Getrennt";
-
             }
         );
 
-
-
-        /* -----------------------------------------------------
-           VERBINDUNGSFEHLER
-           ----------------------------------------------------- */
 
         socket.on(
             "connect_error",
-            error => {
-
-                console.error(
-                    "Socket Fehler:",
-                    error
-                );
-
+            () => {
 
                 setLiveStatus(
                     false,
-                    "Server nicht erreichbar"
+                    "Backend nicht erreichbar"
                 );
 
             }
         );
 
-
-
-        /* -----------------------------------------------------
-           SERVER UPDATE
-           ----------------------------------------------------- */
 
         socket.on(
             "serverUpdate",
-            data => {
+            (data) => {
 
-                console.log(
-                    "Server Update:",
-                    data
-                );
-
-
-                updateServer(
-                    data
-                );
+                updateServer(data);
 
             }
         );
 
 
+        socket.on(
+            "liveUpdate",
+            (data) => {
 
-        /* -----------------------------------------------------
-           SERVER ONLINE
-           ----------------------------------------------------- */
+                updateServer(data);
+
+            }
+        );
+
 
         socket.on(
             "serverOnline",
-            data => {
+            (data) => {
 
-                updateServer(
-                    data
+                setServerStatus(
+                    true,
+                    "Online"
                 );
+
+                updateServer(data);
 
             }
         );
 
-
-
-        /* -----------------------------------------------------
-           SERVER OFFLINE
-           ----------------------------------------------------- */
 
         socket.on(
             "serverOffline",
             () => {
 
-                updateServer({
-
-                    online: false,
-
-                    players: 0,
-
-                    maxPlayers: 64
-
-                });
+                setServerStatus(
+                    false,
+                    "Offline"
+                );
 
             }
         );
 
-
-
-        /* -----------------------------------------------------
-           SPIELER JOIN
-           ----------------------------------------------------- */
 
         socket.on(
             "playerJoined",
-            data => {
+            (data) => {
 
-                if (
-                    data &&
-                    data.players !== undefined
-                ) {
-
-                    updateServer(
-                        data
-                    );
-
-                }
+                updateServer(data);
 
             }
         );
 
-
-
-        /* -----------------------------------------------------
-           SPIELER LEAVE
-           ----------------------------------------------------- */
 
         socket.on(
             "playerLeft",
-            data => {
+            (data) => {
 
-                if (
-                    data &&
-                    data.players !== undefined
-                ) {
-
-                    updateServer(
-                        data
-                    );
-
-                }
-
-            }
-        );
-
-
-
-        /* -----------------------------------------------------
-           ALLGEMEINES LIVE UPDATE
-           ----------------------------------------------------- */
-
-        socket.on(
-            "liveUpdate",
-            data => {
-
-                if (!data) {
-                    return;
-                }
-
-
-                if (
-                    data.server
-                ) {
-
-                    updateServer(
-                        data.server
-                    );
-
-                }
+                updateServer(data);
 
             }
         );
 
     }
 
-    catch(error) {
-
-        console.error(
-            error
-        );
-
+    catch (error) {
 
         setLiveStatus(
             false,
-            "Keine Verbindung"
+            "Live-System Fehler"
         );
 
     }
@@ -2259,653 +2270,117 @@ function connectLive() {
 }
 
 
-
 /* =========================================================
-   SERVERDATEN AKTUALISIEREN
-   ========================================================= */
+   SERVER API FALLBACK
+========================================================= */
 
-function updateServer(
-    data
-) {
+async function fetchServerStatus() {
 
-    if (!data) {
+    if (
+        BACKEND_URL.includes(
+            "DEINE-VPS-IP"
+        )
+    ) {
         return;
     }
 
 
-    const players =
-        Number(
-            data.players ?? 0
-        );
+    try {
+
+        const response =
+            await fetch(
+                BACKEND_URL +
+                "/api/server",
+                {
+                    cache: "no-store"
+                }
+            );
 
 
-    const maxPlayers =
-        Number(
-            data.maxPlayers ?? 64
-        );
+        if (!response.ok)
+            return;
 
 
-
-    /* Spieler */
-
-    document.getElementById(
-        "players"
-    ).textContent =
-        players;
+        const data =
+            await response.json();
 
 
-    document.getElementById(
-        "maxPlayers"
-    ).textContent =
-        maxPlayers;
+        updateServer(data);
 
-
-    document.getElementById(
-        "statPlayers"
-    ).textContent =
-        players;
-
-
-
-    /* Fortschrittsbalken */
-
-    const percentage =
-        maxPlayers > 0
-            ? Math.min(
-                100,
-                (players /
-                maxPlayers) *
-                100
-            )
-            : 0;
-
-
-    document.getElementById(
-        "playerProgress"
-    ).style.width =
-        percentage + "%";
-
-
-
-    /* Serverstatus */
-
-    if (
-        data.online === false
-    ) {
-
-        setServerStatus(
-            false,
-            "OFFLINE"
-        );
-
-    }
-
-    else {
 
         setServerStatus(
             true,
-            "ONLINE"
+            "Online"
         );
 
     }
 
+    catch (error) {
 
-
-    /* Version */
-
-    if (
-        data.version
-    ) {
-
-        document.getElementById(
-            "serverVersion"
-        ).textContent =
-            data.version;
-
-    }
-
-
-
-    /* Ping */
-
-    if (
-        data.ping !== undefined
-    ) {
-
-        document.getElementById(
-            "serverPing"
-        ).textContent =
-            data.ping + " ms";
-
-
-        document.getElementById(
-            "statPing"
-        ).textContent =
-            data.ping + " ms";
-
-    }
-
-
-
-    /* Uptime */
-
-    if (
-        data.uptime
-    ) {
-
-        document.getElementById(
-            "statUptime"
-        ).textContent =
-            data.uptime;
+        setServerStatus(
+            false,
+            "Offline"
+        );
 
     }
 
 }
 
 
-
 /* =========================================================
-   SERVERSTATUS
-   ========================================================= */
+   SERVER IP KOPIEREN
+========================================================= */
 
-function setServerStatus(
-    online,
-    text
-) {
+function copyServerIP() {
 
-    const status =
-        document.getElementById(
-            "serverStatus"
-        );
-
-
-    const statusText =
-        document.getElementById(
-            "statusText"
-        );
-
-
-    if (online) {
-
-        status.classList.remove(
-            "offline"
-        );
-
-    }
-
-    else {
-
-        status.classList.add(
-            "offline"
-        );
-
-    }
-
-
-    statusText.textContent =
-        text;
-
-}
-
-
-
-/* =========================================================
-   LIVE STATUS
-   ========================================================= */
-
-function setLiveStatus(
-    online,
-    text
-) {
-
-    const light =
-        document.getElementById(
-            "liveLight"
-        );
-
-
-    const liveText =
-        document.getElementById(
-            "liveText"
-        );
-
-
-    if (online) {
-
-        light.classList.remove(
-            "offline"
-        );
-
-    }
-
-    else {
-
-        light.classList.add(
-            "offline"
-        );
-
-    }
-
-
-    liveText.textContent =
-        text;
-
-}
-
-
-
-/* =========================================================
-   LOGIN
-   ========================================================= */
-
-function openLogin() {
-
-    document
-        .getElementById(
-            "loginModal"
+    navigator.clipboard
+        .writeText(
+            FIVEM_SERVER_IP
         )
-        .classList.add(
-            "active"
-        );
-
-}
-
-
-
-function closeLogin() {
-
-    document
-        .getElementById(
-            "loginModal"
-        )
-        .classList.remove(
-            "active"
-        );
-
-}
-
-
-
-async function login() {
-
-    const email =
-        document.getElementById(
-            "loginEmail"
-        ).value.trim();
-
-
-    const password =
-        document.getElementById(
-            "loginPassword"
-        ).value;
-
-
-
-    if (
-        !email ||
-        !password
-    ) {
-
-        showToast(
-            "Bitte alle Felder ausfüllen.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-
-    try {
-
-        const response =
-            await fetch(
-                BACKEND_URL +
-                "/api/login",
-                {
-
-                    method:
-                        "POST",
-
-                    headers: {
-
-                        "Content-Type":
-                            "application/json"
-
-                    },
-
-                    body:
-                        JSON.stringify({
-
-                            email:
-                                email,
-
-                            password:
-                                password
-
-                        })
-
-                }
-            );
-
-
-
-        const data =
-            await response.json();
-
-
-
-        if (!response.ok) {
+        .then(() => {
 
             showToast(
-                data.message ||
-                "Login fehlgeschlagen.",
-                "error"
+                "Server-IP kopiert: " +
+                FIVEM_SERVER_IP
             );
 
-            return;
-
-        }
-
-
-
-        if (
-            data.token
-        ) {
-
-            localStorage.setItem(
-                "rp_token",
-                data.token
-            );
-
-        }
-
-
-
-        if (
-            data.user
-        ) {
-
-            localStorage.setItem(
-                "rp_user",
-                JSON.stringify(
-                    data.user
-                )
-            );
-
-        }
-
-
-
-        showToast(
-            "Erfolgreich eingeloggt!"
-        );
-
-
-        closeLogin();
-
-    }
-
-    catch(error) {
-
-        console.error(
-            error
-        );
-
-
-        showToast(
-            "Backend nicht erreichbar.",
-            "error"
-        );
-
-    }
-
-}
-
-
-
-/* =========================================================
-   WHITELIST
-   ========================================================= */
-
-function openApplication() {
-
-    document
-        .getElementById(
-            "applicationModal"
-        )
-        .classList.add(
-            "active"
-        );
-
-}
-
-
-
-function closeApplication() {
-
-    document
-        .getElementById(
-            "applicationModal"
-        )
-        .classList.remove(
-            "active"
-        );
-
-}
-
-
-
-async function sendApplication() {
-
-    const name =
-        document.getElementById(
-            "applicationName"
-        ).value.trim();
-
-
-    const age =
-        document.getElementById(
-            "applicationAge"
-        ).value;
-
-
-    const reason =
-        document.getElementById(
-            "applicationReason"
-        ).value.trim();
-
-
-
-    if (
-        !name ||
-        !age ||
-        !reason
-    ) {
-
-        showToast(
-            "Bitte alle Felder ausfüllen.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-
-    try {
-
-        const token =
-            localStorage.getItem(
-                "rp_token"
-            );
-
-
-        const response =
-            await fetch(
-                BACKEND_URL +
-                "/api/applications",
-                {
-
-                    method:
-                        "POST",
-
-                    headers: {
-
-                        "Content-Type":
-                            "application/json",
-
-                        ...(token
-                            ? {
-                                Authorization:
-                                "Bearer " +
-                                token
-                            }
-                            : {})
-
-                    },
-
-                    body:
-                        JSON.stringify({
-
-                            name:
-                                name,
-
-                            age:
-                                age,
-
-                            reason:
-                                reason
-
-                        })
-
-                }
-            );
-
-
-
-        const data =
-            await response.json();
-
-
-
-        if (!response.ok) {
+        })
+        .catch(() => {
 
             showToast(
-                data.message ||
-                "Bewerbung konnte nicht gesendet werden.",
-                "error"
+                "Server-IP: " +
+                FIVEM_SERVER_IP
             );
 
-            return;
-
-        }
-
-
-
-        showToast(
-            "Bewerbung erfolgreich gesendet!"
-        );
-
-
-        closeApplication();
-
-
-        document.getElementById(
-            "applicationName"
-        ).value = "";
-
-
-        document.getElementById(
-            "applicationAge"
-        ).value = "";
-
-
-        document.getElementById(
-            "applicationReason"
-        ).value = "";
-
-    }
-
-    catch(error) {
-
-        console.error(
-            error
-        );
-
-
-        showToast(
-            "Backend nicht erreichbar.",
-            "error"
-        );
-
-    }
+        });
 
 }
 
 
-
 /* =========================================================
-   MODAL AUSSERHALB KLICKEN
-   ========================================================= */
+   MODALS SCHLIESSEN
+========================================================= */
 
-document
-    .querySelectorAll(
-        ".modal"
-    )
-    .forEach(
-        modal => {
-
-            modal.addEventListener(
-                "click",
-                event => {
-
-                    if (
-                        event.target ===
-                        modal
-                    ) {
-
-                        modal.classList.remove(
-                            "active"
-                        );
-
-                    }
-
-                }
-            );
-
-        }
-    );
-
-
-
-/* =========================================================
-   ESC-TASTE
-   ========================================================= */
-
-document.addEventListener(
-    "keydown",
-    event => {
+window.addEventListener(
+    "click",
+    (event) => {
 
         if (
-            event.key === "Escape"
+            event.target.id ===
+            "loginModal"
         ) {
 
-            document
-                .querySelectorAll(
-                    ".modal.active"
-                )
-                .forEach(
-                    modal => {
+            closeLogin();
 
-                        modal.classList.remove(
-                            "active"
-                        );
+        }
 
-                    }
-                );
+
+        if (
+            event.target.id ===
+            "applicationModal"
+        ) {
+
+            closeApplication();
 
         }
 
@@ -2913,35 +2388,38 @@ document.addEventListener(
 );
 
 
-
-/* =========================================================
-   AUTOMATISCH VERBINDEN
-   ========================================================= */
-
-connectLive();
-
-
-
-/* =========================================================
-   FALLS SOCKET.IO NOCH NICHT VERFÜGBAR IST
-   ========================================================= */
-
-setTimeout(
-    () => {
+document.addEventListener(
+    "keydown",
+    (event) => {
 
         if (
-            !connected
+            event.key === "Escape"
         ) {
 
-            setLiveStatus(
-                false,
-                "Warte auf Live-System..."
-            );
+            closeLogin();
+
+            closeApplication();
 
         }
 
-    },
-    3000
+    }
+);
+
+
+/* =========================================================
+   START
+========================================================= */
+
+connectLive();
+
+fetchServerStatus();
+
+
+/* Alle 10 Sekunden Status prüfen */
+
+setInterval(
+    fetchServerStatus,
+    10000
 );
 
 </script>
