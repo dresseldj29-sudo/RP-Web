@@ -3,23 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>NovaRP – Roleplay Server</title>
+
+<meta name="description" content="NovaRP – moderner FiveM Roleplay Server">
 
 <style>
 :root{
     --bg:#070a10;
     --bg2:#0d111a;
     --card:#111722;
-    --card2:#151c29;
-    --line:#263043;
+    --card2:#151c28;
+    --border:rgba(255,255,255,.08);
     --text:#f5f7fb;
     --muted:#8d98aa;
-    --primary:#6c5ce7;
-    --primary2:#8b7cff;
-    --green:#22c55e;
-    --red:#ef4444;
-    --orange:#f59e0b;
-    --blue:#3b82f6;
+    --primary:#5865f2;
+    --primary2:#7280ff;
+    --success:#22c55e;
+    --danger:#ef4444;
+    --warning:#f59e0b;
     --shadow:0 20px 60px rgba(0,0,0,.35);
 }
 
@@ -34,10 +36,10 @@ html{
 }
 
 body{
-    font-family:Inter,Segoe UI,Arial,sans-serif;
+    font-family:Inter,Arial,Helvetica,sans-serif;
     background:
-        radial-gradient(circle at 20% 10%,rgba(108,92,231,.14),transparent 30%),
-        radial-gradient(circle at 90% 20%,rgba(59,130,246,.10),transparent 25%),
+        radial-gradient(circle at top left,rgba(88,101,242,.14),transparent 35%),
+        radial-gradient(circle at top right,rgba(34,197,94,.06),transparent 30%),
         var(--bg);
     color:var(--text);
     min-height:100vh;
@@ -59,114 +61,121 @@ a{
     text-decoration:none;
 }
 
-/* HEADER */
+/* =========================
+   HEADER
+========================= */
 
 .header{
-    position:sticky;
+    position:fixed;
     top:0;
+    left:0;
+    right:0;
     z-index:1000;
-    height:74px;
+    background:rgba(7,10,16,.82);
+    backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+}
+
+.nav{
+    max-width:1400px;
+    margin:auto;
+    padding:16px 24px;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 5%;
-    background:rgba(7,10,16,.82);
-    backdrop-filter:blur(20px);
-    border-bottom:1px solid rgba(255,255,255,.06);
+    gap:20px;
 }
 
 .logo{
-    display:flex;
-    align-items:center;
-    gap:12px;
+    font-size:23px;
     font-weight:900;
-    font-size:21px;
-}
-
-.logo-icon{
-    width:42px;
-    height:42px;
-    display:grid;
-    place-items:center;
-    border-radius:13px;
-    background:linear-gradient(135deg,var(--primary),#3b82f6);
-    box-shadow:0 10px 30px rgba(108,92,231,.3);
+    letter-spacing:-.5px;
 }
 
 .logo span{
     color:var(--primary2);
 }
 
-.nav{
+.nav-links{
     display:flex;
     gap:8px;
     align-items:center;
 }
 
-.nav button{
-    border:0;
+.nav-links button{
     background:transparent;
+    border:0;
     color:var(--muted);
-    padding:10px 13px;
+    padding:10px 14px;
     border-radius:10px;
     transition:.2s;
 }
 
-.nav button:hover{
-    color:white;
-    background:rgba(255,255,255,.05);
+.nav-links button:hover{
+    color:#fff;
+    background:rgba(255,255,255,.06);
 }
 
-.header-actions{
+.nav-actions{
     display:flex;
     gap:10px;
 }
 
 .btn{
-    border:1px solid var(--line);
-    background:var(--card);
-    color:white;
+    border:0;
     border-radius:11px;
     padding:11px 17px;
+    color:#fff;
+    font-weight:700;
     transition:.2s;
 }
 
 .btn:hover{
     transform:translateY(-1px);
-    border-color:#3a465c;
 }
 
 .btn-primary{
     background:linear-gradient(135deg,var(--primary),var(--primary2));
-    border:0;
-    box-shadow:0 10px 25px rgba(108,92,231,.25);
+    box-shadow:0 10px 25px rgba(88,101,242,.2);
+}
+
+.btn-secondary{
+    background:rgba(255,255,255,.07);
+    border:1px solid var(--border);
 }
 
 .btn-danger{
-    background:rgba(239,68,68,.1);
-    border-color:rgba(239,68,68,.3);
-    color:#ff8a8a;
+    background:var(--danger);
 }
 
 .btn-success{
-    background:rgba(34,197,94,.1);
-    border-color:rgba(34,197,94,.3);
-    color:#6ee7a0;
+    background:var(--success);
 }
 
-/* HERO */
+.btn-warning{
+    background:var(--warning);
+    color:#111;
+}
+
+/* =========================
+   HERO
+========================= */
 
 .hero{
-    min-height:650px;
+    min-height:760px;
+    padding:180px 24px 100px;
     display:flex;
     align-items:center;
-    padding:90px 7%;
-    position:relative;
-    overflow:hidden;
 }
 
-.hero-content{
-    max-width:780px;
+.hero-inner{
+    width:100%;
+    max-width:1400px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:1.25fr .75fr;
+    gap:50px;
+    align-items:center;
 }
 
 .badge{
@@ -174,182 +183,163 @@ a{
     align-items:center;
     gap:8px;
     padding:8px 13px;
-    border:1px solid rgba(108,92,231,.3);
-    background:rgba(108,92,231,.08);
-    color:#b9b0ff;
+    border:1px solid rgba(88,101,242,.3);
+    background:rgba(88,101,242,.1);
+    color:#b9bfff;
     border-radius:999px;
     font-size:13px;
-    margin-bottom:22px;
-}
-
-.dot{
-    width:8px;
-    height:8px;
-    border-radius:50%;
-    background:var(--green);
-    box-shadow:0 0 15px var(--green);
+    font-weight:700;
+    margin-bottom:20px;
 }
 
 .hero h1{
-    font-size:clamp(48px,8vw,92px);
+    font-size:clamp(48px,7vw,88px);
     line-height:.95;
-    letter-spacing:-5px;
+    letter-spacing:-4px;
     margin-bottom:25px;
 }
 
-.gradient{
-    background:linear-gradient(135deg,#fff 20%,#9d92ff 55%,#4d8cff);
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
+.hero h1 span{
+    color:var(--primary2);
 }
 
 .hero p{
-    max-width:650px;
     color:var(--muted);
-    font-size:18px;
+    font-size:19px;
     line-height:1.7;
+    max-width:680px;
 }
 
-.hero-actions{
+.hero-buttons{
     display:flex;
+    flex-wrap:wrap;
     gap:12px;
     margin-top:30px;
-    flex-wrap:wrap;
 }
-
-.hero-glow{
-    position:absolute;
-    width:500px;
-    height:500px;
-    right:-180px;
-    top:100px;
-    border-radius:50%;
-    background:radial-gradient(circle,rgba(108,92,231,.2),transparent 65%);
-    pointer-events:none;
-}
-
-/* SECTIONS */
-
-.section{
-    padding:80px 7%;
-}
-
-.section-title{
-    margin-bottom:35px;
-}
-
-.section-title small{
-    color:var(--primary2);
-    text-transform:uppercase;
-    font-weight:800;
-    letter-spacing:2px;
-}
-
-.section-title h2{
-    font-size:38px;
-    margin-top:7px;
-}
-
-.section-title p{
-    color:var(--muted);
-    margin-top:8px;
-}
-
-/* SERVER */
 
 .server-card{
-    display:grid;
-    grid-template-columns:1.4fr .8fr .8fr;
-    gap:20px;
-    padding:28px;
-    border:1px solid var(--line);
-    background:linear-gradient(145deg,#111722,#0d121b);
-    border-radius:20px;
+    background:
+        linear-gradient(145deg,rgba(88,101,242,.15),transparent),
+        var(--card);
+    border:1px solid var(--border);
+    border-radius:25px;
+    padding:30px;
     box-shadow:var(--shadow);
 }
 
-.server-main h3{
-    font-size:28px;
+.server-card-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.server-status{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:#8ff0ad;
+    font-size:13px;
+    font-weight:800;
+}
+
+.status-dot{
+    width:9px;
+    height:9px;
+    background:var(--success);
+    border-radius:50%;
+    box-shadow:0 0 15px var(--success);
+}
+
+.server-name{
+    font-size:30px;
+    font-weight:900;
+    margin-bottom:8px;
 }
 
 .server-ip{
-    margin-top:8px;
     color:var(--muted);
     font-family:monospace;
 }
 
-.status{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    margin-top:18px;
-    padding:8px 12px;
-    border-radius:9px;
-    font-size:13px;
-}
-
-.status.online{
-    color:#65e69a;
-    background:rgba(34,197,94,.1);
-}
-
-.status.offline{
-    color:#ff8585;
-    background:rgba(239,68,68,.1);
-}
-
 .server-stat{
-    padding:22px;
-    border-radius:15px;
-    background:rgba(255,255,255,.025);
-    border:1px solid rgba(255,255,255,.05);
+    margin-top:30px;
+    padding-top:25px;
+    border-top:1px solid var(--border);
 }
 
-.server-stat strong{
-    display:block;
-    font-size:30px;
+.server-stat-row{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:10px;
 }
 
-.server-stat span{
+.progress{
+    height:8px;
+    background:#202735;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,var(--primary),var(--primary2));
+    transition:.5s;
+}
+
+/* =========================
+   SECTIONS
+========================= */
+
+section{
+    max-width:1400px;
+    margin:auto;
+    padding:90px 24px;
+}
+
+.section-title{
+    margin-bottom:40px;
+}
+
+.section-title small{
+    color:var(--primary2);
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:2px;
+}
+
+.section-title h2{
+    font-size:42px;
+    margin-top:10px;
+}
+
+.section-title p{
     color:var(--muted);
-    font-size:13px;
+    margin-top:10px;
 }
-
-/* CARDS */
 
 .grid{
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:18px;
+    gap:20px;
 }
 
 .card{
-    padding:24px;
-    border:1px solid var(--line);
     background:var(--card);
+    border:1px solid var(--border);
     border-radius:18px;
-    transition:.2s;
-}
-
-.card:hover{
-    transform:translateY(-3px);
-    border-color:#39455d;
+    padding:25px;
+    box-shadow:0 10px 40px rgba(0,0,0,.15);
 }
 
 .card-icon{
-    width:50px;
-    height:50px;
-    display:grid;
-    place-items:center;
-    border-radius:14px;
-    background:rgba(108,92,231,.12);
-    font-size:24px;
-    margin-bottom:18px;
+    font-size:34px;
+    margin-bottom:17px;
 }
 
 .card h3{
-    margin-bottom:8px;
+    margin-bottom:10px;
 }
 
 .card p{
@@ -357,121 +347,166 @@ a{
     line-height:1.6;
 }
 
-/* NEWS */
+.faction-card{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
 
-.news-card{
-    min-height:190px;
+.faction-icon{
+    width:55px;
+    height:55px;
+    border-radius:15px;
+    background:rgba(88,101,242,.13);
+    display:grid;
+    place-items:center;
+    font-size:27px;
+}
+
+.news-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
 }
 
 .news-date{
     color:var(--primary2);
     font-size:12px;
+    font-weight:800;
     margin-bottom:10px;
 }
 
-/* FACTIONS */
-
-.faction-card{
-    position:relative;
+.news-text{
+    color:var(--muted);
+    line-height:1.6;
+    margin-top:10px;
 }
 
-.faction-icon{
-    font-size:38px;
-    margin-bottom:15px;
+/* =========================
+   RULES
+========================= */
+
+.rules{
+    display:grid;
+    gap:12px;
 }
 
-.faction-card .btn{
-    margin-top:18px;
+.rule{
+    display:flex;
+    gap:15px;
+    align-items:flex-start;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:18px;
 }
 
-/* FOOTER */
+.rule-number{
+    width:32px;
+    height:32px;
+    min-width:32px;
+    border-radius:10px;
+    background:var(--primary);
+    display:grid;
+    place-items:center;
+    font-weight:900;
+}
+
+/* =========================
+   FOOTER
+========================= */
 
 footer{
-    border-top:1px solid var(--line);
-    padding:40px 7%;
+    border-top:1px solid var(--border);
+    padding:40px 24px;
     color:var(--muted);
+}
+
+.footer-inner{
+    max-width:1400px;
+    margin:auto;
     display:flex;
     justify-content:space-between;
     gap:20px;
 }
 
-/* MODAL */
+/* =========================
+   MODAL
+========================= */
 
 .modal{
     position:fixed;
     inset:0;
-    z-index:5000;
+    z-index:2000;
+    background:rgba(0,0,0,.72);
+    backdrop-filter:blur(10px);
     display:none;
     align-items:center;
     justify-content:center;
     padding:20px;
-    background:rgba(0,0,0,.72);
-    backdrop-filter:blur(10px);
 }
 
-.modal.show{
+.modal.active{
     display:flex;
 }
 
 .modal-box{
-    width:min(600px,100%);
+    width:min(500px,100%);
     max-height:90vh;
     overflow:auto;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:22px;
+    box-shadow:var(--shadow);
     padding:28px;
-    border:1px solid var(--line);
-    background:#0d121b;
-    border-radius:20px;
-    box-shadow:0 30px 100px rgba(0,0,0,.5);
 }
 
 .modal-header{
     display:flex;
-    justify-content:space-between;
     align-items:center;
-    margin-bottom:24px;
+    justify-content:space-between;
+    margin-bottom:25px;
 }
 
 .close{
     width:38px;
     height:38px;
-    border:1px solid var(--line);
-    background:var(--card);
-    color:white;
+    border:0;
     border-radius:10px;
+    background:rgba(255,255,255,.06);
+    color:#fff;
+    font-size:20px;
 }
 
 .form-group{
-    margin-bottom:16px;
+    margin-bottom:17px;
 }
 
 .form-group label{
     display:block;
-    margin-bottom:7px;
-    color:#c8cfda;
+    color:#c9cfda;
     font-size:13px;
+    font-weight:700;
+    margin-bottom:8px;
 }
 
-.input,
-textarea,
-select{
+.form-control{
     width:100%;
-    border:1px solid var(--line);
-    background:#080c13;
-    color:white;
+    background:#0b0f17;
+    border:1px solid var(--border);
     border-radius:11px;
-    padding:12px 13px;
+    color:#fff;
+    padding:13px 14px;
     outline:none;
 }
 
-.input:focus,
-textarea:focus,
-select:focus{
+.form-control:focus{
     border-color:var(--primary);
-    box-shadow:0 0 0 3px rgba(108,92,231,.1);
+    box-shadow:0 0 0 3px rgba(88,101,242,.1);
 }
 
-textarea{
-    min-height:110px;
+textarea.form-control{
+    min-height:120px;
     resize:vertical;
 }
 
@@ -482,138 +517,183 @@ textarea{
     margin-top:20px;
 }
 
-/* DASHBOARD */
+/* =========================
+   LOGIN
+========================= */
+
+.login-info{
+    padding:12px 14px;
+    border-radius:11px;
+    background:rgba(245,158,11,.08);
+    border:1px solid rgba(245,158,11,.2);
+    color:#fbd38d;
+    font-size:13px;
+    line-height:1.5;
+    margin-bottom:18px;
+}
+
+/* =========================
+   DASHBOARD
+========================= */
 
 .dashboard{
     display:none;
     min-height:100vh;
-    background:#080b11;
+    background:#080b12;
 }
 
 .dashboard.active{
-    display:block;
-}
-
-.dashboard-layout{
-    display:grid;
-    grid-template-columns:250px 1fr;
-    min-height:100vh;
+    display:flex;
 }
 
 .sidebar{
-    border-right:1px solid var(--line);
-    background:#0b0f16;
-    padding:20px 13px;
-    position:sticky;
+    width:260px;
+    min-height:100vh;
+    position:fixed;
+    left:0;
     top:0;
-    height:100vh;
+    bottom:0;
+    background:#0c1018;
+    border-right:1px solid var(--border);
+    padding:25px 15px;
+    overflow:auto;
 }
 
 .sidebar-logo{
-    padding:15px 12px 25px;
+    padding:5px 12px 30px;
 }
 
-.sidebar-nav{
-    display:flex;
-    flex-direction:column;
+.sidebar-logo strong{
+    font-size:24px;
+}
+
+.sidebar-logo span{
+    color:var(--primary2);
+}
+
+.sidebar-user{
+    padding:15px;
+    background:rgba(255,255,255,.04);
+    border:1px solid var(--border);
+    border-radius:14px;
+    margin-bottom:20px;
+}
+
+.sidebar-user-name{
+    font-weight:800;
+}
+
+.sidebar-user-role{
+    color:var(--primary2);
+    font-size:12px;
+    margin-top:4px;
+    text-transform:uppercase;
+}
+
+.side-nav{
+    display:grid;
     gap:5px;
 }
 
-.sidebar-nav button{
-    text-align:left;
+.side-nav button{
+    width:100%;
     border:0;
     background:transparent;
     color:var(--muted);
     padding:12px 14px;
     border-radius:10px;
+    text-align:left;
+    transition:.2s;
 }
 
-.sidebar-nav button:hover,
-.sidebar-nav button.active{
-    background:rgba(108,92,231,.12);
-    color:white;
+.side-nav button:hover,
+.side-nav button.active{
+    color:#fff;
+    background:rgba(88,101,242,.14);
 }
 
 .dashboard-main{
-    padding:30px;
-    overflow:auto;
+    margin-left:260px;
+    width:calc(100% - 260px);
+    min-height:100vh;
 }
 
 .dashboard-top{
+    height:75px;
     display:flex;
-    justify-content:space-between;
     align-items:center;
-    margin-bottom:28px;
-    gap:20px;
-}
-
-.dashboard-top h1{
-    font-size:30px;
+    justify-content:space-between;
+    padding:0 30px;
+    border-bottom:1px solid var(--border);
+    background:rgba(8,11,18,.8);
+    backdrop-filter:blur(15px);
+    position:sticky;
+    top:0;
+    z-index:50;
 }
 
 .dashboard-content{
+    padding:30px;
+    max-width:1600px;
+}
+
+.dashboard-page{
     display:none;
 }
 
-.dashboard-content.active{
+.dashboard-page.active{
     display:block;
 }
 
-.stats-grid{
+.page-title{
+    font-size:32px;
+    margin-bottom:25px;
+}
+
+.stats{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:15px;
-    margin-bottom:20px;
+    gap:18px;
+    margin-bottom:25px;
 }
 
 .stat-card{
-    padding:20px;
-    border:1px solid var(--line);
     background:var(--card);
+    border:1px solid var(--border);
     border-radius:16px;
+    padding:20px;
 }
 
-.stat-card small{
+.stat-label{
     color:var(--muted);
+    font-size:13px;
 }
 
-.stat-card strong{
-    display:block;
+.stat-value{
     font-size:30px;
+    font-weight:900;
     margin-top:8px;
 }
 
-.panel{
-    border:1px solid var(--line);
-    background:var(--card);
-    border-radius:16px;
-    padding:20px;
-    margin-bottom:20px;
-}
-
-.panel-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:10px;
-    margin-bottom:18px;
-}
-
 .table-wrap{
+    width:100%;
     overflow:auto;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
 }
 
 table{
     width:100%;
     border-collapse:collapse;
+    min-width:700px;
 }
 
 th,
 td{
-    padding:13px 10px;
+    padding:15px;
     text-align:left;
-    border-bottom:1px solid var(--line);
-    white-space:nowrap;
+    border-bottom:1px solid var(--border);
 }
 
 th{
@@ -626,138 +706,144 @@ td{
     font-size:14px;
 }
 
-.action-row{
+.table-actions{
     display:flex;
     gap:7px;
 }
 
-.action-row button{
+.small-btn{
+    border:0;
+    border-radius:8px;
     padding:7px 10px;
     font-size:12px;
+    font-weight:700;
+    color:#fff;
 }
 
 .empty{
-    padding:35px;
     text-align:center;
     color:var(--muted);
+    padding:40px;
 }
 
-/* TOAST */
+/* =========================
+   TOAST
+========================= */
 
-#toastContainer{
+.toast-container{
     position:fixed;
     right:20px;
     bottom:20px;
-    z-index:10000;
-    display:flex;
-    flex-direction:column;
+    z-index:5000;
+    display:grid;
     gap:10px;
 }
 
 .toast{
     min-width:280px;
-    max-width:400px;
-    padding:14px 16px;
-    border:1px solid var(--line);
+    max-width:420px;
+    background:#151b27;
+    border:1px solid var(--border);
+    border-left:4px solid var(--success);
     border-radius:12px;
-    background:#101722;
+    padding:14px 16px;
     box-shadow:var(--shadow);
     animation:toastIn .25s ease;
 }
 
-.toast.success{
-    border-color:rgba(34,197,94,.4);
+.toast.error{
+    border-left-color:var(--danger);
 }
 
-.toast.error{
-    border-color:rgba(239,68,68,.4);
+.toast.warning{
+    border-left-color:var(--warning);
 }
 
 @keyframes toastIn{
     from{
+        transform:translateY(15px);
         opacity:0;
-        transform:translateY(10px);
     }
     to{
+        transform:translateY(0);
         opacity:1;
-        transform:none;
     }
 }
 
-/* MOBILE */
+/* =========================
+   MOBILE
+========================= */
 
-@media(max-width:900px){
-    .nav{
-        display:none;
-    }
+.mobile-menu{
+    display:none;
+    border:0;
+    background:rgba(255,255,255,.07);
+    color:#fff;
+    border-radius:10px;
+    padding:10px;
+}
 
-    .server-card{
+@media(max-width:1000px){
+
+    .hero-inner{
         grid-template-columns:1fr;
     }
 
-    .grid{
-        grid-template-columns:1fr 1fr;
+    .grid,
+    .news-grid{
+        grid-template-columns:repeat(2,1fr);
     }
 
-    .stats-grid{
-        grid-template-columns:1fr 1fr;
+    .stats{
+        grid-template-columns:repeat(2,1fr);
     }
 
-    .dashboard-layout{
+    .nav-links{
+        display:none;
+    }
+
+    .mobile-menu{
+        display:block;
+    }
+
+}
+
+@media(max-width:700px){
+
+    .hero{
+        padding-top:140px;
+    }
+
+    .hero h1{
+        letter-spacing:-2px;
+    }
+
+    .grid,
+    .news-grid,
+    .stats{
         grid-template-columns:1fr;
     }
 
     .sidebar{
-        position:relative;
-        height:auto;
-        border-right:0;
-        border-bottom:1px solid var(--line);
+        transform:translateX(-100%);
+        transition:.25s;
+        z-index:100;
     }
 
-    .sidebar-nav{
-        display:grid;
-        grid-template-columns:repeat(3,1fr);
-    }
-}
-
-@media(max-width:600px){
-    .header{
-        padding:0 4%;
-    }
-
-    .header-actions .btn:not(.btn-primary){
-        display:none;
-    }
-
-    .hero{
-        padding:70px 5%;
-    }
-
-    .hero h1{
-        letter-spacing:-3px;
-    }
-
-    .section{
-        padding:60px 5%;
-    }
-
-    .grid{
-        grid-template-columns:1fr;
-    }
-
-    .stats-grid{
-        grid-template-columns:1fr;
+    .sidebar.open{
+        transform:translateX(0);
     }
 
     .dashboard-main{
+        margin-left:0;
+        width:100%;
+    }
+
+    .dashboard-content{
         padding:18px;
     }
 
-    .sidebar-nav{
-        grid-template-columns:1fr 1fr;
-    }
-
-    footer{
+    .footer-inner{
         flex-direction:column;
     }
 }
@@ -773,245 +859,427 @@ td{
 <div id="publicSite">
 
 <header class="header">
+    <div class="nav">
 
-    <a href="#home" class="logo">
-        <div class="logo-icon">N</div>
-        Nova<span>RP</span>
-    </a>
+        <div class="logo">
+            Nova<span>RP</span>
+        </div>
 
-    <nav class="nav">
-        <button onclick="scrollToSection('home')">Home</button>
-        <button onclick="scrollToSection('server')">Server</button>
-        <button onclick="scrollToSection('features')">Features</button>
-        <button onclick="scrollToSection('factions')">Fraktionen</button>
-        <button onclick="scrollToSection('news')">News</button>
-        <button onclick="scrollToSection('rules')">Regeln</button>
-    </nav>
+        <nav class="nav-links">
+            <button onclick="scrollToSection('home')">Home</button>
+            <button onclick="scrollToSection('server')">Server</button>
+            <button onclick="scrollToSection('features')">Features</button>
+            <button onclick="scrollToSection('factions')">Fraktionen</button>
+            <button onclick="scrollToSection('news')">News</button>
+            <button onclick="scrollToSection('rules')">Regeln</button>
+        </nav>
 
-    <div class="header-actions">
-        <button class="btn" onclick="openLogin()">Login</button>
-        <button class="btn btn-primary" onclick="openWhitelist()">Whitelist</button>
+        <div class="nav-actions">
+            <button class="btn btn-secondary" onclick="openModal('whitelistModal')">
+                Whitelist
+            </button>
+
+            <button class="btn btn-primary" onclick="openModal('loginModal')">
+                Admin Login
+            </button>
+        </div>
+
     </div>
-
 </header>
+
+<main>
+
+<!-- HERO -->
 
 <section class="hero" id="home">
 
-    <div class="hero-content">
+<div class="hero-inner">
 
-        <div class="badge">
-            <span class="dot"></span>
-            NovaRP Roleplay
-        </div>
+<div>
 
-        <h1>
-            Deine Stadt.<br>
-            Deine <span class="gradient">Story.</span>
-        </h1>
+<div class="badge">
+    ● NovaRP Roleplay
+</div>
 
-        <p>
-            Willkommen bei NovaRP – einem modernen Roleplay-Projekt
-            mit Polizei, Feuerwehr, Rettungsdienst, Unternehmen
-            und vielen Möglichkeiten, deine eigene Geschichte zu schreiben.
-        </p>
+<h1>
+    Deine Stadt.<br>
+    Dein <span>Roleplay.</span>
+</h1>
 
-        <div class="hero-actions">
-            <button class="btn btn-primary" onclick="openWhitelist()">
-                Jetzt Whitelist beantragen
-            </button>
+<p>
+    Willkommen bei NovaRP. Erlebe modernes,
+    immersives Roleplay mit aktiver Community,
+    verschiedenen Fraktionen und einer eigenen
+    Stadt voller Möglichkeiten.
+</p>
 
-            <button class="btn" onclick="scrollToSection('server')">
-                Server ansehen
-            </button>
-        </div>
+<div class="hero-buttons">
 
+<button
+    class="btn btn-primary"
+    onclick="openModal('whitelistModal')">
+    Jetzt bewerben
+</button>
+
+<button
+    class="btn btn-secondary"
+    onclick="scrollToSection('server')">
+    Server ansehen
+</button>
+
+</div>
+
+</div>
+
+<div class="server-card">
+
+<div class="server-card-top">
+
+<div>
+    <div class="server-name" id="heroServerName">
+        NovaRP
     </div>
 
-    <div class="hero-glow"></div>
+    <div class="server-ip" id="heroServerIP">
+        145.224.72.197:30120
+    </div>
+</div>
+
+<div class="server-status">
+    <span class="status-dot"></span>
+    <span id="heroStatus">Online</span>
+</div>
+
+</div>
+
+<div class="server-stat">
+
+<div class="server-stat-row">
+    <span>Spieler</span>
+    <strong>
+        <span id="heroPlayers">0</span>
+        /
+        <span id="heroMaxPlayers">128</span>
+    </strong>
+</div>
+
+<div class="progress">
+    <div
+        class="progress-bar"
+        id="heroProgress">
+    </div>
+</div>
+
+</div>
+
+</div>
+
+</div>
 
 </section>
 
+<!-- SERVER -->
 
-<section class="section" id="server">
+<section id="server">
 
-    <div class="section-title">
-        <small>Server</small>
-        <h2>NovaRP Server</h2>
-        <p>Alle wichtigen Informationen zu unserem Server.</p>
-    </div>
+<div class="section-title">
 
-    <div class="server-card">
+<small>Server</small>
 
-        <div class="server-main">
+<h2>NovaRP Server</h2>
 
-            <h3 id="publicServerName">NovaRP</h3>
+<p>
+    Alle wichtigen Informationen über unseren Server.
+</p>
 
-            <div class="server-ip" id="publicServerIP">
-                145.224.72.197:30120
-            </div>
+</div>
 
-            <div id="publicServerStatus" class="status online">
-                <span class="dot"></span>
-                Online
-            </div>
+<div class="grid">
 
-        </div>
+<div class="card">
 
-        <div class="server-stat">
-            <strong id="publicPlayerCount">0</strong>
-            <span>Spieler</span>
-        </div>
+<div class="card-icon">🟢</div>
 
-        <div class="server-stat">
-            <strong id="publicMaxPlayers">128</strong>
-            <span>Maximale Spieler</span>
-        </div>
+<h3>Status</h3>
 
-    </div>
+<p>
+    Der aktuelle Status wird durch die
+    NovaRP-Verwaltung gepflegt.
+</p>
 
-</section>
+<h2 id="serverStatusText" style="margin-top:15px">
+    Online
+</h2>
 
+</div>
 
-<section class="section" id="features">
+<div class="card">
 
-    <div class="section-title">
-        <small>Features</small>
-        <h2>Was dich erwartet</h2>
-    </div>
+<div class="card-icon">🎮</div>
 
-    <div class="grid">
+<h3>Spieler</h3>
 
-        <div class="card">
-            <div class="card-icon">🚓</div>
-            <h3>Polizei</h3>
-            <p>
-                Erlebe spannenden Polizeialltag und sorge für Sicherheit
-                und Ordnung in Nova City.
-            </p>
-        </div>
+<p>
+    Aktuell registrierte bzw. vom Team
+    eingetragene Spieler.
+</p>
 
-        <div class="card">
-            <div class="card-icon">🚒</div>
-            <h3>Feuerwehr</h3>
-            <p>
-                Einsatzfahrten, technische Hilfeleistung und spannende
-                Feuerwehr-Rollenspiele.
-            </p>
-        </div>
+<h2 style="margin-top:15px">
+    <span id="serverPlayers">0</span>
+    /
+    <span id="serverMaxPlayers">128</span>
+</h2>
 
-        <div class="card">
-            <div class="card-icon">🚑</div>
-            <h3>Rettungsdienst</h3>
-            <p>
-                Versorge Patienten und arbeite realistisch mit anderen
-                Einsatzorganisationen zusammen.
-            </p>
-        </div>
+</div>
 
-        <div class="card">
-            <div class="card-icon">🔧</div>
-            <h3>Mechaniker</h3>
-            <p>
-                Betreibe deine Werkstatt und kümmere dich um die Fahrzeuge
-                der Stadt.
-            </p>
-        </div>
+<div class="card">
 
-        <div class="card">
-            <div class="card-icon">🏢</div>
-            <h3>Unternehmen</h3>
-            <p>
-                Gründe Unternehmen, verdiene Geld und baue deine eigene
-                Karriere auf.
-            </p>
-        </div>
+<div class="card-icon">🌐</div>
 
-        <div class="card">
-            <div class="card-icon">🎭</div>
-            <h3>Freies Roleplay</h3>
-            <p>
-                Erstelle deine eigene Geschichte und gestalte Nova City
-                aktiv mit.
-            </p>
-        </div>
+<h3>Server-IP</h3>
 
-    </div>
+<p>
+    Verbinde dich mit dem NovaRP Server.
+</p>
+
+<h3
+    id="serverIP"
+    style="margin-top:15px;font-family:monospace">
+    145.224.72.197:30120
+</h3>
+
+</div>
+
+</div>
 
 </section>
 
+<!-- FEATURES -->
 
-<section class="section" id="factions">
+<section id="features">
 
-    <div class="section-title">
-        <small>Fraktionen</small>
-        <h2>Unsere Fraktionen</h2>
-    </div>
+<div class="section-title">
 
-    <div class="grid" id="publicFactions"></div>
+<small>Features</small>
+
+<h2>Was NovaRP bietet</h2>
+
+<p>
+    Eine moderne Plattform für unsere Roleplay-Community.
+</p>
+
+</div>
+
+<div class="grid">
+
+<div class="card">
+
+<div class="card-icon">🏙️</div>
+
+<h3>Eigene Stadt</h3>
+
+<p>
+    Eine umfangreiche Roleplay-Welt mit
+    zahlreichen Möglichkeiten.
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="card-icon">🚓</div>
+
+<h3>Fraktionen</h3>
+
+<p>
+    Polizei, Feuerwehr, Rettungsdienst,
+    Unternehmen und viele weitere Bereiche.
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="card-icon">👥</div>
+
+<h3>Community</h3>
+
+<p>
+    Spiele gemeinsam mit anderen Spielern
+    und baue deine eigene Geschichte auf.
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="card-icon">📋</div>
+
+<h3>Whitelist</h3>
+
+<p>
+    Bewerbe dich direkt über unsere Website
+    für den Server.
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="card-icon">📰</div>
+
+<h3>News</h3>
+
+<p>
+    Alle wichtigen Neuigkeiten werden
+    direkt auf der Website veröffentlicht.
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="card-icon">⚙️</div>
+
+<h3>Administration</h3>
+
+<p>
+    Ein eigenes Dashboard zur Verwaltung
+    von NovaRP.
+</p>
+
+</div>
+
+</div>
 
 </section>
 
+<!-- FACTIONS -->
 
-<section class="section" id="news">
+<section id="factions">
 
-    <div class="section-title">
-        <small>News</small>
-        <h2>Neuigkeiten</h2>
-    </div>
+<div class="section-title">
 
-    <div class="grid" id="publicNews"></div>
+<small>Fraktionen</small>
 
-</section>
+<h2>Unsere Fraktionen</h2>
 
+<p>
+    Diese Fraktionen werden aktuell auf NovaRP verwaltet.
+</p>
 
-<section class="section" id="rules">
+</div>
 
-    <div class="section-title">
-        <small>Regeln</small>
-        <h2>NovaRP Regeln</h2>
-        <p>Ein faires Roleplay funktioniert nur gemeinsam.</p>
-    </div>
-
-    <div class="grid">
-
-        <div class="card">
-            <div class="card-icon">🤝</div>
-            <h3>Respekt</h3>
-            <p>
-                Behandle andere Spieler respektvoll und fair.
-            </p>
-        </div>
-
-        <div class="card">
-            <div class="card-icon">🎭</div>
-            <h3>Roleplay</h3>
-            <p>
-                Bleibe im Roleplay und spiele deine Rolle glaubwürdig.
-            </p>
-        </div>
-
-        <div class="card">
-            <div class="card-icon">🚫</div>
-            <h3>Kein Trolling</h3>
-            <p>
-                Absichtliches Stören anderer Spieler ist nicht erlaubt.
-            </p>
-        </div>
-
-    </div>
+<div
+    class="grid"
+    id="publicFactions">
+</div>
 
 </section>
 
+<!-- NEWS -->
+
+<section id="news">
+
+<div class="section-title">
+
+<small>News</small>
+
+<h2>Neuigkeiten</h2>
+
+<p>
+    Aktuelle Informationen aus der NovaRP-Verwaltung.
+</p>
+
+</div>
+
+<div
+    class="news-grid"
+    id="publicNews">
+</div>
+
+</section>
+
+<!-- RULES -->
+
+<section id="rules">
+
+<div class="section-title">
+
+<small>Regeln</small>
+
+<h2>Serverregeln</h2>
+
+<p>
+    Grundregeln für ein faires Roleplay.
+</p>
+
+</div>
+
+<div class="rules">
+
+<div class="rule">
+<div class="rule-number">1</div>
+<div>
+<strong>Respekt</strong>
+<p style="color:var(--muted);margin-top:5px">
+Behandle andere Spieler respektvoll.
+</p>
+</div>
+</div>
+
+<div class="rule">
+<div class="rule-number">2</div>
+<div>
+<strong>Roleplay</strong>
+<p style="color:var(--muted);margin-top:5px">
+Bleibe im Roleplay und vermeide unnötiges Trolling.
+</p>
+</div>
+</div>
+
+<div class="rule">
+<div class="rule-number">3</div>
+<div>
+<strong>Keine Cheats</strong>
+<p style="color:var(--muted);margin-top:5px">
+Cheats, Exploits und unerlaubte Vorteile sind verboten.
+</p>
+</div>
+</div>
+
+<div class="rule">
+<div class="rule-number">4</div>
+<div>
+<strong>Teamentscheidungen</strong>
+<p style="color:var(--muted);margin-top:5px">
+Entscheidungen des Serverteams sind zu respektieren.
+</p>
+</div>
+</div>
+
+</div>
+
+</section>
+
+</main>
 
 <footer>
 
-    <div>
-        © <span id="footerYear"></span> NovaRP
-    </div>
+<div class="footer-inner">
 
-    <div>
-        <span id="footerCity">Nova City</span>
-    </div>
+<div>
+<strong>NovaRP</strong>
+<p style="margin-top:7px">
+Roleplay • Community • Deine Stadt
+</p>
+</div>
+
+<div>
+Version <span id="footerVersion">1.0.0</span>
+</div>
+
+</div>
 
 </footer>
 
@@ -1024,59 +1292,79 @@ td{
 
 <div class="modal" id="loginModal">
 
-    <div class="modal-box">
+<div class="modal-box">
 
-        <div class="modal-header">
-            <h2>NovaRP Login</h2>
-            <button class="close" onclick="closeModal('loginModal')">×</button>
-        </div>
+<div class="modal-header">
 
-        <form id="loginForm">
+<h2>NovaRP Admin Login</h2>
 
-            <div class="form-group">
-                <label>E-Mail</label>
-                <input
-                    class="input"
-                    type="email"
-                    id="loginEmail"
-                    placeholder="admin@example.com"
-                    required
-                >
-            </div>
+<button
+    class="close"
+    onclick="closeModal('loginModal')">
+    ×
+</button>
 
-            <div class="form-group">
-                <label>Passwort</label>
-                <input
-                    class="input"
-                    type="password"
-                    id="loginPassword"
-                    placeholder="Passwort"
-                    required
-                >
-            </div>
+</div>
 
-            <div class="form-actions">
+<div class="login-info">
+    Nur für Owner und Administratoren.
+    <br>
+    Bei <b>auth/too-many-requests</b> bitte keine
+    weiteren Loginversuche durchführen und warten,
+    bis Firebase die Sperre automatisch aufhebt.
+</div>
 
-                <button
-                    type="button"
-                    class="btn"
-                    onclick="closeModal('loginModal')"
-                >
-                    Abbrechen
-                </button>
+<form id="loginForm">
 
-                <button
-                    type="submit"
-                    class="btn btn-primary"
-                >
-                    Einloggen
-                </button>
+<div class="form-group">
 
-            </div>
+<label>E-Mail</label>
 
-        </form>
+<input
+    class="form-control"
+    id="loginEmail"
+    type="email"
+    autocomplete="username"
+    placeholder="admin@example.com"
+    required>
 
-    </div>
+</div>
+
+<div class="form-group">
+
+<label>Passwort</label>
+
+<input
+    class="form-control"
+    id="loginPassword"
+    type="password"
+    autocomplete="current-password"
+    placeholder="Passwort"
+    required>
+
+</div>
+
+<div class="form-actions">
+
+<button
+    type="button"
+    class="btn btn-secondary"
+    onclick="closeModal('loginModal')">
+    Abbrechen
+</button>
+
+<button
+    type="submit"
+    class="btn btn-primary"
+    id="loginButton">
+    Einloggen
+</button>
+
+</div>
+
+</form>
+
+</div>
 
 </div>
 
@@ -1087,78 +1375,106 @@ td{
 
 <div class="modal" id="whitelistModal">
 
-    <div class="modal-box">
+<div class="modal-box">
 
-        <div class="modal-header">
-            <h2>Whitelist beantragen</h2>
-            <button class="close" onclick="closeModal('whitelistModal')">×</button>
-        </div>
+<div class="modal-header">
 
-        <form id="whitelistForm">
+<h2>Whitelist Bewerbung</h2>
 
-            <div class="form-group">
-                <label>Name</label>
-                <input
-                    class="input"
-                    id="wlName"
-                    required
-                    placeholder="Dein Name"
-                >
-            </div>
+<button
+    class="close"
+    onclick="closeModal('whitelistModal')">
+    ×
+</button>
 
-            <div class="form-group">
-                <label>E-Mail</label>
-                <input
-                    class="input"
-                    id="wlEmail"
-                    type="email"
-                    required
-                    placeholder="deine@email.de"
-                >
-            </div>
+</div>
 
-            <div class="form-group">
-                <label>Alter</label>
-                <input
-                    class="input"
-                    id="wlAge"
-                    type="number"
-                    min="1"
-                    required
-                >
-            </div>
+<form id="whitelistForm">
 
-            <div class="form-group">
-                <label>Warum möchtest du bei NovaRP spielen?</label>
-                <textarea
-                    id="wlReason"
-                    required
-                    placeholder="Erzähle uns etwas über dich..."
-                ></textarea>
-            </div>
+<div class="form-group">
 
-            <div class="form-actions">
+<label>Ingame-Name</label>
 
-                <button
-                    type="button"
-                    class="btn"
-                    onclick="closeModal('whitelistModal')"
-                >
-                    Abbrechen
-                </button>
+<input
+    class="form-control"
+    id="wlName"
+    required
+    placeholder="Max Mustermann">
 
-                <button
-                    type="submit"
-                    class="btn btn-primary"
-                >
-                    Bewerbung senden
-                </button>
+</div>
 
-            </div>
+<div class="form-group">
 
-        </form>
+<label>E-Mail</label>
 
-    </div>
+<input
+    class="form-control"
+    id="wlEmail"
+    type="email"
+    required
+    placeholder="max@example.com">
+
+</div>
+
+<div class="form-group">
+
+<label>Alter</label>
+
+<input
+    class="form-control"
+    id="wlAge"
+    type="number"
+    min="1"
+    max="99"
+    required>
+
+</div>
+
+<div class="form-group">
+
+<label>Warum möchtest du auf NovaRP spielen?</label>
+
+<textarea
+    class="form-control"
+    id="wlReason"
+    required
+    placeholder="Schreibe etwas über dich...">
+</textarea>
+
+</div>
+
+<div class="form-group">
+
+<label>RP-Erfahrung</label>
+
+<textarea
+    class="form-control"
+    id="wlExperience"
+    placeholder="Welche Roleplay-Erfahrung hast du?">
+</textarea>
+
+</div>
+
+<div class="form-actions">
+
+<button
+    type="button"
+    class="btn btn-secondary"
+    onclick="closeModal('whitelistModal')">
+    Abbrechen
+</button>
+
+<button
+    type="submit"
+    class="btn btn-primary">
+    Bewerbung senden
+</button>
+
+</div>
+
+</form>
+
+</div>
 
 </div>
 
@@ -1167,529 +1483,599 @@ td{
      DASHBOARD
 ========================= -->
 
-<div class="dashboard" id="dashboard">
-
-    <div class="dashboard-layout">
-
-        <aside class="sidebar">
-
-            <div class="sidebar-logo">
-                <div class="logo">
-                    <div class="logo-icon">N</div>
-                    Nova<span>RP</span>
-                </div>
-            </div>
-
-            <nav class="sidebar-nav">
-
-                <button
-                    class="active"
-                    data-page="dashboardPage"
-                    onclick="showDashboardPage('dashboardPage',this)"
-                >
-                    📊 Dashboard
-                </button>
-
-                <button
-                    data-page="whitelistPage"
-                    onclick="showDashboardPage('whitelistPage',this)"
-                >
-                    📋 Whitelist
-                </button>
-
-                <button
-                    data-page="playersPage"
-                    onclick="showDashboardPage('playersPage',this)"
-                >
-                    👤 Spieler
-                </button>
-
-                <button
-                    data-page="factionsPage"
-                    onclick="showDashboardPage('factionsPage',this)"
-                >
-                    🚓 Fraktionen
-                </button>
-
-                <button
-                    data-page="newsPage"
-                    onclick="showDashboardPage('newsPage',this)"
-                >
-                    📰 News
-                </button>
-
-                <button
-                    id="adminsNav"
-                    data-page="adminsPage"
-                    onclick="showDashboardPage('adminsPage',this)"
-                >
-                    👑 Admins
-                </button>
-
-                <button
-                    id="serverNav"
-                    data-page="serverPage"
-                    onclick="showDashboardPage('serverPage',this)"
-                >
-                    🖥️ Server
-                </button>
-
-                <button
-                    id="settingsNav"
-                    data-page="settingsPage"
-                    onclick="showDashboardPage('settingsPage',this)"
-                >
-                    ⚙️ Einstellungen
-                </button>
-
-                <button onclick="logout()">
-                    🚪 Logout
-                </button>
-
-            </nav>
-
-        </aside>
-
-
-        <main class="dashboard-main">
-
-            <div class="dashboard-top">
+<div
+    class="dashboard"
+    id="dashboard">
+
+<aside
+    class="sidebar"
+    id="sidebar">
+
+<div class="sidebar-logo">
+    <strong>Nova<span>RP</span></strong>
+</div>
+
+<div class="sidebar-user">
+
+<div
+    class="sidebar-user-name"
+    id="sidebarUserName">
+    Admin
+</div>
+
+<div
+    class="sidebar-user-role"
+    id="sidebarUserRole">
+    ADMIN
+</div>
+
+</div>
 
-                <div>
-                    <h1 id="dashboardTitle">Dashboard</h1>
-                    <p id="dashboardUser" style="color:var(--muted);margin-top:5px;">
-                        -
-                    </p>
-                </div>
-
-                <div>
-                    <span
-                        class="status online"
-                        id="firebaseStatus"
-                    >
-                        <span class="dot"></span>
-                        Firebase verbunden
-                    </span>
-                </div>
+<nav class="side-nav">
+
+<button
+    class="active"
+    data-page="dashboard"
+    onclick="showDashboardPage('dashboard')">
+    📊 Dashboard
+</button>
 
-            </div>
+<button
+    data-page="whitelist"
+    onclick="showDashboardPage('whitelist')">
+    📋 Whitelist
+</button>
+
+<button
+    data-page="players"
+    onclick="showDashboardPage('players')">
+    👥 Spieler
+</button>
+
+<button
+    data-page="factions"
+    onclick="showDashboardPage('factions')">
+    🚓 Fraktionen
+</button>
+
+<button
+    data-page="news"
+    onclick="showDashboardPage('news')">
+    📰 News
+</button>
+
+<button
+    data-page="admins"
+    onclick="showDashboardPage('admins')">
+    🛡️ Admins
+</button>
+
+<button
+    data-page="server"
+    onclick="showDashboardPage('server')">
+    🌐 Server
+</button>
+
+<button
+    data-page="settings"
+    onclick="showDashboardPage('settings')">
+    ⚙️ Einstellungen
+</button>
+
+</nav>
+
+<div style="margin-top:25px">
+
+<button
+    class="btn btn-danger"
+    style="width:100%"
+    onclick="logout()">
+    Abmelden
+</button>
+
+</div>
+
+</aside>
+
+
+<main class="dashboard-main">
+
+<div class="dashboard-top">
+
+<button
+    class="mobile-menu"
+    onclick="toggleSidebar()">
+    ☰
+</button>
 
+<div>
+    <strong id="dashboardTitle">
+        Dashboard
+    </strong>
+</div>
 
-            <!-- DASHBOARD PAGE -->
+<div>
+    <button
+        class="btn btn-secondary"
+        onclick="refreshData()">
+        ↻ Aktualisieren
+    </button>
+</div>
 
-            <section
-                class="dashboard-content active"
-                id="dashboardPage"
-            >
+</div>
 
-                <div class="stats-grid">
 
-                    <div class="stat-card">
-                        <small>Spieler</small>
-                        <strong id="statPlayers">0</strong>
-                    </div>
+<div class="dashboard-content">
 
-                    <div class="stat-card">
-                        <small>Whitelist</small>
-                        <strong id="statWhitelist">0</strong>
-                    </div>
 
-                    <div class="stat-card">
-                        <small>Fraktionen</small>
-                        <strong id="statFactions">0</strong>
-                    </div>
+<!-- DASHBOARD PAGE -->
 
-                    <div class="stat-card">
-                        <small>News</small>
-                        <strong id="statNews">0</strong>
-                    </div>
+<div
+    class="dashboard-page active"
+    id="page-dashboard">
 
-                </div>
+<h1 class="page-title">
+    Dashboard
+</h1>
 
+<div class="stats">
 
-                <div class="panel">
+<div class="stat-card">
+<div class="stat-label">Whitelist</div>
+<div
+    class="stat-value"
+    id="statWhitelist">
+    0
+</div>
+</div>
 
-                    <div class="panel-header">
-                        <h3>Server</h3>
-                    </div>
+<div class="stat-card">
+<div class="stat-label">Spieler</div>
+<div
+    class="stat-value"
+    id="statPlayers">
+    0
+</div>
+</div>
 
-                    <div class="server-card">
+<div class="stat-card">
+<div class="stat-label">Fraktionen</div>
+<div
+    class="stat-value"
+    id="statFactions">
+    0
+</div>
+</div>
 
-                        <div class="server-main">
-                            <h3 id="dashServerName">NovaRP</h3>
-                            <div class="server-ip" id="dashServerIP">
-                                145.224.72.197:30120
-                            </div>
-                        </div>
+<div class="stat-card">
+<div class="stat-label">Admins</div>
+<div
+    class="stat-value"
+    id="statAdmins">
+    0
+</div>
+</div>
 
-                        <div class="server-stat">
-                            <strong id="dashServerPlayers">0</strong>
-                            <span>Spieler</span>
-                        </div>
+</div>
 
-                        <div class="server-stat">
-                            <strong id="dashServerMax">128</strong>
-                            <span>Slots</span>
-                        </div>
+<div class="card">
 
-                    </div>
+<h3>Serverübersicht</h3>
 
-                </div>
+<div style="margin-top:20px">
 
-            </section>
+<p style="color:var(--muted)">
+Server:
+</p>
 
+<strong id="dashServerName">
+NovaRP
+</strong>
 
-            <!-- WHITELIST -->
+<p
+    style="color:var(--muted);margin-top:15px">
+IP:
+</p>
 
-            <section
-                class="dashboard-content"
-                id="whitelistPage"
-            >
+<strong id="dashServerIP">
+145.224.72.197:30120
+</strong>
 
-                <div class="panel">
+</div>
 
-                    <div class="panel-header">
-                        <h3>Whitelist Bewerbungen</h3>
-                    </div>
+</div>
 
-                    <div class="table-wrap">
+</div>
 
-                        <table>
 
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>E-Mail</th>
-                                    <th>Alter</th>
-                                    <th>Status</th>
-                                    <th>Datum</th>
-                                    <th>Aktionen</th>
-                                </tr>
-                            </thead>
+<!-- WHITELIST PAGE -->
 
-                            <tbody id="whitelistTable"></tbody>
+<div
+    class="dashboard-page"
+    id="page-whitelist">
 
-                        </table>
+<h1 class="page-title">
+    Whitelist
+</h1>
 
-                    </div>
+<div class="table-wrap">
 
-                </div>
+<table>
 
-            </section>
+<thead>
 
+<tr>
+<th>Name</th>
+<th>E-Mail</th>
+<th>Alter</th>
+<th>Status</th>
+<th>Datum</th>
+<th>Aktionen</th>
+</tr>
 
-            <!-- PLAYERS -->
+</thead>
 
-            <section
-                class="dashboard-content"
-                id="playersPage"
-            >
+<tbody id="whitelistTable"></tbody>
 
-                <div class="panel">
+</table>
 
-                    <div class="panel-header">
-                        <h3>Spieler</h3>
+</div>
 
-                        <button
-                            class="btn btn-primary"
-                            onclick="openPlayerModal()"
-                        >
-                            + Spieler
-                        </button>
-                    </div>
+</div>
 
-                    <div class="table-wrap">
 
-                        <table>
+<!-- PLAYERS PAGE -->
 
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>ID</th>
-                                    <th>Fraktion</th>
-                                    <th>Status</th>
-                                    <th>Aktionen</th>
-                                </tr>
-                            </thead>
+<div
+    class="dashboard-page"
+    id="page-players">
 
-                            <tbody id="playersTable"></tbody>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;gap:15px">
 
-                        </table>
+<h1 class="page-title" style="margin:0">
+Spieler
+</h1>
 
-                    </div>
+<button
+    class="btn btn-primary"
+    onclick="openModal('playerModal')">
+    + Spieler
+</button>
 
-                </div>
+</div>
 
-            </section>
+<div class="table-wrap">
 
+<table>
 
-            <!-- FACTIONS -->
+<thead>
 
-            <section
-                class="dashboard-content"
-                id="factionsPage"
-            >
+<tr>
+<th>Name</th>
+<th>ID</th>
+<th>Fraktion</th>
+<th>Status</th>
+<th>Aktionen</th>
+</tr>
 
-                <div class="panel">
+</thead>
 
-                    <div class="panel-header">
+<tbody id="playersTable"></tbody>
 
-                        <h3>Fraktionen</h3>
+</table>
 
-                        <button
-                            class="btn btn-primary"
-                            onclick="openFactionModal()"
-                        >
-                            + Fraktion
-                        </button>
+</div>
 
-                    </div>
+</div>
 
-                    <div
-                        class="grid"
-                        id="adminFactions"
-                    ></div>
 
-                </div>
+<!-- FACTIONS PAGE -->
 
-            </section>
+<div
+    class="dashboard-page"
+    id="page-factions">
 
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;gap:15px">
 
-            <!-- NEWS -->
+<h1 class="page-title" style="margin:0">
+Fraktionen
+</h1>
 
-            <section
-                class="dashboard-content"
-                id="newsPage"
-            >
+<button
+    class="btn btn-primary"
+    onclick="openModal('factionModal')">
+    + Fraktion
+</button>
 
-                <div class="panel">
+</div>
 
-                    <div class="panel-header">
+<div class="table-wrap">
 
-                        <h3>News</h3>
+<table>
 
-                        <button
-                            class="btn btn-primary"
-                            onclick="openNewsModal()"
-                        >
-                            + News
-                        </button>
+<thead>
 
-                    </div>
+<tr>
+<th>Name</th>
+<th>Icon</th>
+<th>Beschreibung</th>
+<th>Aktionen</th>
+</tr>
 
-                    <div
-                        class="grid"
-                        id="adminNews"
-                    ></div>
+</thead>
 
-                </div>
+<tbody id="factionsTable"></tbody>
 
-            </section>
+</table>
 
+</div>
 
-            <!-- ADMINS -->
+</div>
 
-            <section
-                class="dashboard-content"
-                id="adminsPage"
-            >
 
-                <div class="panel">
+<!-- NEWS PAGE -->
 
-                    <div class="panel-header">
+<div
+    class="dashboard-page"
+    id="page-news">
 
-                        <h3>Administratoren</h3>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;gap:15px">
 
-                        <button
-                            class="btn btn-primary"
-                            onclick="openAdminModal()"
-                        >
-                            + Admin
-                        </button>
+<h1 class="page-title" style="margin:0">
+News
+</h1>
 
-                    </div>
+<button
+    class="btn btn-primary"
+    onclick="openModal('newsModal')">
+    + News
+</button>
 
-                    <div class="table-wrap">
+</div>
 
-                        <table>
+<div class="table-wrap">
 
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>E-Mail</th>
-                                    <th>Rolle</th>
-                                    <th>Aktionen</th>
-                                </tr>
-                            </thead>
+<table>
 
-                            <tbody id="adminsTable"></tbody>
+<thead>
 
-                        </table>
+<tr>
+<th>Titel</th>
+<th>Text</th>
+<th>Datum</th>
+<th>Aktionen</th>
+</tr>
 
-                    </div>
+</thead>
 
-                </div>
+<tbody id="newsTable"></tbody>
 
-            </section>
+</table>
 
+</div>
 
-            <!-- SERVER -->
+</div>
 
-            <section
-                class="dashboard-content"
-                id="serverPage"
-            >
 
-                <div class="panel">
+<!-- ADMINS PAGE -->
 
-                    <div class="panel-header">
-                        <h3>Serververwaltung</h3>
-                    </div>
+<div
+    class="dashboard-page"
+    id="page-admins">
 
-                    <form id="serverForm">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;gap:15px">
 
-                        <div class="form-group">
-                            <label>Servername</label>
-                            <input
-                                class="input"
-                                id="serverNameInput"
-                                required
-                            >
-                        </div>
+<h1 class="page-title" style="margin:0">
+Admins
+</h1>
 
-                        <div class="form-group">
-                            <label>Server-IP</label>
-                            <input
-                                class="input"
-                                id="serverIPInput"
-                                required
-                            >
-                        </div>
+<button
+    class="btn btn-primary"
+    id="createAdminButton"
+    onclick="openModal('adminModal')">
+    + Admin
+</button>
 
-                        <div class="form-group">
-                            <label>Maximale Spieler</label>
-                            <input
-                                class="input"
-                                type="number"
-                                id="serverMaxInput"
-                                min="1"
-                                required
-                            >
-                        </div>
+</div>
 
-                        <div class="form-group">
-                            <label>Aktuelle Spieler</label>
-                            <input
-                                class="input"
-                                type="number"
-                                id="serverPlayersInput"
-                                min="0"
-                                required
-                            >
-                        </div>
+<div class="card"
+     style="margin-bottom:20px">
 
-                        <div class="form-group">
-                            <label>Status</label>
+<p style="color:var(--muted);line-height:1.6">
 
-                            <select
-                                class="input"
-                                id="serverStatusInput"
-                            >
-                                <option value="online">Online</option>
-                                <option value="offline">Offline</option>
-                                <option value="maintenance">Wartung</option>
-                            </select>
+<strong style="color:#fff">
+Wichtig:
+</strong>
 
-                        </div>
+Neue Firebase-Benutzer sollten nicht direkt mit
+<code>createUserWithEmailAndPassword()</code>
+aus dem Owner-Dashboard angelegt werden, weil Firebase
+dabei den aktuell angemeldeten Benutzer wechseln kann.
 
-                        <div class="form-group">
-                            <label>Version</label>
-                            <input
-                                class="input"
-                                id="serverVersionInput"
-                                required
-                            >
-                        </div>
+Erstelle neue Admin-Accounts sicher über
+Firebase Authentication oder einen sicheren
+Server/Cloud-Function-Workflow.
 
-                        <button
-                            class="btn btn-primary"
-                            type="submit"
-                        >
-                            Serverdaten speichern
-                        </button>
+</p>
 
-                    </form>
+</div>
 
-                </div>
+<div class="table-wrap">
 
-            </section>
+<table>
 
+<thead>
 
-            <!-- SETTINGS -->
+<tr>
+<th>Name</th>
+<th>E-Mail</th>
+<th>Rolle</th>
+<th>Aktionen</th>
+</tr>
 
-            <section
-                class="dashboard-content"
-                id="settingsPage"
-            >
+</thead>
 
-                <div class="panel">
+<tbody id="adminsTable"></tbody>
 
-                    <div class="panel-header">
-                        <h3>Allgemeine Einstellungen</h3>
-                    </div>
+</table>
 
-                    <form id="settingsForm">
+</div>
 
-                        <div class="form-group">
-                            <label>Discord</label>
+</div>
 
-                            <input
-                                class="input"
-                                id="settingsDiscord"
-                                placeholder="https://discord.gg/..."
-                            >
-                        </div>
 
-                        <div class="form-group">
-                            <label>Stadtname</label>
+<!-- SERVER PAGE -->
 
-                            <input
-                                class="input"
-                                id="settingsCity"
-                            >
-                        </div>
+<div
+    class="dashboard-page"
+    id="page-server">
 
-                        <button
-                            class="btn btn-primary"
-                            type="submit"
-                        >
-                            Einstellungen speichern
-                        </button>
+<h1 class="page-title">
+    Server
+</h1>
 
-                    </form>
+<div class="card">
 
-                </div>
+<form id="serverForm">
 
+<div class="form-group">
 
-                <div class="panel">
+<label>Servername</label>
 
-                    <div class="panel-header">
-                        <h3>Firebase / Datenbank</h3>
-                    </div>
+<input
+    class="form-control"
+    id="serverNameInput"
+    required>
 
-                    <p style="color:var(--muted);line-height:1.7;">
-                        NovaRP verwendet Firebase Authentication und
-                        Cloud Firestore zur Speicherung der Daten.
-                        Die Webseite verwendet keine FiveM-API.
-                    </p>
+</div>
 
-                </div>
+<div class="form-group">
 
-            </section>
+<label>Server-IP</label>
 
-        </main>
+<input
+    class="form-control"
+    id="serverIPInput"
+    required>
 
-    </div>
+</div>
+
+<div class="form-group">
+
+<label>Maximale Spieler</label>
+
+<input
+    class="form-control"
+    id="serverMaxPlayersInput"
+    type="number"
+    min="1"
+    required>
+
+</div>
+
+<div class="form-group">
+
+<label>Aktuelle Spieler</label>
+
+<input
+    class="form-control"
+    id="serverPlayersInput"
+    type="number"
+    min="0"
+    required>
+
+</div>
+
+<div class="form-group">
+
+<label>Status</label>
+
+<select
+    class="form-control"
+    id="serverStatusInput">
+
+<option value="online">Online</option>
+<option value="offline">Offline</option>
+<option value="maintenance">Wartung</option>
+
+</select>
+
+</div>
+
+<div class="form-actions">
+
+<button
+    type="submit"
+    class="btn btn-primary">
+    Speichern
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+
+<!-- SETTINGS PAGE -->
+
+<div
+    class="dashboard-page"
+    id="page-settings">
+
+<h1 class="page-title">
+    Einstellungen
+</h1>
+
+<div class="card">
+
+<form id="settingsForm">
+
+<div class="form-group">
+
+<label>Discord-Link</label>
+
+<input
+    class="form-control"
+    id="settingsDiscord"
+    placeholder="https://discord.gg/...">
+
+</div>
+
+<div class="form-group">
+
+<label>Stadtname</label>
+
+<input
+    class="form-control"
+    id="settingsCity">
+
+</div>
+
+<div class="form-actions">
+
+<button
+    type="submit"
+    class="btn btn-primary">
+    Einstellungen speichern
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+
+</div>
+
+</main>
+
+</div>
 
 </div>
 
@@ -1700,78 +2086,89 @@ td{
 
 <div class="modal" id="playerModal">
 
-    <div class="modal-box">
+<div class="modal-box">
 
-        <div class="modal-header">
-            <h2>Spieler hinzufügen</h2>
-            <button class="close" onclick="closeModal('playerModal')">×</button>
-        </div>
+<div class="modal-header">
 
-        <form id="playerForm">
+<h2>Spieler erstellen</h2>
 
-            <div class="form-group">
-                <label>Name</label>
-                <input
-                    class="input"
-                    id="playerName"
-                    required
-                >
-            </div>
+<button
+    class="close"
+    onclick="closeModal('playerModal')">
+    ×
+</button>
 
-            <div class="form-group">
-                <label>Spieler-ID</label>
-                <input
-                    class="input"
-                    id="playerId"
-                    required
-                >
-            </div>
+</div>
 
-            <div class="form-group">
-                <label>Fraktion</label>
+<form id="playerForm">
 
-                <select
-                    class="input"
-                    id="playerFaction"
-                ></select>
+<div class="form-group">
 
-            </div>
+<label>Name</label>
 
-            <div class="form-group">
-                <label>Status</label>
+<input
+    class="form-control"
+    id="playerName"
+    required>
 
-                <select
-                    class="input"
-                    id="playerStatus"
-                >
-                    <option value="online">Online</option>
-                    <option value="offline">Offline</option>
-                </select>
+</div>
 
-            </div>
+<div class="form-group">
 
-            <div class="form-actions">
+<label>Spieler-ID</label>
 
-                <button
-                    type="button"
-                    class="btn"
-                    onclick="closeModal('playerModal')"
-                >
-                    Abbrechen
-                </button>
+<input
+    class="form-control"
+    id="playerId"
+    required>
 
-                <button
-                    type="submit"
-                    class="btn btn-primary"
-                >
-                    Speichern
-                </button>
+</div>
 
-            </div>
+<div class="form-group">
 
-        </form>
+<label>Fraktion</label>
 
-    </div>
+<select
+    class="form-control"
+    id="playerFaction">
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Status</label>
+
+<select
+    class="form-control"
+    id="playerStatus">
+
+<option value="online">Online</option>
+<option value="offline">Offline</option>
+</select>
+
+</div>
+
+<div class="form-actions">
+
+<button
+    type="button"
+    class="btn btn-secondary"
+    onclick="closeModal('playerModal')">
+    Abbrechen
+</button>
+
+<button
+    type="submit"
+    class="btn btn-primary">
+    Erstellen
+</button>
+
+</div>
+
+</form>
+
+</div>
 
 </div>
 
@@ -1782,77 +2179,76 @@ td{
 
 <div class="modal" id="factionModal">
 
-    <div class="modal-box">
+<div class="modal-box">
 
-        <div class="modal-header">
-            <h2>Fraktion erstellen</h2>
-            <button class="close" onclick="closeModal('factionModal')">×</button>
-        </div>
+<div class="modal-header">
 
-        <form id="factionForm">
+<h2>Fraktion erstellen</h2>
 
-            <div class="form-group">
-                <label>Name</label>
-                <input
-                    class="input"
-                    id="factionName"
-                    required
-                >
-            </div>
+<button
+    class="close"
+    onclick="closeModal('factionModal')">
+    ×
+</button>
 
-            <div class="form-group">
-                <label>Icon</label>
-                <input
-                    class="input"
-                    id="factionIcon"
-                    placeholder="🚓"
-                    required
-                >
-            </div>
+</div>
 
-            <div class="form-group">
-                <label>Beschreibung</label>
+<form id="factionForm">
 
-                <textarea
-                    id="factionDescription"
-                    required
-                ></textarea>
+<div class="form-group">
 
-            </div>
+<label>Name</label>
 
-            <div class="form-group">
-                <label>Discord</label>
+<input
+    class="form-control"
+    id="factionName"
+    required>
 
-                <input
-                    class="input"
-                    id="factionDiscord"
-                    placeholder="https://discord.gg/..."
-                >
+</div>
 
-            </div>
+<div class="form-group">
 
-            <div class="form-actions">
+<label>Icon / Emoji</label>
 
-                <button
-                    type="button"
-                    class="btn"
-                    onclick="closeModal('factionModal')"
-                >
-                    Abbrechen
-                </button>
+<input
+    class="form-control"
+    id="factionIcon"
+    placeholder="🚓"
+    required>
 
-                <button
-                    type="submit"
-                    class="btn btn-primary"
-                >
-                    Speichern
-                </button>
+</div>
 
-            </div>
+<div class="form-group">
 
-        </form>
+<label>Beschreibung</label>
 
-    </div>
+<textarea
+    class="form-control"
+    id="factionDescription">
+</textarea>
+
+</div>
+
+<div class="form-actions">
+
+<button
+    type="button"
+    class="btn btn-secondary"
+    onclick="closeModal('factionModal')">
+    Abbrechen
+</button>
+
+<button
+    type="submit"
+    class="btn btn-primary">
+    Erstellen
+</button>
+
+</div>
+
+</form>
+
+</div>
 
 </div>
 
@@ -1863,158 +2259,198 @@ td{
 
 <div class="modal" id="newsModal">
 
-    <div class="modal-box">
+<div class="modal-box">
 
-        <div class="modal-header">
-            <h2>News erstellen</h2>
-            <button class="close" onclick="closeModal('newsModal')">×</button>
-        </div>
+<div class="modal-header">
 
-        <form id="newsForm">
+<h2>News erstellen</h2>
 
-            <div class="form-group">
-                <label>Titel</label>
+<button
+    class="close"
+    onclick="closeModal('newsModal')">
+    ×
+</button>
 
-                <input
-                    class="input"
-                    id="newsTitle"
-                    required
-                >
+</div>
 
-            </div>
+<form id="newsForm">
 
-            <div class="form-group">
-                <label>Text</label>
+<div class="form-group">
 
-                <textarea
-                    id="newsText"
-                    required
-                ></textarea>
+<label>Titel</label>
 
-            </div>
+<input
+    class="form-control"
+    id="newsTitle"
+    required>
 
-            <div class="form-actions">
+</div>
 
-                <button
-                    type="button"
-                    class="btn"
-                    onclick="closeModal('newsModal')"
-                >
-                    Abbrechen
-                </button>
+<div class="form-group">
 
-                <button
-                    type="submit"
-                    class="btn btn-primary"
-                >
-                    Veröffentlichen
-                </button>
+<label>Text</label>
 
-            </div>
+<textarea
+    class="form-control"
+    id="newsText"
+    required>
+</textarea>
 
-        </form>
+</div>
 
-    </div>
+<div class="form-actions">
+
+<button
+    type="button"
+    class="btn btn-secondary"
+    onclick="closeModal('newsModal')">
+    Abbrechen
+</button>
+
+<button
+    type="submit"
+    class="btn btn-primary">
+    Veröffentlichen
+</button>
+
+</div>
+
+</form>
+
+</div>
 
 </div>
 
 
 <!-- =========================
-     ADMIN MODAL
+     ADMIN INFO MODAL
 ========================= -->
 
 <div class="modal" id="adminModal">
 
-    <div class="modal-box">
+<div class="modal-box">
 
-        <div class="modal-header">
-            <h2>Admin erstellen</h2>
-            <button class="close" onclick="closeModal('adminModal')">×</button>
-        </div>
+<div class="modal-header">
 
-        <form id="adminForm">
+<h2>Admin hinzufügen</h2>
 
-            <div class="form-group">
-                <label>Name</label>
+<button
+    class="close"
+    onclick="closeModal('adminModal')">
+    ×
+</button>
 
-                <input
-                    class="input"
-                    id="adminName"
-                    required
-                >
+</div>
 
-            </div>
+<div class="login-info">
 
-            <div class="form-group">
-                <label>E-Mail</label>
+Aus Sicherheitsgründen wird hier kein neuer
+Firebase-Authentication-Account direkt aus dem
+Browser erstellt.
 
-                <input
-                    class="input"
-                    type="email"
-                    id="adminEmail"
-                    required
-                >
+Erstelle den Benutzer zuerst unter:
 
-            </div>
+<b>Firebase Console → Authentication → Users</b>
 
-            <div class="form-group">
-                <label>Passwort</label>
+und lege anschließend sein Profil unter
+<b>Firestore → users → UID</b> an.
 
-                <input
-                    class="input"
-                    type="password"
-                    id="adminPassword"
-                    required
-                    minlength="6"
-                >
+</div>
 
-            </div>
+<form id="adminForm">
 
-            <div class="form-group">
-                <label>Rolle</label>
+<div class="form-group">
 
-                <select
-                    class="input"
-                    id="adminRole"
-                >
-                    <option value="admin">Admin</option>
-                    <option value="owner">Owner</option>
-                </select>
+<label>Name</label>
 
-            </div>
+<input
+    class="form-control"
+    id="adminName"
+    required>
 
-            <div class="form-actions">
+</div>
 
-                <button
-                    type="button"
-                    class="btn"
-                    onclick="closeModal('adminModal')"
-                >
-                    Abbrechen
-                </button>
+<div class="form-group">
 
-                <button
-                    type="submit"
-                    class="btn btn-primary"
-                >
-                    Admin erstellen
-                </button>
+<label>Firebase UID</label>
 
-            </div>
+<input
+    class="form-control"
+    id="adminUid"
+    required
+    placeholder="Firebase User UID">
 
-        </form>
+</div>
 
-    </div>
+<div class="form-group">
+
+<label>E-Mail</label>
+
+<input
+    class="form-control"
+    id="adminEmail"
+    type="email"
+    required>
+
+</div>
+
+<div class="form-group">
+
+<label>Rolle</label>
+
+<select
+    class="form-control"
+    id="adminRole">
+
+<option value="admin">
+    Admin
+</option>
+
+<option value="owner">
+    Owner
+</option>
+
+</select>
+
+</div>
+
+<div class="form-actions">
+
+<button
+    type="button"
+    class="btn btn-secondary"
+    onclick="closeModal('adminModal')">
+    Abbrechen
+</button>
+
+<button
+    type="submit"
+    class="btn btn-primary">
+    Profil speichern
+</button>
+
+</div>
+
+</form>
+
+</div>
 
 </div>
 
 
-<div id="toastContainer"></div>
+<!-- =========================
+     TOAST
+========================= -->
+
+<div
+    class="toast-container"
+    id="toastContainer">
+</div>
 
 
-<!-- =========================================================
+<!-- =========================
      FIREBASE
-========================================================= -->
+========================= -->
 
 <script type="module">
 
@@ -2024,7 +2460,6 @@ import {
 
 import {
     getAuth,
-    createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
     onAuthStateChanged
@@ -2034,94 +2469,120 @@ import {
     getFirestore,
     collection,
     doc,
-    addDoc,
-    setDoc,
     getDoc,
     getDocs,
+    setDoc,
+    addDoc,
     deleteDoc,
     updateDoc,
-    onSnapshot,
-    query,
-    orderBy,
-    serverTimestamp
+    onSnapshot
 } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
 
 
-/* =========================================================
+/* =====================================
    FIREBASE CONFIG
-========================================================= */
+===================================== */
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDbmd7d0eMFMFZPn64RH66zY8Yumh5PSeA",
-    authDomain: "novarp-website.firebaseapp.com",
-    projectId: "novarp-website",
-    storageBucket: "novarp-website.firebasestorage.app",
-    messagingSenderId: "577457308310",
-    appId: "1:577457308310:web:833064b12b6e7aa2b338b7",
-    measurementId: "G-RSSY8LGGY2"
+
+    apiKey:
+        "AIzaSyDbmd7d0eMFMFZPn64RH66zY8Yumh5PSeA",
+
+    authDomain:
+        "novarp-website.firebaseapp.com",
+
+    projectId:
+        "novarp-website",
+
+    storageBucket:
+        "novarp-website.firebasestorage.app",
+
+    messagingSenderId:
+        "577457308310",
+
+    appId:
+        "1:577457308310:web:833064b12b6e7aa2b338b7",
+
+    measurementId:
+        "G-RSSY8LGGY2"
+
 };
 
 
-/* =========================================================
+/* =====================================
    FIREBASE INITIALISIEREN
-========================================================= */
+===================================== */
 
-const app = initializeApp(firebaseConfig);
+const app =
+    initializeApp(firebaseConfig);
 
-const auth = getAuth(app);
+const auth =
+    getAuth(app);
 
-const db = getFirestore(app);
+const db =
+    getFirestore(app);
 
 
-/* =========================================================
-   NOVARP CONFIG
-========================================================= */
+/* =====================================
+   CONFIG
+===================================== */
 
 const CONFIG = {
 
-    siteName: "NovaRP",
+    siteName:
+        "NovaRP",
 
-    serverName: "NovaRP",
+    serverName:
+        "NovaRP",
 
-    serverIP: "145.224.72.197:30120",
+    serverIP:
+        "145.224.72.197:30120",
 
-    maxPlayers: 128,
+    maxPlayers:
+        128,
 
-    version: "1.0.0",
+    version:
+        "1.0.0",
 
-    cityName: "Nova City",
+    cityName:
+        "Nova City",
 
-    discord: "https://discord.gg/DEIN-COMMUNITY-CODE"
+    discord:
+        "https://discord.gg/DEIN-COMMUNITY-CODE"
 
 };
 
 
-/* =========================================================
-   DEFAULT DATA
-========================================================= */
-
 const DEFAULT_SERVER = {
 
-    name: CONFIG.serverName,
+    name:
+        CONFIG.serverName,
 
-    ip: CONFIG.serverIP,
+    ip:
+        CONFIG.serverIP,
 
-    maxPlayers: CONFIG.maxPlayers,
+    maxPlayers:
+        CONFIG.maxPlayers,
 
-    players: 0,
+    players:
+        0,
 
-    status: "online",
+    status:
+        "online",
 
-    version: CONFIG.version
+    version:
+        CONFIG.version
 
 };
 
 
 const DEFAULT_SETTINGS = {
 
-    discord: CONFIG.discord,
+    discord:
+        CONFIG.discord,
 
-    cityName: CONFIG.cityName
+    cityName:
+        CONFIG.cityName
 
 };
 
@@ -2129,139 +2590,183 @@ const DEFAULT_SETTINGS = {
 const DEFAULT_FACTIONS = [
 
     {
-        id: "polizei",
-        name: "Polizei",
-        icon: "🚓",
-        description: "Sorge für Sicherheit und Ordnung.",
-        discord: ""
+        name:"Polizei",
+        icon:"🚓",
+        description:"Polizeiliche Aufgaben und öffentliche Sicherheit."
     },
 
     {
-        id: "feuerwehr",
-        name: "Feuerwehr",
-        icon: "🚒",
-        description: "Retten, löschen, bergen und schützen.",
-        discord: ""
+        name:"Feuerwehr",
+        icon:"🚒",
+        description:"Brandbekämpfung, technische Hilfeleistung und Rettung."
     },
 
     {
-        id: "rettungsdienst",
-        name: "Rettungsdienst",
-        icon: "🚑",
-        description: "Versorge verletzte Personen.",
-        discord: ""
+        name:"Rettungsdienst",
+        icon:"🚑",
+        description:"Medizinische Versorgung und Notfallrettung."
     },
 
     {
-        id: "mechaniker",
-        name: "Mechaniker",
-        icon: "🔧",
-        description: "Repariere Fahrzeuge und betreibe deine Werkstatt.",
-        discord: ""
+        name:"Mechaniker",
+        icon:"🔧",
+        description:"Fahrzeugreparaturen und Abschleppdienst."
     },
 
     {
-        id: "taxi",
-        name: "Taxi",
-        icon: "🚕",
-        description: "Bringe Bürger sicher ans Ziel.",
-        discord: ""
+        name:"Taxi",
+        icon:"🚕",
+        description:"Personenbeförderung innerhalb der Stadt."
     },
 
     {
-        id: "unternehmen",
-        name: "Unternehmen",
-        icon: "🏢",
-        description: "Baue dein eigenes Unternehmen auf.",
-        discord: ""
+        name:"Unternehmen",
+        icon:"🏢",
+        description:"Unternehmen und wirtschaftliche Aktivitäten."
     }
 
 ];
 
 
-/* =========================================================
-   LOCAL STATE
-========================================================= */
+/* =====================================
+   STATE
+===================================== */
 
-let currentUser = null;
+let currentUser =
+    null;
 
-let currentUserData = null;
+let currentUserData =
+    null;
 
-let admins = [];
+let admins =
+    [];
 
-let whitelist = [];
+let whitelist =
+    [];
 
-let players = [];
+let players =
+    [];
 
-let factions = [];
+let factions =
+    [];
 
-let news = [];
+let news =
+    [];
 
-let serverData = DEFAULT_SERVER;
+let serverData =
+    {
+        ...DEFAULT_SERVER
+    };
 
-let settings = DEFAULT_SETTINGS;
+let settings =
+    {
+        ...DEFAULT_SETTINGS
+    };
 
 
-/* =========================================================
-   HILFSFUNKTIONEN
-========================================================= */
+/* =====================================
+   HELPERS
+===================================== */
 
-function escapeHTML(value){
+window.escapeHTML =
+function(value){
 
-    return String(value ?? "")
+    if(value === null ||
+       value === undefined){
+
+        return "";
+
+    }
+
+    return String(value)
         .replaceAll("&","&amp;")
         .replaceAll("<","&lt;")
         .replaceAll(">","&gt;")
         .replaceAll('"',"&quot;")
         .replaceAll("'","&#039;");
 
-}
+};
 
 
-function showToast(message,type="success"){
+window.showToast =
+function(
+    message,
+    type="success"
+){
 
     const container =
-        document.getElementById("toastContainer");
+        document.getElementById(
+            "toastContainer"
+        );
 
     const toast =
         document.createElement("div");
 
     toast.className =
-        "toast " + type;
+        "toast " +
+        (
+            type === "error"
+                ? "error"
+                : type === "warning"
+                    ? "warning"
+                    : ""
+        );
 
     toast.textContent =
         message;
 
-    container.appendChild(toast);
+    container.appendChild(
+        toast
+    );
 
-    setTimeout(() => {
+    setTimeout(
+        () => {
 
-        toast.remove();
+            toast.remove();
 
-    },4000);
+        },
+        5000
+    );
 
-}
-
-
-function openModal(id){
-
-    document
-        .getElementById(id)
-        .classList.add("show");
-
-}
+};
 
 
-function closeModal(id){
+window.openModal =
+function(id){
 
-    document
-        .getElementById(id)
-        .classList.remove("show");
+    const modal =
+        document.getElementById(id);
 
-}
+    if(modal){
+
+        modal.classList.add(
+            "active"
+        );
+
+    }
+
+};
 
 
-function scrollToSection(id){
+window.closeModal =
+function(id){
+
+    const modal =
+        document.getElementById(id);
+
+    if(modal){
+
+        modal.classList.remove(
+            "active"
+        );
+
+    }
+
+};
+
+
+window.scrollToSection =
+function(id){
 
     document
         .getElementById(id)
@@ -2269,25 +2774,13 @@ function scrollToSection(id){
             behavior:"smooth"
         });
 
-}
+};
 
-
-window.openLogin = () => openModal("loginModal");
-
-window.openWhitelist = () => openModal("whitelistModal");
-
-window.closeModal = closeModal;
-
-window.scrollToSection = scrollToSection;
-
-
-/* =========================================================
-   BENUTZERRECHTE
-========================================================= */
 
 function isOwner(){
 
-    return currentUserData?.role === "owner";
+    return currentUserData?.role ===
+        "owner";
 
 }
 
@@ -2307,7 +2800,7 @@ function requireAdmin(){
     if(!isAdmin()){
 
         showToast(
-            "Du hast keine Berechtigung.",
+            "Du hast keine Admin-Berechtigung.",
             "error"
         );
 
@@ -2325,7 +2818,7 @@ function requireOwner(){
     if(!isOwner()){
 
         showToast(
-            "Nur der Owner darf diesen Bereich öffnen.",
+            "Nur der Owner darf diese Funktion verwenden.",
             "error"
         );
 
@@ -2338,991 +2831,123 @@ function requireOwner(){
 }
 
 
-/* =========================================================
-   FIRESTORE HILFSFUNKTIONEN
-========================================================= */
+/* =====================================
+   FIREBASE ERROR
+===================================== */
 
-async function getCollectionData(name){
+function getFirebaseError(error){
 
-    try{
+    const code =
+        error?.code || "";
 
-        const snapshot =
-            await getDocs(collection(db,name));
+    const errors = {
 
-        return snapshot.docs.map(
-            document => ({
-                id:document.id,
-                ...document.data()
-            })
-        );
+        "auth/invalid-credential":
+            "E-Mail oder Passwort ist falsch.",
 
-    }catch(error){
+        "auth/invalid-login-credentials":
+            "E-Mail oder Passwort ist falsch.",
 
-        console.error(error);
+        "auth/user-not-found":
+            "Dieser Firebase-Benutzer existiert nicht.",
 
-        showToast(
-            "Fehler beim Laden von " + name,
-            "error"
-        );
+        "auth/wrong-password":
+            "Das Passwort ist falsch.",
 
-        return [];
+        "auth/email-already-in-use":
+            "Diese E-Mail wird bereits verwendet.",
 
-    }
+        "auth/weak-password":
+            "Das Passwort ist zu schwach.",
 
-}
+        "auth/invalid-email":
+            "Die E-Mail-Adresse ist ungültig.",
 
+        "auth/too-many-requests":
+            "Zu viele Loginversuche. Firebase hat den Login vorübergehend eingeschränkt. Bitte nicht weiter versuchen und etwas warten.",
 
-async function saveDocument(collectionName,id,data){
+        "auth/network-request-failed":
+            "Netzwerkfehler. Überprüfe deine Internetverbindung.",
 
-    await setDoc(
-        doc(db,collectionName,id),
-        data,
-        {merge:true}
+        "auth/user-disabled":
+            "Dieser Firebase-Benutzer wurde deaktiviert.",
+
+        "permission-denied":
+            "Firebase hat den Zugriff verweigert.",
+
+        "permission-denied":
+            "Firebase hat den Zugriff verweigert."
+
+    };
+
+    return (
+        errors[code] ||
+        error?.message ||
+        "Unbekannter Firebase-Fehler."
     );
 
 }
 
 
-async function deleteDocument(collectionName,id){
-
-    await deleteDoc(
-        doc(db,collectionName,id)
-    );
-
-}
-
-
-/* =========================================================
-   SERVER LADEN
-========================================================= */
-
-async function loadServer(){
-
-    try{
-
-        const ref =
-            doc(db,"public","server");
-
-        const snapshot =
-            await getDoc(ref);
-
-        if(snapshot.exists()){
-
-            serverData = {
-                ...DEFAULT_SERVER,
-                ...snapshot.data()
-            };
-
-        }else{
-
-            serverData = DEFAULT_SERVER;
-
-            await setDoc(
-                ref,
-                serverData
-            );
-
-        }
-
-        updatePublicServer();
-
-    }catch(error){
-
-        console.error(error);
-
-        showToast(
-            "Serverdaten konnten nicht geladen werden.",
-            "error"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   SETTINGS LADEN
-========================================================= */
-
-async function loadSettings(){
-
-    try{
-
-        const ref =
-            doc(db,"public","settings");
-
-        const snapshot =
-            await getDoc(ref);
-
-        if(snapshot.exists()){
-
-            settings = {
-                ...DEFAULT_SETTINGS,
-                ...snapshot.data()
-            };
-
-        }else{
-
-            settings = DEFAULT_SETTINGS;
-
-            await setDoc(
-                ref,
-                settings
-            );
-
-        }
-
-        updatePublicSettings();
-
-    }catch(error){
-
-        console.error(error);
-
-    }
-
-}
-
-
-/* =========================================================
-   DEFAULT FRAKTIONEN
-========================================================= */
-
-async function ensureDefaultFactions(){
-
-    const existing =
-        await getCollectionData("factions");
-
-    if(existing.length > 0){
-
-        factions = existing;
-
-        return;
-
-    }
-
-    for(const faction of DEFAULT_FACTIONS){
-
-        await saveDocument(
-            "factions",
-            faction.id,
-            faction
-        );
-
-    }
-
-    factions =
-        await getCollectionData("factions");
-
-}
-
-
-/* =========================================================
-   ALLE DATEN LADEN
-========================================================= */
-
-async function loadAllData(){
-
-    whitelist =
-        await getCollectionData("whitelist");
-
-    players =
-        await getCollectionData("players");
-
-    factions =
-        await getCollectionData("factions");
-
-    news =
-        await getCollectionData("news");
-
-    admins =
-        await getCollectionData("admins");
-
-    await ensureDefaultFactions();
-
-    await loadServer();
-
-    await loadSettings();
-
-    renderEverything();
-
-}
-
-
-/* =========================================================
-   ÖFFENTLICHE SERVERDATEN
-========================================================= */
-
-function updatePublicServer(){
+/* =====================================
+   PUBLIC / DASHBOARD
+===================================== */
+
+function showPublicSite(){
 
     document
-        .getElementById("publicServerName")
-        .textContent =
-            serverData.name;
+        .getElementById("publicSite")
+        .style.display =
+            "block";
 
     document
-        .getElementById("publicServerIP")
-        .textContent =
-            serverData.ip;
-
-    document
-        .getElementById("publicPlayerCount")
-        .textContent =
-            serverData.players;
-
-    document
-        .getElementById("publicMaxPlayers")
-        .textContent =
-            serverData.maxPlayers;
-
-
-    const status =
-        document.getElementById(
-            "publicServerStatus"
+        .getElementById("dashboard")
+        .classList.remove(
+            "active"
         );
 
-
-    if(serverData.status === "online"){
-
-        status.className =
-            "status online";
-
-        status.innerHTML =
-            '<span class="dot"></span> Online';
-
-    }else if(serverData.status === "maintenance"){
-
-        status.className =
-            "status";
-
-        status.style.color =
-            "#fbbf24";
-
-        status.innerHTML =
-            "🛠️ Wartung";
-
-    }else{
-
-        status.className =
-            "status offline";
-
-        status.innerHTML =
-            "● Offline";
-
-    }
-
-
-    document
-        .getElementById("dashServerName")
-        .textContent =
-            serverData.name;
-
-    document
-        .getElementById("dashServerIP")
-        .textContent =
-            serverData.ip;
-
-    document
-        .getElementById("dashServerPlayers")
-        .textContent =
-            serverData.players;
-
-    document
-        .getElementById("dashServerMax")
-        .textContent =
-            serverData.maxPlayers;
-
 }
 
 
-function updatePublicSettings(){
+function showDashboard(){
 
     document
-        .getElementById("footerCity")
-        .textContent =
-            settings.cityName;
+        .getElementById("publicSite")
+        .style.display =
+            "none";
 
-}
-
-
-/* =========================================================
-   RENDER
-========================================================= */
-
-function renderEverything(){
-
-    renderPublicFactions();
-
-    renderPublicNews();
-
-    renderWhitelist();
-
-    renderPlayers();
-
-    renderAdminFactions();
-
-    renderAdminNews();
-
-    renderAdmins();
-
-    updateStats();
-
-    updatePublicServer();
-
-    updatePublicSettings();
-
-}
-
-
-/* =========================================================
-   PUBLIC FRACTIONS
-========================================================= */
-
-function renderPublicFactions(){
-
-    const container =
-        document.getElementById(
-            "publicFactions"
+    document
+        .getElementById("dashboard")
+        .classList.add(
+            "active"
         );
 
-    if(!factions.length){
-
-        container.innerHTML =
-            '<div class="empty">Keine Fraktionen vorhanden.</div>';
-
-        return;
-
-    }
-
-    container.innerHTML =
-        factions.map(faction => `
-
-            <div class="card faction-card">
-
-                <div class="faction-icon">
-                    ${escapeHTML(faction.icon)}
-                </div>
-
-                <h3>
-                    ${escapeHTML(faction.name)}
-                </h3>
-
-                <p>
-                    ${escapeHTML(faction.description)}
-                </p>
-
-                ${
-                    faction.discord
-                    ?
-                    `
-                    <a
-                        class="btn"
-                        href="${escapeHTML(faction.discord)}"
-                        target="_blank"
-                        rel="noopener"
-                    >
-                        Discord
-                    </a>
-                    `
-                    :
-                    ""
-                }
-
-            </div>
-
-        `).join("");
-
-}
-
-
-/* =========================================================
-   PUBLIC NEWS
-========================================================= */
-
-function renderPublicNews(){
-
-    const container =
-        document.getElementById(
-            "publicNews"
-        );
-
-    if(!news.length){
-
-        container.innerHTML =
-            '<div class="empty">Noch keine News veröffentlicht.</div>';
-
-        return;
-
-    }
-
-    const sorted =
-        [...news].sort(
-            (a,b) =>
-                (b.createdAt || 0) -
-                (a.createdAt || 0)
-        );
-
-
-    container.innerHTML =
-        sorted.slice(0,6).map(item => `
-
-            <div class="card news-card">
-
-                <div class="news-date">
-                    ${formatDate(item.createdAt)}
-                </div>
-
-                <h3>
-                    ${escapeHTML(item.title)}
-                </h3>
-
-                <p style="margin-top:10px;">
-                    ${escapeHTML(item.text)}
-                </p>
-
-            </div>
-
-        `).join("");
-
-}
-
-
-/* =========================================================
-   WHITELIST
-========================================================= */
-
-function renderWhitelist(){
-
-    const table =
-        document.getElementById(
-            "whitelistTable"
-        );
-
-    if(!table) return;
-
-    if(!whitelist.length){
-
-        table.innerHTML =
-            `<tr>
-                <td colspan="6">
-                    <div class="empty">
-                        Keine Bewerbungen vorhanden.
-                    </div>
-                </td>
-            </tr>`;
-
-        return;
-
-    }
-
-
-    table.innerHTML =
-        whitelist.map(item => `
-
-            <tr>
-
-                <td>${escapeHTML(item.name)}</td>
-
-                <td>${escapeHTML(item.email)}</td>
-
-                <td>${escapeHTML(item.age)}</td>
-
-                <td>
-                    ${getWhitelistStatus(item.status)}
-                </td>
-
-                <td>
-                    ${formatDate(item.createdAt)}
-                </td>
-
-                <td>
-
-                    <div class="action-row">
-
-                        <button
-                            class="btn btn-success"
-                            onclick="approveWhitelist('${item.id}')"
-                        >
-                            ✓
-                        </button>
-
-                        <button
-                            class="btn btn-danger"
-                            onclick="rejectWhitelist('${item.id}')"
-                        >
-                            ✕
-                        </button>
-
-                        <button
-                            class="btn"
-                            onclick="deleteWhitelist('${item.id}')"
-                        >
-                            🗑
-                        </button>
-
-                    </div>
-
-                </td>
-
-            </tr>
-
-        `).join("");
-
-}
-
-
-function getWhitelistStatus(status){
-
-    if(status === "approved")
-        return "✅ Angenommen";
-
-    if(status === "rejected")
-        return "❌ Abgelehnt";
-
-    return "⏳ Offen";
-
-}
-
-
-window.approveWhitelist = async function(id){
-
-    if(!requireAdmin()) return;
-
-    await updateDoc(
-        doc(db,"whitelist",id),
-        {
-            status:"approved"
-        }
-    );
-
-    showToast(
-        "Whitelist angenommen."
-    );
-
-    await refreshData();
-
-};
-
-
-window.rejectWhitelist = async function(id){
-
-    if(!requireAdmin()) return;
-
-    await updateDoc(
-        doc(db,"whitelist",id),
-        {
-            status:"rejected"
-        }
-    );
-
-    showToast(
-        "Whitelist abgelehnt."
-    );
-
-    await refreshData();
-
-};
-
-
-window.deleteWhitelist = async function(id){
-
-    if(!requireAdmin()) return;
-
-    if(!confirm(
-        "Diese Bewerbung wirklich löschen?"
-    )) return;
-
-    await deleteDocument(
-        "whitelist",
-        id
-    );
-
-    showToast(
-        "Bewerbung gelöscht."
-    );
-
-    await refreshData();
-
-};
-
-
-/* =========================================================
-   PLAYERS
-========================================================= */
-
-function renderPlayers(){
-
-    const table =
-        document.getElementById(
-            "playersTable"
-        );
-
-    if(!table) return;
-
-
-    if(!players.length){
-
-        table.innerHTML =
-            `<tr>
-                <td colspan="5">
-                    <div class="empty">
-                        Keine Spieler vorhanden.
-                    </div>
-                </td>
-            </tr>`;
-
-        return;
-
-    }
-
-
-    table.innerHTML =
-        players.map(player => `
-
-            <tr>
-
-                <td>
-                    ${escapeHTML(player.name)}
-                </td>
-
-                <td>
-                    ${escapeHTML(player.playerId)}
-                </td>
-
-                <td>
-                    ${escapeHTML(player.faction || "-")}
-                </td>
-
-                <td>
-                    ${
-                        player.status === "online"
-                        ? "🟢 Online"
-                        : "⚫ Offline"
-                    }
-                </td>
-
-                <td>
-
-                    <button
-                        class="btn btn-danger"
-                        onclick="deletePlayer('${player.id}')"
-                    >
-                        Löschen
-                    </button>
-
-                </td>
-
-            </tr>
-
-        `).join("");
-
-}
-
-
-window.deletePlayer = async function(id){
-
-    if(!requireOwner()) return;
-
-    if(!confirm(
-        "Spieler wirklich löschen?"
-    )) return;
-
-    await deleteDocument(
-        "players",
-        id
-    );
-
-    showToast(
-        "Spieler gelöscht."
-    );
-
-    await refreshData();
-
-};
-
-
-/* =========================================================
-   ADMIN FRACTIONS
-========================================================= */
-
-function renderAdminFactions(){
-
-    const container =
-        document.getElementById(
-            "adminFactions"
-        );
-
-    if(!container) return;
-
-
-    container.innerHTML =
-        factions.map(faction => `
-
-            <div class="card">
-
-                <div class="faction-icon">
-                    ${escapeHTML(faction.icon)}
-                </div>
-
-                <h3>
-                    ${escapeHTML(faction.name)}
-                </h3>
-
-                <p>
-                    ${escapeHTML(faction.description)}
-                </p>
-
-                <div class="action-row"
-                     style="margin-top:15px;">
-
-                    <button
-                        class="btn btn-danger"
-                        onclick="deleteFaction('${faction.id}')"
-                    >
-                        Löschen
-                    </button>
-
-                </div>
-
-            </div>
-
-        `).join("");
-
-}
-
-
-window.deleteFaction = async function(id){
-
-    if(!requireOwner()) return;
-
-    if(!confirm(
-        "Fraktion wirklich löschen?"
-    )) return;
-
-    await deleteDocument(
-        "factions",
-        id
-    );
-
-    showToast(
-        "Fraktion gelöscht."
-    );
-
-    await refreshData();
-
-};
-
-
-/* =========================================================
-   ADMIN NEWS
-========================================================= */
-
-function renderAdminNews(){
-
-    const container =
-        document.getElementById(
-            "adminNews"
-        );
-
-    if(!container) return;
-
-
-    if(!news.length){
-
-        container.innerHTML =
-            '<div class="empty">Keine News.</div>';
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-        news.map(item => `
-
-            <div class="card">
-
-                <div class="news-date">
-                    ${formatDate(item.createdAt)}
-                </div>
-
-                <h3>
-                    ${escapeHTML(item.title)}
-                </h3>
-
-                <p style="margin-top:10px;">
-                    ${escapeHTML(item.text)}
-                </p>
-
-                <button
-                    class="btn btn-danger"
-                    style="margin-top:18px;"
-                    onclick="deleteNews('${item.id}')"
-                >
-                    Löschen
-                </button>
-
-            </div>
-
-        `).join("");
-
-}
-
-
-window.deleteNews = async function(id){
-
-    if(!requireOwner()) return;
-
-    if(!confirm(
-        "News wirklich löschen?"
-    )) return;
-
-    await deleteDocument(
-        "news",
-        id
-    );
-
-    showToast(
-        "News gelöscht."
-    );
-
-    await refreshData();
-
-};
-
-
-/* =========================================================
-   ADMINS
-========================================================= */
-
-function renderAdmins(){
-
-    const table =
-        document.getElementById(
-            "adminsTable"
-        );
-
-    if(!table) return;
-
-
-    if(!admins.length){
-
-        table.innerHTML =
-            `<tr>
-                <td colspan="4">
-                    <div class="empty">
-                        Keine Admins gefunden.
-                    </div>
-                </td>
-            </tr>`;
-
-        return;
-
-    }
-
-
-    table.innerHTML =
-        admins.map(admin => `
-
-            <tr>
-
-                <td>
-                    ${escapeHTML(admin.name)}
-                </td>
-
-                <td>
-                    ${escapeHTML(admin.email)}
-                </td>
-
-                <td>
-                    ${
-                        admin.role === "owner"
-                        ? "👑 Owner"
-                        : "🛡️ Admin"
-                    }
-                </td>
-
-                <td>
-
-                    ${
-                        admin.role !== "owner"
-                        ?
-                        `
-                        <button
-                            class="btn btn-danger"
-                            onclick="deleteAdmin('${admin.id}')"
-                        >
-                            Löschen
-                        </button>
-                        `
-                        :
-                        "Geschützt"
-                    }
-
-                </td>
-
-            </tr>
-
-        `).join("");
-
-}
-
-
-window.deleteAdmin = async function(id){
-
-    if(!requireOwner()) return;
-
-    if(!confirm(
-        "Admin wirklich löschen?"
-    )) return;
-
-    await deleteDocument(
-        "admins",
-        id
-    );
-
-    showToast(
-        "Admin gelöscht."
-    );
-
-    await refreshData();
-
-};
-
-
-/* =========================================================
-   STATS
-========================================================= */
-
-function updateStats(){
+    document
+        .getElementById("sidebarUserName")
+        .textContent =
+            currentUserData?.name ||
+            currentUser?.email ||
+            "Admin";
 
     document
-        .getElementById("statPlayers")
+        .getElementById("sidebarUserRole")
         .textContent =
-            players.length;
+            currentUserData?.role ||
+            "admin";
 
     document
-        .getElementById("statWhitelist")
-        .textContent =
-            whitelist.filter(
-                x => x.status === "pending"
-            ).length;
-
-    document
-        .getElementById("statFactions")
-        .textContent =
-            factions.length;
-
-    document
-        .getElementById("statNews")
-        .textContent =
-            news.length;
+        .getElementById("createAdminButton")
+        .style.display =
+            isOwner()
+                ? "block"
+                : "none";
 
 }
 
 
-/* =========================================================
+/* =====================================
    LOGIN
-========================================================= */
+===================================== */
 
 document
     .getElementById("loginForm")
@@ -3332,19 +2957,54 @@ document
 
             event.preventDefault();
 
+            const button =
+                document.getElementById(
+                    "loginButton"
+                );
+
             const email =
                 document
-                    .getElementById("loginEmail")
+                    .getElementById(
+                        "loginEmail"
+                    )
                     .value
                     .trim();
 
             const password =
                 document
-                    .getElementById("loginPassword")
+                    .getElementById(
+                        "loginPassword"
+                    )
                     .value;
 
+            if(!email || !password){
+
+                showToast(
+                    "Bitte E-Mail und Passwort eingeben.",
+                    "warning"
+                );
+
+                return;
+
+            }
+
+            button.disabled =
+                true;
+
+            button.textContent =
+                "Anmeldung...";
 
             try{
+
+                /*
+                 * WICHTIG:
+                 * Es wird hier KEIN
+                 * createUserWithEmailAndPassword()
+                 * verwendet.
+                 *
+                 * Dadurch wird beim Login
+                 * kein neuer Account erstellt.
+                 */
 
                 await signInWithEmailAndPassword(
                     auth,
@@ -3362,12 +3022,37 @@ document
 
             }catch(error){
 
-                console.error(error);
-
-                showToast(
-                    getFirebaseError(error),
-                    "error"
+                console.error(
+                    "Firebase Login Error:",
+                    error
                 );
+
+                if(
+                    error?.code ===
+                    "auth/too-many-requests"
+                ){
+
+                    showToast(
+                        "Firebase hat wegen zu vieler Versuche vorübergehend gesperrt. Bitte jetzt nicht weiter versuchen.",
+                        "error"
+                    );
+
+                }else{
+
+                    showToast(
+                        getFirebaseError(error),
+                        "error"
+                    );
+
+                }
+
+            }finally{
+
+                button.disabled =
+                    false;
+
+                button.textContent =
+                    "Einloggen";
 
             }
 
@@ -3375,9 +3060,9 @@ document
     );
 
 
-/* =========================================================
+/* =====================================
    AUTH STATE
-========================================================= */
+===================================== */
 
 onAuthStateChanged(
     auth,
@@ -3388,14 +3073,14 @@ onAuthStateChanged(
 
         if(!user){
 
-            showPublicSite();
+            currentUserData =
+                null;
 
-            currentUserData = null;
+            showPublicSite();
 
             return;
 
         }
-
 
         try{
 
@@ -3408,38 +3093,38 @@ onAuthStateChanged(
                     )
                 );
 
-
             if(!userDoc.exists()){
 
-                await signOut(auth);
+                await signOut(
+                    auth
+                );
 
                 showToast(
-                    "Für diesen Account existiert kein NovaRP-Profil.",
+                    "Für diesen Firebase-Account existiert noch kein NovaRP-Profil.",
                     "error"
                 );
 
                 return;
 
             }
-
 
             currentUserData =
                 userDoc.data();
 
-
             if(!isAdmin()){
 
-                await signOut(auth);
+                await signOut(
+                    auth
+                );
 
                 showToast(
-                    "Dieser Account hat keinen Admin-Zugriff.",
+                    "Dieser Account besitzt keine NovaRP-Admin-Berechtigung.",
                     "error"
                 );
 
                 return;
 
             }
-
 
             showDashboard();
 
@@ -3447,10 +3132,12 @@ onAuthStateChanged(
 
         }catch(error){
 
-            console.error(error);
+            console.error(
+                error
+            );
 
             showToast(
-                "Benutzerprofil konnte nicht geladen werden.",
+                getFirebaseError(error),
                 "error"
             );
 
@@ -3460,170 +3147,684 @@ onAuthStateChanged(
 );
 
 
-/* =========================================================
+/* =====================================
    LOGOUT
-========================================================= */
+===================================== */
 
-window.logout = async function(){
+window.logout =
+async function(){
 
-    await signOut(auth);
+    try{
 
-    showToast(
-        "Du wurdest ausgeloggt."
+        await signOut(
+            auth
+        );
+
+        showPublicSite();
+
+        showToast(
+            "Du wurdest abgemeldet."
+        );
+
+    }catch(error){
+
+        console.error(
+            error
+        );
+
+        showToast(
+            getFirebaseError(error),
+            "error"
+        );
+
+    }
+
+};
+
+
+/* =====================================
+   FIRESTORE LOAD
+===================================== */
+
+async function getCollectionData(
+    collectionName
+){
+
+    const snapshot =
+        await getDocs(
+            collection(
+                db,
+                collectionName
+            )
+        );
+
+    return snapshot.docs.map(
+        item => ({
+            id:item.id,
+            ...item.data()
+        })
     );
 
-};
+}
 
 
-function showDashboard(){
+async function loadAllData(){
 
-    document
-        .getElementById("publicSite")
-        .style.display =
-            "none";
+    if(!isAdmin()){
 
-    document
-        .getElementById("dashboard")
-        .classList.add("active");
+        return;
+
+    }
+
+    try{
+
+        whitelist =
+            await getCollectionData(
+                "whitelist"
+            );
+
+    }catch(error){
+
+        console.error(
+            "Whitelist:",
+            error
+        );
+
+        whitelist = [];
+
+    }
+
+    try{
+
+        players =
+            await getCollectionData(
+                "players"
+            );
+
+    }catch(error){
+
+        console.error(
+            "Players:",
+            error
+        );
+
+        players = [];
+
+    }
+
+    try{
+
+        factions =
+            await getCollectionData(
+                "factions"
+            );
+
+    }catch(error){
+
+        console.error(
+            "Factions:",
+            error
+        );
+
+        factions = [];
+
+    }
+
+    try{
+
+        news =
+            await getCollectionData(
+                "news"
+            );
+
+    }catch(error){
+
+        console.error(
+            "News:",
+            error
+        );
+
+        news = [];
+
+    }
+
+    try{
+
+        admins =
+            await getCollectionData(
+                "admins"
+            );
+
+    }catch(error){
+
+        console.error(
+            "Admins:",
+            error
+        );
+
+        admins = [];
+
+    }
+
+    try{
+
+        const serverDoc =
+            await getDoc(
+                doc(
+                    db,
+                    "public",
+                    "server"
+                )
+            );
+
+        if(serverDoc.exists()){
+
+            serverData =
+                {
+                    ...DEFAULT_SERVER,
+                    ...serverDoc.data()
+                };
+
+        }else{
+
+            serverData =
+                {
+                    ...DEFAULT_SERVER
+                };
+
+        }
+
+    }catch(error){
+
+        console.error(
+            "Server:",
+            error
+        );
+
+    }
 
 
-    document
-        .getElementById("dashboardUser")
-        .textContent =
-            `${currentUserData.name} • ${
-                currentUserData.role
-            }`;
+    try{
+
+        const settingsDoc =
+            await getDoc(
+                doc(
+                    db,
+                    "public",
+                    "settings"
+                )
+            );
+
+        if(settingsDoc.exists()){
+
+            settings =
+                {
+                    ...DEFAULT_SETTINGS,
+                    ...settingsDoc.data()
+                };
+
+        }
+
+    }catch(error){
+
+        console.error(
+            "Settings:",
+            error
+        );
+
+    }
 
 
-    document
-        .getElementById("adminsNav")
-        .style.display =
-            isOwner()
-            ? ""
-            : "none";
+    if(
+        factions.length === 0
+    ){
 
+        factions =
+            DEFAULT_FACTIONS.map(
+                (faction,index) => ({
+                    id:
+                        "default-" +
+                        index,
+                    ...faction
+                })
+            );
 
-    document
-        .getElementById("serverNav")
-        .style.display =
-            isOwner()
-            ? ""
-            : "none";
+    }
 
-
-    document
-        .getElementById("settingsNav")
-        .style.display =
-            isOwner()
-            ? ""
-            : "none";
-
-
-    loadServerForm();
-
-    loadSettingsForm();
+    renderEverything();
 
 }
 
 
-function showPublicSite(){
+/* =====================================
+   RENDER EVERYTHING
+===================================== */
 
-    document
-        .getElementById("publicSite")
-        .style.display =
-            "block";
+function renderEverything(){
 
-    document
-        .getElementById("dashboard")
-        .classList.remove("active");
+    renderPublicServer();
+
+    renderPublicFactions();
+
+    renderPublicNews();
+
+    renderWhitelist();
+
+    renderPlayers();
+
+    renderFactions();
+
+    renderNews();
+
+    renderAdmins();
+
+    renderStats();
+
+    renderSettings();
+
+    renderServerForm();
+
+    updatePlayerFactionSelect();
 
 }
 
 
-/* =========================================================
-   DASHBOARD NAVIGATION
-========================================================= */
+/* =====================================
+   PUBLIC SERVER
+===================================== */
 
-window.showDashboardPage =
-function(pageId,button){
+function renderPublicServer(){
 
-    if(pageId === "adminsPage" && !requireOwner())
-        return;
-
-    if(pageId === "serverPage" && !requireOwner())
-        return;
-
-    if(pageId === "settingsPage" && !requireOwner())
-        return;
-
-
-    document
-        .querySelectorAll(
-            ".dashboard-content"
-        )
-        .forEach(
-            page =>
-                page.classList.remove(
-                    "active"
-                )
+    const max =
+        Number(
+            serverData.maxPlayers ||
+            CONFIG.maxPlayers
         );
 
-
-    document
-        .getElementById(pageId)
-        .classList.add("active");
-
-
-    document
-        .querySelectorAll(
-            ".sidebar-nav button"
-        )
-        .forEach(
-            item =>
-                item.classList.remove(
-                    "active"
-                )
+    const current =
+        Number(
+            serverData.players ||
+            0
         );
 
-
-    if(button)
-        button.classList.add("active");
-
-
-    const names = {
-
-        dashboardPage:"Dashboard",
-
-        whitelistPage:"Whitelist",
-
-        playersPage:"Spieler",
-
-        factionsPage:"Fraktionen",
-
-        newsPage:"News",
-
-        adminsPage:"Administratoren",
-
-        serverPage:"Server",
-
-        settingsPage:"Einstellungen"
-
-    };
-
+    const percentage =
+        Math.min(
+            100,
+            Math.max(
+                0,
+                (current / max) * 100
+            )
+        );
 
     document
-        .getElementById(
-            "dashboardTitle"
-        )
+        .getElementById("heroServerName")
         .textContent =
-            names[pageId] || "Dashboard";
+            serverData.name;
+
+    document
+        .getElementById("heroServerIP")
+        .textContent =
+            serverData.ip;
+
+    document
+        .getElementById("heroPlayers")
+        .textContent =
+            current;
+
+    document
+        .getElementById("heroMaxPlayers")
+        .textContent =
+            max;
+
+    document
+        .getElementById("heroProgress")
+        .style.width =
+            percentage + "%";
+
+    document
+        .getElementById("serverIP")
+        .textContent =
+            serverData.ip;
+
+    document
+        .getElementById("serverPlayers")
+        .textContent =
+            current;
+
+    document
+        .getElementById("serverMaxPlayers")
+        .textContent =
+            max;
+
+    const status =
+        serverData.status ||
+        "online";
+
+    const statusText =
+        status === "online"
+            ? "Online"
+            : status === "maintenance"
+                ? "Wartung"
+                : "Offline";
+
+    document
+        .getElementById("heroStatus")
+        .textContent =
+            statusText;
+
+    document
+        .getElementById("serverStatusText")
+        .textContent =
+            statusText;
+
+    document
+        .getElementById("dashServerName")
+        .textContent =
+            serverData.name;
+
+    document
+        .getElementById("dashServerIP")
+        .textContent =
+            serverData.ip;
+
+    document
+        .getElementById("footerVersion")
+        .textContent =
+            serverData.version ||
+            CONFIG.version;
+
+}
+
+
+/* =====================================
+   PUBLIC FACTIONS
+===================================== */
+
+function renderPublicFactions(){
+
+    const container =
+        document.getElementById(
+            "publicFactions"
+        );
+
+    if(!factions.length){
+
+        container.innerHTML =
+            `<div class="card">
+                <div class="empty">
+                    Noch keine Fraktionen vorhanden.
+                </div>
+            </div>`;
+
+        return;
+
+    }
+
+    container.innerHTML =
+        factions.map(
+            faction => `
+
+            <div class="card faction-card">
+
+                <div class="faction-icon">
+                    ${escapeHTML(faction.icon || "🏢")}
+                </div>
+
+                <div>
+
+                    <h3>
+                        ${escapeHTML(faction.name)}
+                    </h3>
+
+                    <p>
+                        ${escapeHTML(
+                            faction.description ||
+                            "Keine Beschreibung."
+                        )}
+                    </p>
+
+                </div>
+
+            </div>
+
+            `
+        ).join("");
+
+}
+
+
+/* =====================================
+   PUBLIC NEWS
+===================================== */
+
+function renderPublicNews(){
+
+    const container =
+        document.getElementById(
+            "publicNews"
+        );
+
+    if(!news.length){
+
+        container.innerHTML =
+            `<div class="card">
+                <div class="empty">
+                    Noch keine News veröffentlicht.
+                </div>
+            </div>`;
+
+        return;
+
+    }
+
+    const sorted =
+        [...news].sort(
+            (a,b) =>
+                Number(b.createdAt || 0) -
+                Number(a.createdAt || 0)
+        );
+
+    container.innerHTML =
+        sorted.slice(0,6).map(
+            item => `
+
+            <div class="card">
+
+                <div class="news-date">
+                    ${formatDate(item.createdAt)}
+                </div>
+
+                <h3>
+                    ${escapeHTML(item.title)}
+                </h3>
+
+                <div class="news-text">
+                    ${escapeHTML(item.text)}
+                </div>
+
+            </div>
+
+            `
+        ).join("");
+
+}
+
+
+/* =====================================
+   WHITELIST
+===================================== */
+
+function renderWhitelist(){
+
+    const tbody =
+        document.getElementById(
+            "whitelistTable"
+        );
+
+    if(!whitelist.length){
+
+        tbody.innerHTML =
+            `<tr>
+                <td colspan="6">
+                    <div class="empty">
+                        Keine Bewerbungen vorhanden.
+                    </div>
+                </td>
+            </tr>`;
+
+        return;
+
+    }
+
+    tbody.innerHTML =
+        whitelist.map(
+            item => `
+
+            <tr>
+
+                <td>
+                    ${escapeHTML(item.name)}
+                </td>
+
+                <td>
+                    ${escapeHTML(item.email)}
+                </td>
+
+                <td>
+                    ${escapeHTML(item.age)}
+                </td>
+
+                <td>
+                    ${escapeHTML(item.status || "pending")}
+                </td>
+
+                <td>
+                    ${formatDate(item.createdAt)}
+                </td>
+
+                <td>
+
+                    <div class="table-actions">
+
+                        <button
+                            class="small-btn btn-success"
+                            onclick="setWhitelistStatus('${item.id}','approved')">
+                            ✓
+                        </button>
+
+                        <button
+                            class="small-btn btn-warning"
+                            onclick="setWhitelistStatus('${item.id}','rejected')">
+                            ✕
+                        </button>
+
+                        <button
+                            class="small-btn btn-danger"
+                            onclick="deleteWhitelist('${item.id}')">
+                            🗑
+                        </button>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+            `
+        ).join("");
+
+}
+
+
+window.setWhitelistStatus =
+async function(
+    id,
+    status
+){
+
+    if(!requireAdmin()) return;
+
+    try{
+
+        await updateDoc(
+            doc(
+                db,
+                "whitelist",
+                id
+            ),
+            {
+                status
+            }
+        );
+
+        showToast(
+            "Whitelist aktualisiert."
+        );
+
+        await refreshData();
+
+    }catch(error){
+
+        console.error(error);
+
+        showToast(
+            getFirebaseError(error),
+            "error"
+        );
+
+    }
 
 };
 
 
-/* =========================================================
+window.deleteWhitelist =
+async function(id){
+
+    if(!requireAdmin()) return;
+
+    if(
+        !confirm(
+            "Whitelist-Bewerbung wirklich löschen?"
+        )
+    ){
+
+        return;
+
+    }
+
+    try{
+
+        await deleteDoc(
+            doc(
+                db,
+                "whitelist",
+                id
+            )
+        );
+
+        showToast(
+            "Bewerbung gelöscht."
+        );
+
+        await refreshData();
+
+    }catch(error){
+
+        console.error(error);
+
+        showToast(
+            getFirebaseError(error),
+            "error"
+        );
+
+    }
+
+};
+
+
+/* =====================================
    WHITELIST FORM
-========================================================= */
+===================================== */
 
 document
     .getElementById("whitelistForm")
@@ -3633,41 +3834,56 @@ document
 
             event.preventDefault();
 
-
             const data = {
 
                 name:
                     document
-                        .getElementById("wlName")
+                        .getElementById(
+                            "wlName"
+                        )
                         .value
                         .trim(),
 
                 email:
                     document
-                        .getElementById("wlEmail")
+                        .getElementById(
+                            "wlEmail"
+                        )
                         .value
                         .trim(),
 
                 age:
                     Number(
                         document
-                            .getElementById("wlAge")
+                            .getElementById(
+                                "wlAge"
+                            )
                             .value
                     ),
 
                 reason:
                     document
-                        .getElementById("wlReason")
+                        .getElementById(
+                            "wlReason"
+                        )
                         .value
                         .trim(),
 
-                status:"pending",
+                experience:
+                    document
+                        .getElementById(
+                            "wlExperience"
+                        )
+                        .value
+                        .trim(),
+
+                status:
+                    "pending",
 
                 createdAt:
                     Date.now()
 
             };
-
 
             try{
 
@@ -3679,30 +3895,28 @@ document
                     data
                 );
 
-
                 document
                     .getElementById(
                         "whitelistForm"
                     )
                     .reset();
 
-
                 closeModal(
                     "whitelistModal"
                 );
-
 
                 showToast(
                     "Whitelist-Bewerbung wurde gesendet."
                 );
 
+                await refreshData();
 
             }catch(error){
 
                 console.error(error);
 
                 showToast(
-                    "Bewerbung konnte nicht gespeichert werden.",
+                    getFirebaseError(error),
                     "error"
                 );
 
@@ -3712,42 +3926,120 @@ document
     );
 
 
-/* =========================================================
-   PLAYER MODAL
-========================================================= */
+/* =====================================
+   PLAYERS
+===================================== */
 
-window.openPlayerModal =
-function(){
+function renderPlayers(){
 
-    if(!requireOwner()) return;
-
-
-    const select =
+    const tbody =
         document.getElementById(
-            "playerFaction"
+            "playersTable"
         );
 
+    if(!players.length){
 
-    select.innerHTML =
-        `<option value="">
-            Keine Fraktion
-        </option>` +
-        factions.map(
-            faction =>
-                `<option value="${
-                    escapeHTML(faction.name)
-                }">${
-                    escapeHTML(faction.name)
-                }</option>`
+        tbody.innerHTML =
+            `<tr>
+                <td colspan="5">
+                    <div class="empty">
+                        Keine Spieler vorhanden.
+                    </div>
+                </td>
+            </tr>`;
+
+        return;
+
+    }
+
+    tbody.innerHTML =
+        players.map(
+            player => `
+
+            <tr>
+
+                <td>
+                    ${escapeHTML(player.name)}
+                </td>
+
+                <td>
+                    ${escapeHTML(player.playerId)}
+                </td>
+
+                <td>
+                    ${escapeHTML(player.faction || "-")}
+                </td>
+
+                <td>
+                    ${escapeHTML(player.status || "offline")}
+                </td>
+
+                <td>
+
+                    <button
+                        class="small-btn btn-danger"
+                        onclick="deletePlayer('${player.id}')">
+                        Löschen
+                    </button>
+
+                </td>
+
+            </tr>
+
+            `
         ).join("");
 
+}
 
-    openModal(
-        "playerModal"
-    );
+
+window.deletePlayer =
+async function(id){
+
+    if(!requireAdmin()) return;
+
+    if(
+        !confirm(
+            "Spieler wirklich löschen?"
+        )
+    ){
+
+        return;
+
+    }
+
+    try{
+
+        await deleteDoc(
+            doc(
+                db,
+                "players",
+                id
+            )
+        );
+
+        showToast(
+            "Spieler gelöscht."
+        );
+
+        await refreshData();
+
+    }catch(error){
+
+        console.error(error);
+
+        showToast(
+            getFirebaseError(error),
+            "error"
+        );
+
+    }
 
 };
 
+
+/* =====================================
+   PLAYER FORM
+===================================== */
 
 document
     .getElementById("playerForm")
@@ -3757,31 +4049,38 @@ document
 
             event.preventDefault();
 
-            if(!requireOwner()) return;
+            if(!requireAdmin()) return;
 
-
-            const player = {
+            const data = {
 
                 name:
                     document
-                        .getElementById("playerName")
+                        .getElementById(
+                            "playerName"
+                        )
                         .value
                         .trim(),
 
                 playerId:
                     document
-                        .getElementById("playerId")
+                        .getElementById(
+                            "playerId"
+                        )
                         .value
                         .trim(),
 
                 faction:
                     document
-                        .getElementById("playerFaction")
+                        .getElementById(
+                            "playerFaction"
+                        )
                         .value,
 
                 status:
                     document
-                        .getElementById("playerStatus")
+                        .getElementById(
+                            "playerStatus"
+                        )
                         .value,
 
                 createdAt:
@@ -3789,49 +4088,174 @@ document
 
             };
 
+            try{
 
-            await addDoc(
-                collection(db,"players"),
-                player
-            );
+                await addDoc(
+                    collection(
+                        db,
+                        "players"
+                    ),
+                    data
+                );
 
+                document
+                    .getElementById(
+                        "playerForm"
+                    )
+                    .reset();
 
-            document
-                .getElementById("playerForm")
-                .reset();
+                closeModal(
+                    "playerModal"
+                );
 
+                showToast(
+                    "Spieler erstellt."
+                );
 
-            closeModal(
-                "playerModal"
-            );
+                await refreshData();
 
+            }catch(error){
 
-            showToast(
-                "Spieler gespeichert."
-            );
+                console.error(error);
 
+                showToast(
+                    getFirebaseError(error),
+                    "error"
+                );
 
-            await refreshData();
+            }
 
         }
     );
 
 
-/* =========================================================
-   FRACTION MODAL
-========================================================= */
+/* =====================================
+   FACTIONS
+===================================== */
 
-window.openFactionModal =
-function(){
+function renderFactions(){
 
-    if(!requireOwner()) return;
+    const tbody =
+        document.getElementById(
+            "factionsTable"
+        );
 
-    openModal(
-        "factionModal"
-    );
+    if(!factions.length){
+
+        tbody.innerHTML =
+            `<tr>
+                <td colspan="4">
+                    <div class="empty">
+                        Keine Fraktionen vorhanden.
+                    </div>
+                </td>
+            </tr>`;
+
+        return;
+
+    }
+
+    tbody.innerHTML =
+        factions.map(
+            faction => `
+
+            <tr>
+
+                <td>
+                    ${escapeHTML(faction.name)}
+                </td>
+
+                <td style="font-size:25px">
+                    ${escapeHTML(faction.icon)}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        faction.description || "-"
+                    )}
+                </td>
+
+                <td>
+
+                    <button
+                        class="small-btn btn-danger"
+                        onclick="deleteFaction('${faction.id}')">
+                        Löschen
+                    </button>
+
+                </td>
+
+            </tr>
+
+            `
+        ).join("");
+
+}
+
+
+window.deleteFaction =
+async function(id){
+
+    if(!requireAdmin()) return;
+
+    if(
+        !confirm(
+            "Fraktion wirklich löschen?"
+        )
+    ){
+
+        return;
+
+    }
+
+    if(
+        String(id).startsWith(
+            "default-"
+        )
+    ){
+
+        showToast(
+            "Standard-Fraktionen können nicht gelöscht werden.",
+            "warning"
+        );
+
+        return;
+
+    }
+
+    try{
+
+        await deleteDoc(
+            doc(
+                db,
+                "factions",
+                id
+            )
+        );
+
+        showToast(
+            "Fraktion gelöscht."
+        );
+
+        await refreshData();
+
+    }catch(error){
+
+        console.error(error);
+
+        showToast(
+            getFirebaseError(error),
+            "error"
+        );
+
+    }
 
 };
 
+
+/* =====================================
+   FACTION FORM
+===================================== */
 
 document
     .getElementById("factionForm")
@@ -3841,32 +4265,31 @@ document
 
             event.preventDefault();
 
-            if(!requireOwner()) return;
+            if(!requireAdmin()) return;
 
-
-            const faction = {
+            const data = {
 
                 name:
                     document
-                        .getElementById("factionName")
+                        .getElementById(
+                            "factionName"
+                        )
                         .value
                         .trim(),
 
                 icon:
                     document
-                        .getElementById("factionIcon")
+                        .getElementById(
+                            "factionIcon"
+                        )
                         .value
                         .trim(),
 
                 description:
                     document
-                        .getElementById("factionDescription")
-                        .value
-                        .trim(),
-
-                discord:
-                    document
-                        .getElementById("factionDiscord")
+                        .getElementById(
+                            "factionDescription"
+                        )
                         .value
                         .trim(),
 
@@ -3875,49 +4298,164 @@ document
 
             };
 
+            try{
 
-            await addDoc(
-                collection(db,"factions"),
-                faction
-            );
+                await addDoc(
+                    collection(
+                        db,
+                        "factions"
+                    ),
+                    data
+                );
 
+                document
+                    .getElementById(
+                        "factionForm"
+                    )
+                    .reset();
 
-            document
-                .getElementById("factionForm")
-                .reset();
+                closeModal(
+                    "factionModal"
+                );
 
+                showToast(
+                    "Fraktion erstellt."
+                );
 
-            closeModal(
-                "factionModal"
-            );
+                await refreshData();
 
+            }catch(error){
 
-            showToast(
-                "Fraktion erstellt."
-            );
+                console.error(error);
 
+                showToast(
+                    getFirebaseError(error),
+                    "error"
+                );
 
-            await refreshData();
+            }
 
         }
     );
 
 
-/* =========================================================
-   NEWS MODAL
-========================================================= */
+/* =====================================
+   NEWS
+===================================== */
 
-window.openNewsModal =
-function(){
+function renderNews(){
 
-    if(!requireOwner()) return;
+    const tbody =
+        document.getElementById(
+            "newsTable"
+        );
 
-    openModal(
-        "newsModal"
-    );
+    if(!news.length){
+
+        tbody.innerHTML =
+            `<tr>
+                <td colspan="4">
+                    <div class="empty">
+                        Keine News vorhanden.
+                    </div>
+                </td>
+            </tr>`;
+
+        return;
+
+    }
+
+    const sorted =
+        [...news].sort(
+            (a,b) =>
+                Number(b.createdAt || 0) -
+                Number(a.createdAt || 0)
+        );
+
+    tbody.innerHTML =
+        sorted.map(
+            item => `
+
+            <tr>
+
+                <td>
+                    ${escapeHTML(item.title)}
+                </td>
+
+                <td>
+                    ${escapeHTML(item.text)}
+                </td>
+
+                <td>
+                    ${formatDate(item.createdAt)}
+                </td>
+
+                <td>
+
+                    <button
+                        class="small-btn btn-danger"
+                        onclick="deleteNews('${item.id}')">
+                        Löschen
+                    </button>
+
+                </td>
+
+            </tr>
+
+            `
+        ).join("");
+
+}
+
+
+window.deleteNews =
+async function(id){
+
+    if(!requireAdmin()) return;
+
+    if(
+        !confirm(
+            "News wirklich löschen?"
+        )
+    ){
+
+        return;
+
+    }
+
+    try{
+
+        await deleteDoc(
+            doc(
+                db,
+                "news",
+                id
+            )
+        );
+
+        showToast(
+            "News gelöscht."
+        );
+
+        await refreshData();
+
+    }catch(error){
+
+        console.error(error);
+
+        showToast(
+            getFirebaseError(error),
+            "error"
+        );
+
+    }
 
 };
 
+
+/* =====================================
+   NEWS FORM
+===================================== */
 
 document
     .getElementById("newsForm")
@@ -3927,74 +4465,193 @@ document
 
             event.preventDefault();
 
-            if(!requireOwner()) return;
+            if(!requireAdmin()) return;
 
-
-            const newsItem = {
+            const data = {
 
                 title:
                     document
-                        .getElementById("newsTitle")
+                        .getElementById(
+                            "newsTitle"
+                        )
                         .value
                         .trim(),
 
                 text:
                     document
-                        .getElementById("newsText")
+                        .getElementById(
+                            "newsText"
+                        )
                         .value
                         .trim(),
 
-                createdAt:
-                    Date.now(),
-
                 author:
-                    currentUserData.name
+                    currentUserData?.name ||
+                    currentUser?.email ||
+                    "Admin",
+
+                createdAt:
+                    Date.now()
 
             };
 
+            try{
 
-            await addDoc(
-                collection(db,"news"),
-                newsItem
-            );
+                await addDoc(
+                    collection(
+                        db,
+                        "news"
+                    ),
+                    data
+                );
 
+                document
+                    .getElementById(
+                        "newsForm"
+                    )
+                    .reset();
 
-            document
-                .getElementById("newsForm")
-                .reset();
+                closeModal(
+                    "newsModal"
+                );
 
+                showToast(
+                    "News veröffentlicht."
+                );
 
-            closeModal(
-                "newsModal"
-            );
+                await refreshData();
 
+            }catch(error){
 
-            showToast(
-                "News veröffentlicht."
-            );
+                console.error(error);
 
+                showToast(
+                    getFirebaseError(error),
+                    "error"
+                );
 
-            await refreshData();
+            }
 
         }
     );
 
 
-/* =========================================================
-   ADMIN ERSTELLEN
-========================================================= */
+/* =====================================
+   ADMINS
+===================================== */
 
-window.openAdminModal =
-function(){
+function renderAdmins(){
+
+    const tbody =
+        document.getElementById(
+            "adminsTable"
+        );
+
+    if(!admins.length){
+
+        tbody.innerHTML =
+            `<tr>
+                <td colspan="4">
+                    <div class="empty">
+                        Keine Admin-Profile vorhanden.
+                    </div>
+                </td>
+            </tr>`;
+
+        return;
+
+    }
+
+    tbody.innerHTML =
+        admins.map(
+            admin => `
+
+            <tr>
+
+                <td>
+                    ${escapeHTML(admin.name)}
+                </td>
+
+                <td>
+                    ${escapeHTML(admin.email)}
+                </td>
+
+                <td>
+                    ${escapeHTML(admin.role)}
+                </td>
+
+                <td>
+
+                    ${
+                        isOwner()
+                            ? `
+                                <button
+                                    class="small-btn btn-danger"
+                                    onclick="deleteAdmin('${admin.id}')">
+                                    Löschen
+                                </button>
+                              `
+                            : "-"
+                    }
+
+                </td>
+
+            </tr>
+
+            `
+        ).join("");
+
+}
+
+
+window.deleteAdmin =
+async function(id){
 
     if(!requireOwner()) return;
 
-    openModal(
-        "adminModal"
-    );
+    if(
+        !confirm(
+            "Admin-Profil wirklich löschen?"
+        )
+    ){
+
+        return;
+
+    }
+
+    try{
+
+        await deleteDoc(
+            doc(
+                db,
+                "admins",
+                id
+            )
+        );
+
+        showToast(
+            "Admin-Profil gelöscht."
+        );
+
+        await refreshData();
+
+    }catch(error){
+
+        console.error(error);
+
+        showToast(
+            getFirebaseError(error),
+            "error"
+        );
+
+    }
 
 };
 
+
+/* =====================================
+   ADMIN PROFILE FORM
+===================================== */
 
 document
     .getElementById("adminForm")
@@ -4006,75 +4663,83 @@ document
 
             if(!requireOwner()) return;
 
+            const uid =
+                document
+                    .getElementById(
+                        "adminUid"
+                    )
+                    .value
+                    .trim();
 
             const name =
                 document
-                    .getElementById("adminName")
+                    .getElementById(
+                        "adminName"
+                    )
                     .value
                     .trim();
 
             const email =
                 document
-                    .getElementById("adminEmail")
+                    .getElementById(
+                        "adminEmail"
+                    )
                     .value
                     .trim();
 
-            const password =
-                document
-                    .getElementById("adminPassword")
-                    .value;
-
             const role =
                 document
-                    .getElementById("adminRole")
+                    .getElementById(
+                        "adminRole"
+                    )
                     .value;
 
+            if(!uid){
+
+                showToast(
+                    "Firebase UID fehlt.",
+                    "warning"
+                );
+
+                return;
+
+            }
 
             try{
-
-                /*
-                 * WICHTIG:
-                 * Firebase Authentication erstellt
-                 * den Login-Account.
-                 */
-
-                const credential =
-                    await createUserWithEmailAndPassword(
-                        auth,
-                        email,
-                        password
-                    );
-
 
                 await setDoc(
                     doc(
                         db,
                         "users",
-                        credential.user.uid
+                        uid
                     ),
                     {
                         name,
                         email,
                         role,
                         createdAt:Date.now()
+                    },
+                    {
+                        merge:true
                     }
                 );
-
 
                 await setDoc(
                     doc(
                         db,
                         "admins",
-                        credential.user.uid
+                        uid
                     ),
                     {
                         name,
                         email,
                         role,
                         createdAt:Date.now()
+                    },
+                    {
+                        merge:true
                     }
                 );
-
 
                 document
                     .getElementById(
@@ -4082,21 +4747,165 @@ document
                     )
                     .reset();
 
-
                 closeModal(
                     "adminModal"
                 );
 
-
                 showToast(
-                    "Admin wurde erstellt."
+                    "Admin-Profil wurde gespeichert."
                 );
 
+                await refreshData();
 
-                await signOut(auth);
+            }catch(error){
+
+                console.error(error);
 
                 showToast(
-                    "Bitte erneut mit deinem Owner-Account anmelden."
+                    getFirebaseError(error),
+                    "error"
+                );
+
+            }
+
+        }
+    );
+
+
+/* =====================================
+   SERVER
+===================================== */
+
+function renderServerForm(){
+
+    document
+        .getElementById(
+            "serverNameInput"
+        )
+        .value =
+            serverData.name ||
+            "";
+
+    document
+        .getElementById(
+            "serverIPInput"
+        )
+        .value =
+            serverData.ip ||
+            "";
+
+    document
+        .getElementById(
+            "serverMaxPlayersInput"
+        )
+        .value =
+            serverData.maxPlayers ||
+            CONFIG.maxPlayers;
+
+    document
+        .getElementById(
+            "serverPlayersInput"
+        )
+        .value =
+            serverData.players ||
+            0;
+
+    document
+        .getElementById(
+            "serverStatusInput"
+        )
+        .value =
+            serverData.status ||
+            "online";
+
+}
+
+
+document
+    .getElementById("serverForm")
+    .addEventListener(
+        "submit",
+        async event => {
+
+            event.preventDefault();
+
+            if(!requireAdmin()) return;
+
+            const data = {
+
+                name:
+                    document
+                        .getElementById(
+                            "serverNameInput"
+                        )
+                        .value
+                        .trim(),
+
+                ip:
+                    document
+                        .getElementById(
+                            "serverIPInput"
+                        )
+                        .value
+                        .trim(),
+
+                maxPlayers:
+                    Number(
+                        document
+                            .getElementById(
+                                "serverMaxPlayersInput"
+                            )
+                            .value
+                    ),
+
+                players:
+                    Number(
+                        document
+                            .getElementById(
+                                "serverPlayersInput"
+                            )
+                            .value
+                    ),
+
+                status:
+                    document
+                        .getElementById(
+                            "serverStatusInput"
+                        )
+                        .value,
+
+                version:
+                    CONFIG.version,
+
+                updatedAt:
+                    Date.now()
+
+            };
+
+            try{
+
+                await setDoc(
+                    doc(
+                        db,
+                        "public",
+                        "server"
+                    ),
+                    data,
+                    {
+                        merge:true
+                    }
+                );
+
+                serverData =
+                    {
+                        ...serverData,
+                        ...data
+                    };
+
+                renderPublicServer();
+
+                showToast(
+                    "Server gespeichert."
                 );
 
             }catch(error){
@@ -4114,134 +4923,27 @@ document
     );
 
 
-/* =========================================================
-   SERVER FORM
-========================================================= */
+/* =====================================
+   SETTINGS
+===================================== */
 
-function loadServerForm(){
-
-    document
-        .getElementById("serverNameInput")
-        .value =
-            serverData.name;
+function renderSettings(){
 
     document
-        .getElementById("serverIPInput")
+        .getElementById(
+            "settingsDiscord"
+        )
         .value =
-            serverData.ip;
+            settings.discord ||
+            "";
 
     document
-        .getElementById("serverMaxInput")
+        .getElementById(
+            "settingsCity"
+        )
         .value =
-            serverData.maxPlayers;
-
-    document
-        .getElementById("serverPlayersInput")
-        .value =
-            serverData.players;
-
-    document
-        .getElementById("serverStatusInput")
-        .value =
-            serverData.status;
-
-    document
-        .getElementById("serverVersionInput")
-        .value =
-            serverData.version;
-
-}
-
-
-document
-    .getElementById("serverForm")
-    .addEventListener(
-        "submit",
-        async event => {
-
-            event.preventDefault();
-
-            if(!requireOwner()) return;
-
-
-            serverData = {
-
-                name:
-                    document
-                        .getElementById("serverNameInput")
-                        .value
-                        .trim(),
-
-                ip:
-                    document
-                        .getElementById("serverIPInput")
-                        .value
-                        .trim(),
-
-                maxPlayers:
-                    Number(
-                        document
-                            .getElementById("serverMaxInput")
-                            .value
-                    ),
-
-                players:
-                    Number(
-                        document
-                            .getElementById("serverPlayersInput")
-                            .value
-                    ),
-
-                status:
-                    document
-                        .getElementById("serverStatusInput")
-                        .value,
-
-                version:
-                    document
-                        .getElementById("serverVersionInput")
-                        .value
-                        .trim()
-
-            };
-
-
-            await setDoc(
-                doc(
-                    db,
-                    "public",
-                    "server"
-                ),
-                serverData
-            );
-
-
-            updatePublicServer();
-
-
-            showToast(
-                "Serverdaten gespeichert."
-            );
-
-        }
-    );
-
-
-/* =========================================================
-   SETTINGS FORM
-========================================================= */
-
-function loadSettingsForm(){
-
-    document
-        .getElementById("settingsDiscord")
-        .value =
-            settings.discord;
-
-    document
-        .getElementById("settingsCity")
-        .value =
-            settings.cityName;
+            settings.cityName ||
+            "";
 
 }
 
@@ -4254,139 +4956,442 @@ document
 
             event.preventDefault();
 
-            if(!requireOwner()) return;
+            if(!requireAdmin()) return;
 
-
-            settings = {
+            const data = {
 
                 discord:
                     document
-                        .getElementById("settingsDiscord")
+                        .getElementById(
+                            "settingsDiscord"
+                        )
                         .value
                         .trim(),
 
                 cityName:
                     document
-                        .getElementById("settingsCity")
+                        .getElementById(
+                            "settingsCity"
+                        )
                         .value
-                        .trim()
+                        .trim(),
+
+                updatedAt:
+                    Date.now()
 
             };
 
+            try{
 
-            await setDoc(
-                doc(
-                    db,
-                    "public",
-                    "settings"
-                ),
-                settings
-            );
+                await setDoc(
+                    doc(
+                        db,
+                        "public",
+                        "settings"
+                    ),
+                    data,
+                    {
+                        merge:true
+                    }
+                );
 
+                settings =
+                    {
+                        ...settings,
+                        ...data
+                    };
 
-            updatePublicSettings();
+                showToast(
+                    "Einstellungen gespeichert."
+                );
 
+            }catch(error){
 
-            showToast(
-                "Einstellungen gespeichert."
-            );
+                console.error(error);
+
+                showToast(
+                    getFirebaseError(error),
+                    "error"
+                );
+
+            }
 
         }
     );
 
 
-/* =========================================================
-   FIRESTORE LIVE LISTENER
-========================================================= */
+/* =====================================
+   STATS
+===================================== */
 
-function startRealtimeListeners(){
+function renderStats(){
+
+    document
+        .getElementById(
+            "statWhitelist"
+        )
+        .textContent =
+            whitelist.length;
+
+    document
+        .getElementById(
+            "statPlayers"
+        )
+        .textContent =
+            players.length;
+
+    document
+        .getElementById(
+            "statFactions"
+        )
+        .textContent =
+            factions.length;
+
+    document
+        .getElementById(
+            "statAdmins"
+        )
+        .textContent =
+            admins.length;
+
+}
+
+
+/* =====================================
+   PLAYER FACTION SELECT
+===================================== */
+
+function updatePlayerFactionSelect(){
+
+    const select =
+        document.getElementById(
+            "playerFaction"
+        );
+
+    select.innerHTML =
+        `<option value="">
+            Keine Fraktion
+        </option>` +
+        factions.map(
+            faction =>
+                `<option value="${escapeHTML(faction.name)}">
+                    ${escapeHTML(faction.name)}
+                </option>`
+        ).join("");
+
+}
+
+
+/* =====================================
+   DASHBOARD NAVIGATION
+===================================== */
+
+window.showDashboardPage =
+function(page){
+
+    if(!requireAdmin()) return;
+
+    document
+        .querySelectorAll(
+            ".dashboard-page"
+        )
+        .forEach(
+            element =>
+                element.classList.remove(
+                    "active"
+                )
+        );
+
+    const target =
+        document.getElementById(
+            "page-" + page
+        );
+
+    if(target){
+
+        target.classList.add(
+            "active"
+        );
+
+    }
+
+    document
+        .querySelectorAll(
+            ".side-nav button"
+        )
+        .forEach(
+            button => {
+
+                button.classList.toggle(
+                    "active",
+                    button.dataset.page === page
+                );
+
+            }
+        );
+
+    const titles = {
+
+        dashboard:"Dashboard",
+        whitelist:"Whitelist",
+        players:"Spieler",
+        factions:"Fraktionen",
+        news:"News",
+        admins:"Admins",
+        server:"Server",
+        settings:"Einstellungen"
+
+    };
+
+    document
+        .getElementById(
+            "dashboardTitle"
+        )
+        .textContent =
+            titles[page] ||
+            "Dashboard";
+
+    document
+        .getElementById(
+            "sidebar"
+        )
+        .classList.remove(
+            "open"
+        );
+
+};
+
+
+/* =====================================
+   MOBILE SIDEBAR
+===================================== */
+
+window.toggleSidebar =
+function(){
+
+    document
+        .getElementById(
+            "sidebar"
+        )
+        .classList.toggle(
+            "open"
+        );
+
+};
+
+
+/* =====================================
+   REFRESH
+===================================== */
+
+window.refreshData =
+async function(){
+
+    if(!requireAdmin()) return;
+
+    await loadAllData();
+
+    showToast(
+        "Daten aktualisiert."
+    );
+
+};
+
+
+/* =====================================
+   DATE
+===================================== */
+
+function formatDate(
+    timestamp
+){
+
+    if(!timestamp){
+
+        return "-";
+
+    }
+
+    try{
+
+        return new Date(
+            Number(timestamp)
+        ).toLocaleString(
+            "de-DE",
+            {
+                dateStyle:"short",
+                timeStyle:"short"
+            }
+        );
+
+    }catch{
+
+        return "-";
+
+    }
+
+}
+
+
+/* =====================================
+   REALTIME LISTENERS
+===================================== */
+
+function setupRealtime(){
 
     onSnapshot(
-        collection(db,"whitelist"),
+        collection(
+            db,
+            "whitelist"
+        ),
         snapshot => {
 
             whitelist =
                 snapshot.docs.map(
-                    d => ({
-                        id:d.id,
-                        ...d.data()
+                    item => ({
+                        id:item.id,
+                        ...item.data()
                     })
                 );
 
-            renderWhitelist();
+            if(isAdmin()){
 
-            updateStats();
+                renderWhitelist();
+                renderStats();
+
+            }
+
+        },
+        error => {
+
+            console.error(
+                "Whitelist realtime:",
+                error
+            );
 
         }
     );
 
 
     onSnapshot(
-        collection(db,"players"),
+        collection(
+            db,
+            "players"
+        ),
         snapshot => {
 
             players =
                 snapshot.docs.map(
-                    d => ({
-                        id:d.id,
-                        ...d.data()
+                    item => ({
+                        id:item.id,
+                        ...item.data()
                     })
                 );
 
-            renderPlayers();
+            if(isAdmin()){
 
-            updateStats();
+                renderPlayers();
+                renderStats();
+
+            }
+
+        },
+        error => {
+
+            console.error(
+                "Players realtime:",
+                error
+            );
 
         }
     );
 
 
     onSnapshot(
-        collection(db,"factions"),
+        collection(
+            db,
+            "factions"
+        ),
         snapshot => {
 
-            factions =
+            const result =
                 snapshot.docs.map(
-                    d => ({
-                        id:d.id,
-                        ...d.data()
+                    item => ({
+                        id:item.id,
+                        ...item.data()
                     })
                 );
+
+            if(result.length){
+
+                factions =
+                    result;
+
+            }
 
             renderPublicFactions();
 
-            renderAdminFactions();
+            if(isAdmin()){
 
-            updateStats();
+                renderFactions();
+                updatePlayerFactionSelect();
+                renderStats();
+
+            }
+
+        },
+        error => {
+
+            console.error(
+                "Factions realtime:",
+                error
+            );
 
         }
     );
 
 
     onSnapshot(
-        collection(db,"news"),
+        collection(
+            db,
+            "news"
+        ),
         snapshot => {
 
             news =
                 snapshot.docs.map(
-                    d => ({
-                        id:d.id,
-                        ...d.data()
+                    item => ({
+                        id:item.id,
+                        ...item.data()
                     })
                 );
 
             renderPublicNews();
 
-            renderAdminNews();
+            if(isAdmin()){
 
-            updateStats();
+                renderNews();
+
+            }
+
+        },
+        error => {
+
+            console.error(
+                "News realtime:",
+                error
+            );
 
         }
     );
 
 
     onSnapshot(
-        doc(db,"public","server"),
+        doc(
+            db,
+            "public",
+            "server"
+        ),
         snapshot => {
 
             if(snapshot.exists()){
@@ -4397,16 +5402,34 @@ function startRealtimeListeners(){
                         ...snapshot.data()
                     };
 
-                updatePublicServer();
+            }
+
+            renderPublicServer();
+
+            if(isAdmin()){
+
+                renderServerForm();
 
             }
+
+        },
+        error => {
+
+            console.error(
+                "Server realtime:",
+                error
+            );
 
         }
     );
 
 
     onSnapshot(
-        doc(db,"public","settings"),
+        doc(
+            db,
+            "public",
+            "settings"
+        ),
         snapshot => {
 
             if(snapshot.exists()){
@@ -4417,181 +5440,154 @@ function startRealtimeListeners(){
                         ...snapshot.data()
                     };
 
-                updatePublicSettings();
+            }
+
+            if(isAdmin()){
+
+                renderSettings();
 
             }
 
-        }
-    );
+        },
+        error => {
 
-}
-
-
-/* =========================================================
-   REFRESH
-========================================================= */
-
-async function refreshData(){
-
-    await loadAllData();
-
-}
-
-
-/* =========================================================
-   FIREBASE FEHLER
-========================================================= */
-
-function getFirebaseError(error){
-
-    const code =
-        error?.code || "";
-
-
-    const errors = {
-
-        "auth/invalid-credential":
-            "E-Mail oder Passwort ist falsch.",
-
-        "auth/invalid-login-credentials":
-            "E-Mail oder Passwort ist falsch.",
-
-        "auth/user-not-found":
-            "Benutzer wurde nicht gefunden.",
-
-        "auth/wrong-password":
-            "Passwort ist falsch.",
-
-        "auth/email-already-in-use":
-            "Diese E-Mail wird bereits verwendet.",
-
-        "auth/weak-password":
-            "Das Passwort ist zu schwach.",
-
-        "auth/invalid-email":
-            "Die E-Mail-Adresse ist ungültig.",
-
-        "permission-denied":
-            "Firebase hat den Zugriff verweigert.",
-
-        "auth/network-request-failed":
-            "Netzwerkfehler. Überprüfe deine Internetverbindung."
-
-    };
-
-
-    return errors[code] ||
-        error?.message ||
-        "Unbekannter Firebase-Fehler.";
-
-}
-
-
-/* =========================================================
-   DATUM
-========================================================= */
-
-function formatDate(timestamp){
-
-    if(!timestamp)
-        return "-";
-
-
-    let date;
-
-
-    if(
-        typeof timestamp === "object" &&
-        timestamp.seconds
-    ){
-
-        date =
-            new Date(
-                timestamp.seconds * 1000
+            console.error(
+                "Settings realtime:",
+                error
             );
 
-    }else{
-
-        date =
-            new Date(timestamp);
-
-    }
+        }
+    );
 
 
-    if(
-        Number.isNaN(
-            date.getTime()
-        )
-    ){
+    onSnapshot(
+        collection(
+            db,
+            "admins"
+        ),
+        snapshot => {
 
-        return "-";
+            admins =
+                snapshot.docs.map(
+                    item => ({
+                        id:item.id,
+                        ...item.data()
+                    })
+                );
 
-    }
+            if(isAdmin()){
 
+                renderAdmins();
+                renderStats();
 
-    return date.toLocaleDateString(
-        "de-DE",
-        {
-            day:"2-digit",
-            month:"2-digit",
-            year:"numeric"
+            }
+
+        },
+        error => {
+
+            console.error(
+                "Admins realtime:",
+                error
+            );
+
         }
     );
 
 }
 
 
-/* =========================================================
-   INIT
-========================================================= */
+/* =====================================
+   CLOSE MODALS ON BACKDROP
+===================================== */
 
 document
-    .getElementById("footerYear")
-    .textContent =
-        new Date()
-            .getFullYear();
+    .querySelectorAll(".modal")
+    .forEach(
+        modal => {
 
+            modal.addEventListener(
+                "click",
+                event => {
 
-/*
- * Firebase wird direkt verwendet.
- * Es gibt KEINE FiveM-API-Abfrage.
- */
+                    if(
+                        event.target ===
+                        modal
+                    ){
 
-(async function init(){
+                        modal.classList.remove(
+                            "active"
+                        );
 
-    try{
+                    }
 
-        await loadServer();
-
-        await loadSettings();
-
-        await ensureDefaultFactions();
-
-        factions =
-            await getCollectionData(
-                "factions"
+                }
             );
 
-        renderEverything();
+        }
+    );
 
-        startRealtimeListeners();
 
-    }catch(error){
+/* =====================================
+   INIT
+===================================== */
 
-        console.error(
-            "NovaRP Initialisierung:",
-            error
+async function init(){
+
+    document.title =
+        CONFIG.siteName +
+        " – Roleplay Server";
+
+    document
+        .getElementById(
+            "heroServerName"
+        )
+        .textContent =
+            CONFIG.serverName;
+
+    document
+        .getElementById(
+            "heroServerIP"
+        )
+        .textContent =
+            CONFIG.serverIP;
+
+    document
+        .getElementById(
+            "serverIP"
+        )
+        .textContent =
+            CONFIG.serverIP;
+
+    document
+        .getElementById(
+            "footerVersion"
+        )
+        .textContent =
+            CONFIG.version;
+
+    serverData =
+        {
+            ...DEFAULT_SERVER
+        };
+
+    factions =
+        DEFAULT_FACTIONS.map(
+            (faction,index) => ({
+                id:
+                    "default-" +
+                    index,
+                ...faction
+            })
         );
 
-        showToast(
-            "NovaRP konnte Firebase nicht vollständig laden.",
-            "error"
-        );
+    renderEverything();
 
-    }
+    setupRealtime();
 
-})();
+}
 
+
+init();
 
 </script>
 
